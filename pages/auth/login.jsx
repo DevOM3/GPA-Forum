@@ -3,7 +3,7 @@ import loginStyles from "../../styles/pages/auth/Login.module.css";
 
 const Login = () => {
   return (
-    <div className={myClass}>
+    <div className={loginStyles.login}>
       <h2>Hello Login form</h2>
     </div>
   );
