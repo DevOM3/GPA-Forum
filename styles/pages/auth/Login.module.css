@@ -1,0 +1,35 @@
+.login {
+  min-height: 100vh;
+  background: whitesmoke;
+  display: grid;
+  place-items: center;
+}
+
+.form {
+  margin: auto;
+  width: 60vw;
+  height: 60vh;
+  background: white;
+  box-shadow: 0px 0 7px 0.001px lightgrey;
+  border: 1px solid lightgray;
+  border-radius: 11px;
+  display: flex;
+
+  position: relative;
+  flex: 0.5;
+  background: white;
+  overflow: hidden;
+}
+.form img {
+  left: -444px;
+  top: -211px;
+  width: 100%;
+  position: absolute;
+}
+
+@media only screen and (max-width: 550px) {
+  .form {
+    height: 100%;
+    width: 100%;
+  }
+}

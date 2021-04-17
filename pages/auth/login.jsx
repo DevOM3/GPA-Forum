@@ -4,7 +4,10 @@ import loginStyles from "../../styles/pages/auth/Login.module.css";
 const Login = () => {
   return (
     <div className={loginStyles.login}>
-      <h2>Hello Login form</h2>
+      <form className={loginStyles.form}>
+        <img src="/images/circle.svg" alt="" />
+        {/* <div className={loginStyles.mainForm}></div> */}
+      </form>
     </div>
   );
 };

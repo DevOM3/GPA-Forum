@@ -16,7 +16,6 @@ const Home = () => {
           alignItems: "center",
         }}
       >
-        <img src="/images/logo.png" alt="" />
         <h2>Welcome to GPA Forum</h2>
       </div>
     </div>
