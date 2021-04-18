@@ -3,6 +3,8 @@ import { CircularProgress } from "@material-ui/core";
 import loginStyles from "../../styles/pages/auth/Login.module.css";
 import { db } from "../../services/firebase";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
+import { pageAnimationVariant } from "../../services/utilities";
 
 const Login = () => {
   const router = useRouter();
@@ -35,7 +37,12 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <form id={loginStyles.loginForm} onSubmit={login}>
         <input
           required
@@ -68,7 +75,7 @@ const Login = () => {
           </button>
         )}
       </form>
-    </div>
+    </motion.div>
   );
 };
 

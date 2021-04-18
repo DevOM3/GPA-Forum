@@ -8,7 +8,7 @@ import {
   PersonOutlineRounded,
   PhoneIphoneOutlined,
   SchoolOutlined,
-  VicsibilityOffOutlined,
+  VisibilityOffOutlined,
   VisibilityOutlined,
   PermPhoneMsgOutlined,
   DoneOutlined,
@@ -17,6 +17,11 @@ import {
 import { auth, db, firebase } from "../../services/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import {
+  inputAnimationVariant,
+  pageAnimationVariant,
+} from "../../services/utilities";
 
 const SignUp = () => {
   const router = useRouter();
@@ -69,6 +74,8 @@ const SignUp = () => {
   const getOTP = async () => {
     if (name.trim().length < 2) {
       alert("Your name must be at last 2 characters long.");
+    } else if (!branch?.title) {
+      alert("You must select your Branch first.");
     } else if (phno.trim().length !== 10) {
       alert("Enter a valid Phone number");
     } else {
@@ -124,12 +131,27 @@ const SignUp = () => {
   }, []);
 
   return (
-    <div className={signUpStyles.signUp}>
+    <motion.div
+      className={signUpStyles.signUp}
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <form className={signUpStyles.form} onSubmit={verifyOTP}>
         <img id="img" src="/images/circle.svg" alt="" />
         <div className={signUpStyles.mainForm}>
           {showOTPScreen ? (
-            <div className={signUpStyles.inputDiv}>
+            <motion.div
+              className={signUpStyles.inputDiv}
+              variants={inputAnimationVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{
+                duration: 0.5,
+              }}
+            >
               <ChatBubbleOutlineOutlined style={{ color: "grey" }} />
               <input
                 required
@@ -142,10 +164,20 @@ const SignUp = () => {
                 value={otp}
                 onChange={(e) => setOTP(e.target.value)}
               />
-            </div>
+            </motion.div>
           ) : (
             <>
-              <div className={signUpStyles.inputDiv}>
+              <motion.div
+                className={signUpStyles.inputDiv}
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 0.8,
+                  duration: 0.5,
+                }}
+              >
                 <PersonOutlineRounded style={{ color: "grey" }} />
                 <input
                   required
@@ -157,7 +189,7 @@ const SignUp = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-              </div>
+              </motion.div>
               <Autocomplete
                 onChange={(e, v) => setBranch(v)}
                 options={branchData}
@@ -165,9 +197,17 @@ const SignUp = () => {
                   `${option.acronym} (${option.title})`
                 }
                 renderInput={(params) => (
-                  <div
+                  <motion.div
                     className={signUpStyles.inputDiv}
                     ref={params.InputProps.ref}
+                    variants={inputAnimationVariant}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{
+                      delay: 0.9,
+                      duration: 0.5,
+                    }}
                   >
                     <SchoolOutlined style={{ color: "grey" }} />
                     <input
@@ -179,10 +219,20 @@ const SignUp = () => {
                       className={signUpStyles.input}
                       placeholder="Select your branch"
                     />
-                  </div>
+                  </motion.div>
                 )}
               />
-              <div className={signUpStyles.inputDiv}>
+              <motion.div
+                className={signUpStyles.inputDiv}
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 1,
+                  duration: 0.5,
+                }}
+              >
                 <LockOutlined style={{ color: "grey" }} />
                 <input
                   required
@@ -204,8 +254,18 @@ const SignUp = () => {
                     <VisibilityOutlined />
                   )}
                 </IconButton>
-              </div>
-              <div className={signUpStyles.inputDiv}>
+              </motion.div>
+              <motion.div
+                className={signUpStyles.inputDiv}
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 1.1,
+                  duration: 0.5,
+                }}
+              >
                 <PhoneIphoneOutlined style={{ color: "grey" }} />
                 <input
                   required
@@ -229,7 +289,7 @@ const SignUp = () => {
                     )
                   }
                 />
-              </div>
+              </motion.div>
             </>
           )}
           <div id="verifier"></div>
@@ -239,38 +299,66 @@ const SignUp = () => {
                 <CircularProgress size={33} style={{ color: "black" }} />
               </div>
             ) : (
-              <button
+              <motion.button
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 0.5,
+                  duration: 0.5,
+                }}
                 className={signUpStyles.button}
                 onClick={verifyOTP}
                 type="submit"
               >
                 <DoneOutlined style={{ color: "grey" }} />
                 <p className={signUpStyles.buttonText}>Verify OTP</p>
-              </button>
+              </motion.button>
             )
           ) : sendingOTP ? (
             <div className="progress-div">
               <CircularProgress size={33} style={{ color: "black" }} />
             </div>
           ) : (
-            <button
-              className={signUpStyles.button}
-              onClick={getOTP}
-              type="button"
-            >
-              <PermPhoneMsgOutlined style={{ color: "grey" }} />
-              <p className={signUpStyles.buttonText}>Get OTP</p>
-            </button>
+            <>
+              <motion.button
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 1.3,
+                  duration: 0.5,
+                }}
+                className={signUpStyles.button}
+                onClick={getOTP}
+                type="button"
+              >
+                <PermPhoneMsgOutlined style={{ color: "grey" }} />
+                <p className={signUpStyles.buttonText}>Get OTP</p>
+              </motion.button>
+              <motion.p
+                className="alternate-text"
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 1.5,
+                  duration: 0.5,
+                }}
+              >
+                Already have an account?{" "}
+                <Link href="/auth/login">
+                  <a>Login</a>
+                </Link>
+              </motion.p>
+            </>
           )}
-          <p className="alternate-text">
-            Already have an account?{" "}
-            <Link href="/auth/login">
-              <a>Login</a>
-            </Link>
-          </p>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

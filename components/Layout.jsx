@@ -1,9 +1,9 @@
 import React from "react";
 import Footer from "../components/Footer";
 
-const Layout = ({ children }) => {
+const Layout = ({ key, children }) => {
   return (
-    <div>
+    <div key={key}>
       {children}
       <Footer />
     </div>

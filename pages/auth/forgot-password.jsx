@@ -9,6 +9,11 @@ import {
   DoneOutlined,
   ChatBubbleOutlineOutlined,
 } from "@material-ui/icons";
+import { motion } from "framer-motion";
+import {
+  inputAnimationVariant,
+  pageAnimationVariant,
+} from "../../services/utilities";
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -24,10 +29,7 @@ const ForgotPassword = () => {
 
     if (phno.trim().length === 10) {
       setSendingOTP(true);
-      const data = await db
-        .collection("Users")
-        .where("phno", "==", phno)
-        .get();
+      const data = await db.collection("Users").where("phno", "==", phno).get();
       if (!data.empty) {
         const confirmationResult = await auth.signInWithPhoneNumber(
           `+91${phno}`,
@@ -79,88 +81,130 @@ const ForgotPassword = () => {
   }, []);
 
   return (
-    <div className={forgotStyles.signup}>
+    <motion.div
+      className={forgotStyles.signup}
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <form className={forgotStyles.form} onSubmit={verifyOTP}>
         <img src="/images/circle.svg" alt="" />
         <div className={forgotStyles.mainForm}>
-          <div id="verifier"></div>
-            <div className={forgotStyles.inputDiv}>
-                  <PhoneIphoneOutlined style={{ color: "grey" }} />
-                  <input
-                    required
-                    minLength={10}
-                    maxLength={10}
-                    type="text"
-                    pattern="[0-9]*"
-                    className={forgotStyles.input}
-                    placeholder="Enter your Phone Number"
-                    value={phno}
-                    onChange={(e) =>
-                      setPhno(
-                        e.target.value
-                          .toString()
-                          .replace("+", "")
-                          .replace("e", "")
-                          .replace("-", "")
-                          .replace("/", "")
-                          .replace("*", "")
-                          .replace(".", "")
-                      )
-                    }
-                  />
-            </div>
-          {sendingOTP ? (
-            <div className="progress-div">
-              <CircularProgress size={33} style={{ color: "black" }} />
-            </div>
-          ) : (
-            <button
-              className={forgotStyles.button}
-              onClick={getOTP}
-              type="button"
-            >
-              <PermPhoneMsgOutlined style={{ color: "grey" }} />
-              <p className={forgotStyles.buttonText}>Get OTP</p>
-            </button>
-          )}
           {visible ? (
             <>
-              <div className={forgotStyles.inputDiv}>
-              <ChatBubbleOutlineOutlined style={{ color: "grey" }} />
-              <input
-                required
-                minLength={6}
-                maxLength={6}
-                type="text"
-                pattern="[0-9]*"
-                className={forgotStyles.input}
-                placeholder="OTP"
-                value={otp}
-                onChange={(e) => setOTP(e.target.value)}
-              />
-            </div>
-            {verifyingOTP ? (
-              <div className="progress-div">
-                <CircularProgress size={33} style={{ color: "black" }} />
-              </div>
-            ) : (
-              <button
+              <motion.div
+                className={forgotStyles.inputDiv}
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 0.2,
+                  duration: 0.5,
+                }}
+              >
+                <ChatBubbleOutlineOutlined style={{ color: "grey" }} />
+                <input
+                  required
+                  minLength={6}
+                  maxLength={6}
+                  type="text"
+                  pattern="[0-9]*"
+                  className={forgotStyles.input}
+                  placeholder="OTP"
+                  value={otp}
+                  onChange={(e) => setOTP(e.target.value)}
+                />
+              </motion.div>
+              {verifyingOTP ? (
+                <div className="progress-div">
+                  <CircularProgress size={33} style={{ color: "black" }} />
+                </div>
+              ) : (
+                <motion.button
                   className={forgotStyles.button}
                   onClick={verifyOTP}
                   type="submit"
+                  variants={inputAnimationVariant}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{
+                    delay: 0.4,
+                    duration: 0.5,
+                  }}
                 >
                   <DoneOutlined style={{ color: "grey" }} />
                   <p className={forgotStyles.buttonText}>Verify OTP</p>
-                </button>
-            )}
+                </motion.button>
+              )}
             </>
-          ) : 
-          (<>
-          </>)}
-            
+          ) : (
+            <>
+              <div id="verifier"></div>
+              <motion.div
+                className={forgotStyles.inputDiv}
+                variants={inputAnimationVariant}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{
+                  delay: 0.8,
+                  duration: 0.5,
+                }}
+              >
+                <PhoneIphoneOutlined style={{ color: "grey" }} />
+                <input
+                  required
+                  minLength={10}
+                  maxLength={10}
+                  type="text"
+                  pattern="[0-9]*"
+                  className={forgotStyles.input}
+                  placeholder="Enter your Phone Number"
+                  value={phno}
+                  onChange={(e) =>
+                    setPhno(
+                      e.target.value
+                        .toString()
+                        .replace("+", "")
+                        .replace("e", "")
+                        .replace("-", "")
+                        .replace("/", "")
+                        .replace("*", "")
+                        .replace(".", "")
+                    )
+                  }
+                />
+              </motion.div>
+              {sendingOTP ? (
+                <div className="progress-div">
+                  <CircularProgress size={33} style={{ color: "black" }} />
+                </div>
+              ) : (
+                <motion.button
+                  className={forgotStyles.button}
+                  onClick={getOTP}
+                  type="button"
+                  variants={inputAnimationVariant}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  transition={{
+                    delay: 0.9,
+                    duration: 0.5,
+                  }}
+                >
+                  <PermPhoneMsgOutlined style={{ color: "grey" }} />
+                  <p className={forgotStyles.buttonText}>Get OTP</p>
+                </motion.button>
+              )}
+            </>
+          )}
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 export default ForgotPassword;

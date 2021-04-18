@@ -7,12 +7,20 @@ import { IconButton, TextField } from "@material-ui/core";
 import React from "react";
 import { useState } from "react";
 import footerStyles from "../styles/components/Footer.module.css";
+import { motion } from "framer-motion";
+import { pageFooterAnimationVariant } from "../services/utilities";
 
 const Footer = () => {
   const [contactString, setContactString] = useState();
 
   return (
-    <footer className={footerStyles.footer}>
+    <motion.footer
+      className={footerStyles.footer}
+      variants={pageFooterAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <div className={footerStyles.top}>
         <div className={footerStyles.mobileDiv}>
           <a
@@ -62,7 +70,7 @@ const Footer = () => {
       <p className={footerStyles.copyright}>
         Copyright &copy; GPA (Government Polytechnic, Aurangabad)
       </p>
-    </footer>
+    </motion.footer>
   );
 };
 
