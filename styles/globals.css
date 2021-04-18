@@ -5,6 +5,7 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  scroll-behavior: smooth;
 }
 
 a {
@@ -14,4 +15,19 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.progress-div {
+  display: grid;
+  place-items: center;
+}
+
+.alternate-text {
+  color: black;
+  background: whitesmoke;
+  border-radius: 11px;
+  align-self: center;
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
 }

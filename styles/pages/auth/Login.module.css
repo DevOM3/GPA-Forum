@@ -33,3 +33,31 @@
     width: 100%;
   }
 }
+.inputField {
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #b3edff;
+  display: inline-block;
+}
+.submitButton {
+  background-color: #b3edff; /* Green */
+  border: none;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  border: 2px solid #b3edff;
+}
+.submitButton:hover {
+  background-color: #b3edff;
+  color: white;
+}
