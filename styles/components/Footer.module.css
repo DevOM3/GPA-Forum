@@ -1,0 +1,106 @@
+.footer {
+  background: black;
+  padding-top: 21px;
+  padding-bottom: 21px;
+}
+
+.website {
+  margin-left: 4px;
+  margin-right: 4px;
+  color: white;
+  transition: all 751ms ease;
+  padding: 11px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: 1px solid black;
+  border-radius: 51px;
+  display: flex;
+  align-items: center;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contactForm {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  width: 275px;
+  border-radius: 51px;
+  background: white;
+  padding-left: 7px;
+  padding-left: 7px;
+}
+
+.input {
+  flex: 1;
+  font-size: 14px;
+  padding: 11px;
+  border: none;
+  border-radius: 21px;
+  outline: none;
+}
+
+.searchDiv {
+  margin-left: 4px;
+  margin-right: 4px;
+  color: white;
+  display: flex;
+  align-items: center;
+  transition: all 751ms ease;
+  padding: 11px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: 1px solid black;
+  border-radius: 51px;
+  cursor: pointer;
+}
+
+.copyright {
+  margin-top: 51px;
+  color: white;
+  text-align: center;
+}
+
+.mobileDiv {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 21px;
+}
+
+@media only screen and (min-width: 550px) {
+  .website:hover,
+  .searchDiv:hover {
+    color: black;
+    background: white;
+    border: 1px solid grey;
+  }
+  .searchDivMobile {
+    display: none;
+  }
+  .searchDivPC {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .top {
+    flex-direction: column;
+  }
+  .searchDivMobile {
+    display: flex;
+  }
+  .searchDivPC {
+    display: none;
+  }
+  .contactForm {
+    width: 95%;
+  }
+  .mobileDiv {
+    width: 100%;
+  }
+}

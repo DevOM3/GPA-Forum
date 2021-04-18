@@ -1,7 +1,13 @@
 import React from "react";
+import Footer from "../components/Footer";
 
 const Layout = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children}
+      <Footer />
+    </div>
+  );
 };
 
 export default Layout;
