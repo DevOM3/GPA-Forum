@@ -1,52 +1,42 @@
-import { Button, makeStyles, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import forgotStyles from "../../styles/pages/auth/ForgotPassword.module.css";
 import { auth, db, firebase } from "../../services/firebase";
 import { useRouter } from "next/router";
 import { CircularProgress } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  form: {
-    flex: "0.5",
-    width: "100%",
-    marginTop: theme.spacing(1),
-    flexDirection: "column",
-    paddingRight: "5vh",
-  },
-  submit: {
-    width: "20vh",
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import {
+  PhoneIphoneOutlined,
+  PermPhoneMsgOutlined,
+  DoneOutlined,
+  ChatBubbleOutlineOutlined,
+} from "@material-ui/icons";
 
 const ForgotPassword = () => {
   const router = useRouter();
-  const classes = useStyles();
-  const [phone, setPhone] = useState("");
+  const [phno, setPhno] = useState("");
   const [otp, setOTP] = useState("");
-  const [disabled, setDisabled] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [codeResult, setCodeResult] = useState(null);
   const [sendingOTP, setSendingOTP] = useState(false);
   const [verifyingOTP, setVerifyingOTP] = useState(false);
 
-  const sendOTP = async (e) => {
+  const getOTP = async (e) => {
     e.preventDefault();
 
-    if (phone.trim().length === 10) {
+    if (phno.trim().length === 10) {
       setSendingOTP(true);
       const data = await db
         .collection("Users")
-        .where("phno", "==", phone)
+        .where("phno", "==", phno)
         .get();
       if (!data.empty) {
         const confirmationResult = await auth.signInWithPhoneNumber(
-          `+91${phone}`,
+          `+91${phno}`,
           window.recaptchaVerifier
         );
 
         window.confirmationResult = confirmationResult;
+        setVisible(true);
         setCodeResult(confirmationResult);
-        setDisabled(false);
       } else {
         alert("Phone number is not registered!");
       }
@@ -92,65 +82,83 @@ const ForgotPassword = () => {
     <div className={forgotStyles.signup}>
       <form className={forgotStyles.form} onSubmit={verifyOTP}>
         <img src="/images/circle.svg" alt="" />
-
-        <form className={classes.form} method="post" noValidate>
+        <div className={forgotStyles.mainForm}>
           <div id="verifier"></div>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="phone-no"
-            label="Phone Number"
-            name="number"
-            autoComplete="phone"
-            autoFocus
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
+            <div className={forgotStyles.inputDiv}>
+                  <PhoneIphoneOutlined style={{ color: "grey" }} />
+                  <input
+                    required
+                    minLength={10}
+                    maxLength={10}
+                    type="text"
+                    pattern="[0-9]*"
+                    className={forgotStyles.input}
+                    placeholder="Enter your Phone Number"
+                    value={phno}
+                    onChange={(e) =>
+                      setPhno(
+                        e.target.value
+                          .toString()
+                          .replace("+", "")
+                          .replace("e", "")
+                          .replace("-", "")
+                          .replace("/", "")
+                          .replace("*", "")
+                          .replace(".", "")
+                      )
+                    }
+                  />
+            </div>
           {sendingOTP ? (
             <div className="progress-div">
               <CircularProgress size={33} style={{ color: "black" }} />
             </div>
           ) : (
-            <Button
-              type="submit"
-              fullWidth
-              variant="outlined"
-              onClick={sendOTP}
-              className={classes.submit}
+            <button
+              className={forgotStyles.button}
+              onClick={getOTP}
+              type="button"
             >
-              Send OTP
-            </Button>
+              <PermPhoneMsgOutlined style={{ color: "grey" }} />
+              <p className={forgotStyles.buttonText}>Get OTP</p>
+            </button>
           )}
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="otp"
-            label="OTP"
-            name="number"
-            autoComplete="otp"
-            disabled={disabled}
-            value={otp}
-            onChange={(e) => setOTP(e.target.value)}
-          />
-          {verifyingOTP ? (
-            <div className="progress-div">
-              <CircularProgress size={33} style={{ color: "black" }} />
+          {visible ? (
+            <>
+              <div className={forgotStyles.inputDiv}>
+              <ChatBubbleOutlineOutlined style={{ color: "grey" }} />
+              <input
+                required
+                minLength={6}
+                maxLength={6}
+                type="text"
+                pattern="[0-9]*"
+                className={forgotStyles.input}
+                placeholder="OTP"
+                value={otp}
+                onChange={(e) => setOTP(e.target.value)}
+              />
             </div>
-          ) : (
-            <Button
-              type="submit"
-              fullWidth
-              disabled={disabled}
-              variant="outlined"
-              className={classes.submit}
-              onClick={verifyOTP}
-            >
-              Verify
-            </Button>
-          )}
-        </form>
+            {verifyingOTP ? (
+              <div className="progress-div">
+                <CircularProgress size={33} style={{ color: "black" }} />
+              </div>
+            ) : (
+              <button
+                  className={forgotStyles.button}
+                  onClick={verifyOTP}
+                  type="submit"
+                >
+                  <DoneOutlined style={{ color: "grey" }} />
+                  <p className={forgotStyles.buttonText}>Verify OTP</p>
+                </button>
+            )}
+            </>
+          ) : 
+          (<>
+          </>)}
+            
+        </div>
       </form>
     </div>
   );
