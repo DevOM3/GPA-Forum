@@ -351,7 +351,7 @@ const SignUp = () => {
               >
                 Already have an account?{" "}
                 <Link href="/auth/login">
-                  <a>Login</a>
+                  <a className="alternate-link">Login</a>
                 </Link>
               </motion.p>
             </>

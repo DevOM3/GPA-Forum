@@ -1,9 +1,11 @@
 import React from "react";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-const Layout = ({ key, children }) => {
+const Layout = ({ children }) => {
   return (
-    <div key={key}>
+    <div>
+      <Navbar />
       {children}
       <Footer />
     </div>

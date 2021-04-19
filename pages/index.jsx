@@ -11,9 +11,12 @@ import {
   counterTopAnimationVariant,
   homeButtonAnimationVariant,
   homeTopAnimationVariant,
+  pageAnimationVariant,
 } from "../services/utilities";
+import { useRouter } from "next/router";
 
 const Home = () => {
+  const router = useRouter();
   const [userCount, setUserCount] = useState(0);
   const [forumCount, setForumCount] = useState(0);
   const [blogCount, setBlogCount] = useState(0);
@@ -61,7 +64,13 @@ const Home = () => {
   }, []);
 
   return (
-    <motion.div className={styles.home}>
+    <motion.div
+      className={styles.home}
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <Head>
         <title>GPA Forum</title>
         <link rel="icon" href="/images/logo.png" />
@@ -119,6 +128,7 @@ const Home = () => {
         transition={{
           delay: 1,
         }}
+        onClick={() => router.push("/auth/signup")}
       >
         <PersonOutlineOutlined fontSize="small" /> &nbsp;Create Account{" "}
       </motion.button>

@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
 import { IconButton, CircularProgress } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import loginStyles from "../../styles/pages/auth/SignUp.module.css";
+import loginStyles from "../../styles/pages/auth/Login.module.css";
 import {
+  LockOutlined,
   PhoneIphoneOutlined,
   VisibilityOffOutlined,
   VisibilityOutlined,
@@ -11,15 +11,19 @@ import {
 import { auth, db, firebase } from "../../services/firebase";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
-
+import { motion } from "framer-motion";
+import {
+  inputAnimationVariant,
+  pageAnimationVariant,
+} from "../../services/utilities";
 
 const Login = () => {
-    const router = useRouter();
+  const router = useRouter();
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
   const [loggingIn, setLoggingIn] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+
   const login = async (e) => {
     e.preventDefault();
     if (contactNumber.trim().length === 10) {
@@ -43,70 +47,131 @@ const Login = () => {
       alert("Enter a valid Mobile Number");
     }
   };
+
   return (
-    <div className={loginStyles.login}>
-      <form className={loginStyles.form}>
+    <motion.div
+      className={loginStyles.login}
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      <form className={loginStyles.form} onSubmit={login}>
         <img src="/images/circle.svg" alt="" />
         <div className={loginStyles.mainForm}>
-      <div className={loginStyles.inputDiv}>
-        <PhoneIphoneOutlined style={{ color: "grey" }} />
-        <input
-          required
-          className={loginStyles.input}
-          placeholder="Contact Number"
-          type="text"
-          pattern="[0-9]*"
-          maxLength={10}
-          minLength={10}
-          onChange={(e) => setContactNumber(e.target.value)}
-        />
-        </div>
-        <div className={loginStyles.inputDiv}>
-        <input
-          required
-          minLength={8}
-          maxLength={51}
-          type={passwordVisible ? "text" : "password"}
-          className={loginStyles.input}
-          placeholder="Password"
-      
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-  
-        />
-        <IconButton
-                  onClick={() => setPasswordVisible(!passwordVisible)}
-                  style={{ paddingTop: 0, paddingBottom: 0 }}
-                >
-                  {passwordVisible ? (
-                    <VisibilityOffOutlined />
-                  ) : (
-                    <VisibilityOutlined />
-                  )}
-                </IconButton>
-                </div>
-        {loggingIn ? (
-          <div className="progress-div">
-            <CircularProgress size={33} style={{ color: "black" }} />
-          </div>
-        ) : (
-          <button
-            className={loginStyles.submitButton}
-            type="submit"
-            className={loginStyles.button}
+          <motion.div
+            className={loginStyles.inputDiv}
+            variants={inputAnimationVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              delay: 0.7,
+              duration: 0.5,
+            }}
           >
-            Login
-          </button>
-        )}
-        <p  className="alternate-text">
-            Don't have an account? Create one!{" "}
+            <PhoneIphoneOutlined style={{ color: "grey" }} />
+            <input
+              required
+              className={loginStyles.input}
+              placeholder="Contact Number"
+              type="text"
+              pattern="[0-9]*"
+              maxLength={10}
+              minLength={10}
+              onChange={(e) => setContactNumber(e.target.value)}
+            />
+          </motion.div>
+          <motion.div
+            className={loginStyles.inputDiv}
+            variants={inputAnimationVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              delay: 0.9,
+              duration: 0.5,
+            }}
+          >
+            <LockOutlined style={{ color: "grey" }} />
+            <input
+              required
+              minLength={8}
+              maxLength={51}
+              type={passwordVisible ? "text" : "password"}
+              className={loginStyles.input}
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+            />
+            <IconButton
+              onClick={() => setPasswordVisible(!passwordVisible)}
+              style={{ paddingTop: 0, paddingBottom: 0 }}
+            >
+              {passwordVisible ? (
+                <VisibilityOffOutlined />
+              ) : (
+                <VisibilityOutlined />
+              )}
+            </IconButton>
+          </motion.div>
+          {loggingIn ? (
+            <div className="progress-div">
+              <CircularProgress size={33} style={{ color: "black" }} />
+            </div>
+          ) : (
+            <motion.button
+              type="submit"
+              className={loginStyles.button}
+              variants={inputAnimationVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{
+                delay: 1.1,
+                duration: 0.5,
+              }}
+            >
+              Login
+            </motion.button>
+          )}
+          <motion.p
+            className="alternate-text"
+            variants={inputAnimationVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              delay: 1.5,
+              duration: 0.5,
+            }}
+            style={{ marginBottom: 0 }}
+          >
+            Don't have an account?
             <Link href="/auth/signup">
-              <a>Signup</a>
-              </Link>
-              </p> 
+              <a className="alternate-link"> Create one! Sign Up</a>
+            </Link>
+          </motion.p>
+          <motion.p
+            className="alternate-text"
+            variants={inputAnimationVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              delay: 1.7,
+              duration: 0.5,
+            }}
+            style={{ marginTop: 7 }}
+          >
+            Forgot Password?
+            <Link href="/auth/forgot-password">
+              <a className="alternate-link"> Recover it!</a>
+            </Link>
+          </motion.p>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 };
 export default Login;
