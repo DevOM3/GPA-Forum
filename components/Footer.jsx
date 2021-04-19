@@ -1,9 +1,10 @@
 import {
+  ArrowUpwardRounded,
+  KeyboardArrowUpRounded,
   LanguageOutlined,
   SearchOutlined,
   SendRounded,
 } from "@material-ui/icons";
-import { IconButton, TextField } from "@material-ui/core";
 import React from "react";
 import { useState } from "react";
 import footerStyles from "../styles/components/Footer.module.css";
@@ -33,10 +34,17 @@ const Footer = () => {
           </a>
           <div
             className={`${footerStyles.searchDivMobile} ${footerStyles.searchDiv}`}
+            onClick={() => window.scroll(0, 0)}
+          >
+            &nbsp;Go up
+            <ArrowUpwardRounded style={{ marginLeft: 7 }} fontSize="small" />
+          </div>
+          {/* <div
+            className={`${footerStyles.searchDivMobile} ${footerStyles.searchDiv}`}
           >
             &nbsp;Search
             <SearchOutlined style={{ marginLeft: 7 }} fontSize="small" />
-          </div>
+          </div> */}
         </div>
         <div className={footerStyles.contactForm}>
           <input
@@ -62,10 +70,17 @@ const Footer = () => {
         </div>
         <div
           className={`${footerStyles.searchDivPC} ${footerStyles.searchDiv}`}
+          onClick={() => window.scroll(0, 0)}
+        >
+          &nbsp;Go Up
+          <ArrowUpwardRounded style={{ marginLeft: 7 }} fontSize="small" />
+        </div>
+        {/* <div
+          className={`${footerStyles.searchDivPC} ${footerStyles.searchDiv}`}
         >
           &nbsp;Search
           <SearchOutlined style={{ marginLeft: 7 }} fontSize="small" />
-        </div>
+        </div> */}
       </div>
       <p className={footerStyles.copyright}>
         Copyright &copy; GPA (Government Polytechnic, Aurangabad)

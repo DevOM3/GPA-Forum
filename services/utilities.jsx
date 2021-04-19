@@ -85,3 +85,65 @@ export const inputAnimationVariant = {
     },
   },
 };
+
+export const homeTopAnimationVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+  },
+};
+export const homeButtonAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    scale: 2,
+  },
+  visible: {
+    opacity: 1,
+    scale: 1,
+  },
+};
+export const counterDivAnimationVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      ease: "easeInOut",
+      delay: 1.1,
+      duration: 0.7,
+    },
+  },
+};
+export const counterTopAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    y: "-11px",
+  },
+  visible: {
+    y: "0px",
+    opacity: 1,
+    transition: {
+      ease: "easeInOut",
+      delay: 1.5,
+      duration: 0.7,
+    },
+  },
+};
+export const counterBottomAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    y: "11px",
+  },
+  visible: {
+    y: "0px",
+    opacity: 1,
+    transition: {
+      ease: "easeInOut",
+      delay: 1,
+      duration: 0.7,
+    },
+  },
+};
