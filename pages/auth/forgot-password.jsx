@@ -14,8 +14,11 @@ import {
   inputAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
+import { actionTypes } from "../../context/reducer";
+import { useStateValue } from "../../context/StateProvider";
 
 const ForgotPassword = () => {
+  const [{ user }, dispatch] = useStateValue();
   const router = useRouter();
   const [phno, setPhno] = useState("");
   const [otp, setOTP] = useState("");
@@ -23,6 +26,7 @@ const ForgotPassword = () => {
   const [codeResult, setCodeResult] = useState(null);
   const [sendingOTP, setSendingOTP] = useState(false);
   const [verifyingOTP, setVerifyingOTP] = useState(false);
+  const [userData, setUserData] = useState("");
 
   const getOTP = async (e) => {
     e.preventDefault();
@@ -31,6 +35,13 @@ const ForgotPassword = () => {
       setSendingOTP(true);
       const data = await db.collection("Users").where("phno", "==", phno).get();
       if (!data.empty) {
+        setUserData({
+          id: data.docs[0].id,
+          name: data.docs[0].data().name,
+          branch: data.docs[0].data().branch,
+          phno: data.docs[0].data().phno,
+          password: data.docs[0].data().password,
+        });
         const confirmationResult = await auth.signInWithPhoneNumber(
           `+91${phno}`,
           window.recaptchaVerifier
@@ -56,9 +67,14 @@ const ForgotPassword = () => {
 
       codeResult
         .confirm(otp)
-        .then((result) => {
+        .then(async (result) => {
           if (result.user) {
             setVerifyingOTP(false);
+            dispatch({
+              type: actionTypes.SET_USER,
+              user: userData,
+            });
+            localStorage.setItem("forumUserID", userData?.id);
             router.push("/profile");
           }
         })

@@ -114,13 +114,14 @@
     width: 150%;
     top: 50vh;
     left: -25%;
+    filter: none;
   }
   .mainForm {
     margin: auto;
     width: 100%;
   }
   .inputDiv {
-    box-shadow: 0px 2px 4px;
+    /* box-shadow: 0px 2px 4px; */
   }
 }
 

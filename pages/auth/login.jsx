@@ -16,8 +16,11 @@ import {
   inputAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
+import { actionTypes } from "../../context/reducer";
+import { useStateValue } from "../../context/StateProvider";
 
 const Login = () => {
+  const [{ user }, dispatch] = useStateValue();
   const router = useRouter();
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
@@ -34,6 +37,16 @@ const Login = () => {
         .get();
       if (!data.empty) {
         if (data.docs[0].data().password === password) {
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: {
+              id: data.docs[0].id,
+              name: data.docs[0].data().name,
+              branch: data.docs[0].data().branch,
+              phno: data.docs[0].data().phno,
+              password: data.docs[0].data().password,
+            },
+          });
           localStorage.setItem("forumUserID", data.docs[0].id);
           router.push("/");
         } else {

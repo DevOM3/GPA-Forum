@@ -14,7 +14,7 @@
   position: sticky;
   top: 0;
   transition: 571ms linear !important;
-  z-index: 2;
+  z-index: 3;
 }
 
 .logo {
@@ -32,18 +32,16 @@
 .li {
   list-style: none;
   padding: 10px 20px;
+  width: 100%;
+  display: flex;
 }
 
 .a {
   padding: 8px 20px;
   font-size: 1.2rem;
   transition: 0.2s ease-in-out;
-}
-
-.a:hover {
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-  background: #252525;
+  flex: 1;
+  text-align: center;
 }
 
 .links {
@@ -114,6 +112,14 @@
   transition: 571ms linear !important;
 }
 
+@media only screen and (min-width: 1020px) {
+  .a:hover {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+    background: #252525;
+  }
+}
+
 @media only screen and (max-width: 1020px) {
   .hamburger {
     display: block !important;
@@ -172,6 +178,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 2px;
+    width: 100%;
   }
   .searchtext {
     width: 200px;

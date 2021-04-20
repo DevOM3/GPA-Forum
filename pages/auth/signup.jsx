@@ -22,8 +22,11 @@ import {
   inputAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
+import { actionTypes } from "../../context/reducer";
+import { useStateValue } from "../../context/StateProvider";
 
 const SignUp = () => {
+  const [{ user }, dispatch] = useStateValue();
   const router = useRouter();
   const [name, setName] = useState("");
   const [branch, setBranch] = useState("");
@@ -110,6 +113,16 @@ const SignUp = () => {
             phno,
             password,
           });
+          dispatch({
+            type: actionTypes.SET_USER,
+            user: {
+              id: data.id,
+              name,
+              branch,
+              phno,
+              password,
+            },
+          });
           localStorage.setItem("forumUserID", data.id);
           setVerifyingOTP(false);
           router.push("/");
@@ -122,12 +135,16 @@ const SignUp = () => {
   };
 
   useEffect(() => {
+    // if (user) {
+    //   router.replace("/forum");
+    // } else {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("verifier", {
       size: "invisible",
     });
     recaptchaVerifier
       .render()
       .then((widgetId) => (window.recaptchaWidgetId = widgetId));
+    // }
   }, []);
 
   return (
