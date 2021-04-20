@@ -35,9 +35,10 @@ const Navbar = () => {
     window.onresize = () => {
       if (window.innerWidth > 1020) {
         setShowMe(true);
-      } else {
-        setShowMe(false);
       }
+      //  else {
+      //   setShowMe(false);
+      // }
     };
   }, []);
 

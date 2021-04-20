@@ -47,7 +47,7 @@ export const pageFooterAnimationVariant = {
 export const pageNavbarAnimationVariant = {
   hidden: {
     opacity: 0,
-    y: "-100vh",
+    y: "-100px",
   },
   visible: {
     y: "0vh",
@@ -57,7 +57,7 @@ export const pageNavbarAnimationVariant = {
     },
   },
   exit: {
-    y: "-100vh",
+    y: "-100px",
     opacity: 0,
     transition: {
       ease: "easeInOut",
