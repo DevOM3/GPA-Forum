@@ -84,7 +84,18 @@ const Navbar = () => {
           </li>
           <li className={navbarStyles.li}>
             <Link href={`/blog`}>
-              <a className={navbarStyles.a}>Blogs</a>
+              <a
+                className={navbarStyles.a}
+                style={{
+                  borderTop:
+                    router.pathname === "/blog/[blogID]" && "2px solid",
+                  borderBottom:
+                    router.pathname === "/blog/[blogID]" && "2px solid",
+                  background: router.pathname === "/blog/[blogID]" && "#252525",
+                }}
+              >
+                Blogs
+              </a>
             </Link>
           </li>
           <li className={navbarStyles.li}>

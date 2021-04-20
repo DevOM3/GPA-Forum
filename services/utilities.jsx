@@ -67,6 +67,7 @@ export const pageNavbarAnimationVariant = {
   },
 };
 
+// input animations
 export const inputAnimationVariant = {
   hidden: {
     opacity: 0,
@@ -85,6 +86,7 @@ export const inputAnimationVariant = {
   },
 };
 
+// home animations
 export const homeTopAnimationVariant = {
   hidden: {
     opacity: 0,
@@ -147,6 +149,7 @@ export const counterBottomAnimationVariant = {
   },
 };
 
+// mobile navbar animations
 export const mobileNavbarAnimationVariant = {
   hidden: {
     opacity: 0,
@@ -159,6 +162,45 @@ export const mobileNavbarAnimationVariant = {
     transition: {
       ease: "easeInOut",
       delay: 0,
+      duration: 0.7,
+    },
+  },
+};
+
+// fade animations
+export const fadeAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    y: 11,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: {
+    opacity: 0,
+    y: 11,
+    transition: {
+      ease: "easeInOut",
+      duration: 0.7,
+    },
+  },
+};
+// mid-expand animations
+export const fadeWidthAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    y: 11,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+  exit: {
+    opacity: 0,
+    y: 11,
+    transition: {
+      ease: "easeInOut",
       duration: 0.7,
     },
   },
