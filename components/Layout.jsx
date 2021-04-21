@@ -57,7 +57,7 @@ const Layout = ({ children }) => {
         router.pathname === "/")
     ) {
       setNoUser(false);
-      router.replace("/query");
+      router.replace("/queries");
     }
   }, [user, router.pathname]);
 
