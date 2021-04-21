@@ -48,7 +48,7 @@ const Login = () => {
             },
           });
           localStorage.setItem("forumUserID", data.docs[0].id);
-          router.push("/");
+          router.push("/query");
         } else {
           alert("Incorrect Password");
         }

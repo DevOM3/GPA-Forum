@@ -1,16 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-.blogPage {
-  min-height: 100vh;
-  background: #f2f2f2;
-  width: 100%;
-  padding-bottom: 3vh;
-}
-
 .blog {
-  padding-top: 3vh;
+  padding-top: 21px;
   background: #fff;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -50,7 +42,7 @@
   font-weight: 700;
 }
 
-.blogtext {
+.blogText {
   width: 90%;
   max-width: 800px;
   margin-left: auto;
@@ -58,6 +50,10 @@
   color: #444444;
   font-family: "Poppins", sans-serif;
   text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .buttons {
@@ -69,14 +65,11 @@
 }
 
 .button {
-  margin-left: auto;
-  margin-right: auto;
   font-size: 12px;
   font-family: "open sans", Arial, sans-serif;
-  display: flex;
-  align-items: center;
+  text-align: center;
   background: white;
-  border: 1px solid lightgrey;
+  border: 1px solid lightgrey !important;
   color: #707885;
   border-radius: 21px;
   outline: none;
@@ -84,34 +77,6 @@
   padding-left: 11px;
   padding-right: 11px;
   cursor: pointer;
-}
-
-.commentInputDiv {
-  margin: 21px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 98%;
-  max-width: 800px;
-  display: flex;
-  align-items: center;
-  border-radius: 51px !important;
-  border: 1px solid lightgrey;
-  padding-left: 7px;
-  height: auto;
-}
-
-.commentInput {
-  min-width: 14px !important;
-  border: none;
-  outline: none;
-  flex: 1;
-  background: transparent;
-  padding: 7px;
-  padding-left: 11px;
-  padding-right: 11px;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  transition: 171ms;
 }
 
 @media screen and (max-width: 775px) {

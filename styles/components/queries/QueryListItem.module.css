@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+.queryListItem {
+  position: relative;
+  border: 1px solid lightgrey;
+  border-radius: 11px;
+  background: white;
+  width: 100%;
+  padding-top: 11px;
+  padding-bottom: 11px;
+  margin-bottom: 11px;
+  text-decoration: none;
+}
+
+.queryListItem p {
+  margin: 0;
+}
+
+.date {
+  color: white;
+  background: #ee5833;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  width: fit-content;
+  border-top-right-radius: 7px;
+  border-bottom-right-radius: 7px;
+  font-size: 12px;
+  font-family: "Nunito", sans-serif;
+}
+
+.query {
+  padding-top: 7px;
+  margin-bottom: 7px !important;
+  padding-left: 11px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.queryType {
+  color: grey;
+  padding-left: 11px;
+  font-size: 14px;
+}
+
+.by {
+  /* padding-top: 4px; */
+  color: #555555;
+  padding-left: 11px;
+  font-size: 14px;
+}
+
+.menu {
+  position: absolute;
+  top: -11px;
+  left: calc(100% - 15px);
+  background: white;
+  border-radius: 50%;
+  border: 1px solid lightgrey;
+}
+
+@media only screen and (max-width: 1015px) {
+  .menu {
+    top: 7px;
+    left: calc(100% - 30px);
+    border: none;
+  }
+}

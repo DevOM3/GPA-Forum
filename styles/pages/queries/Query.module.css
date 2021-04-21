@@ -1,0 +1,56 @@
+.query {
+  min-height: 100vh;
+  background: whitesmoke;
+  padding-bottom: 21px;
+}
+
+.fab {
+  position: fixed !important;
+  top: calc(100vh - 100px);
+  left: calc(100vw - 80px);
+  margin-bottom: 21px !important;
+  height: fit-content;
+  width: fit-content;
+  background: tomato;
+  border: 1px solid lightgray;
+  border-radius: 50%;
+}
+
+.option {
+  width: 100%;
+  position: sticky;
+  top: 75px;
+  background: whitesmoke;
+  margin-bottom: 11px;
+  color: grey;
+  padding-top: 21px;
+  display: flex;
+}
+
+.optionButton {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 4px !important;
+  border: 1px solid lightgray !important;
+  width: 100% !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+  background: white !important;
+  font-size: 15px !important;
+}
+
+.optionModal {
+  margin-right: 11px;
+  margin-left: 11px;
+}
+
+.queries {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 4px;
+  padding-right: 4px;
+}

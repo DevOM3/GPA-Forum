@@ -125,7 +125,7 @@ const SignUp = () => {
           });
           localStorage.setItem("forumUserID", data.id);
           setVerifyingOTP(false);
-          router.push("/");
+          router.push("/query");
         }
       })
       .catch((error) => {
@@ -136,7 +136,7 @@ const SignUp = () => {
 
   useEffect(() => {
     // if (user) {
-    //   router.replace("/forum");
+    //   router.replace("/query");
     // } else {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("verifier", {
       size: "invisible",

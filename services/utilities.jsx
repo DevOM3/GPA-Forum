@@ -205,3 +205,42 @@ export const fadeWidthAnimationVariant = {
     },
   },
 };
+
+// fab animations
+export const fabAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    top: "100vh",
+  },
+  visible: {
+    opacity: 1,
+    top: "calc(100vh - 100px)",
+  },
+  exit: {
+    opacity: 0,
+    top: "100vh",
+    transition: {
+      ease: "easeInOut",
+      duration: 0.7,
+    },
+  },
+};
+
+export const sizeAnimationVariant = {
+  hidden: {
+    opacity: 0,
+    scaleX: 0,
+  },
+  visible: {
+    opacity: 1,
+    scaleX: 1,
+  },
+  exit: {
+    opacity: 0,
+    scaleX: 0,
+    transition: {
+      ease: "easeInOut",
+      duration: 0.7,
+    },
+  },
+};

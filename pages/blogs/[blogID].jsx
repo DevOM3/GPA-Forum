@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import blogsStyles from "../../styles/pages/blog/Blog.module.css";
+import blogsStyles from "../../styles/pages/blogs/Blog.module.css";
 import ShareIcon from "@material-ui/icons/Share";
 import { Divider, IconButton } from "@material-ui/core";
 import Link from "next/link";
@@ -25,9 +25,7 @@ const Blog = () => {
   };
 
   useEffect(() => {
-    document.getElementById("comment-input").style.height = "5px";
-    document.getElementById("comment-input").style.height =
-      document.getElementById("comment-input").scrollHeight + "px";
+    auto_grow(document.getElementById("comment-input"));
   }, []);
 
   return (

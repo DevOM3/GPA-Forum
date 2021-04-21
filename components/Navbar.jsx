@@ -57,7 +57,7 @@ const Navbar = () => {
       animate="visible"
       exit="exit"
     >
-      <Link href={user ? `/forum` : `/`}>
+      <Link href={user ? `/queries` : `/`}>
         <a className={navbarStyles.logo}>GPAForum</a>
       </Link>
       <motion.div
@@ -69,30 +69,27 @@ const Navbar = () => {
       >
         <ul className={navbarStyles.ul}>
           <li className={navbarStyles.li}>
-            <Link href={`/forum`}>
+            <Link href={`/queries`}>
               <a
-                className={navbarStyles.a}
-                style={{
-                  borderTop: router.pathname === "/forum" && "2px solid",
-                  borderBottom: router.pathname === "/forum" && "2px solid",
-                  background: router.pathname === "/forum" && "#252525",
-                }}
+                className={
+                  router.pathname === "/queries"
+                    ? navbarStyles.aActive
+                    : navbarStyles.a
+                }
               >
-                Forum
+                Queries
               </a>
             </Link>
           </li>
           <li className={navbarStyles.li}>
-            <Link href={`/blog`}>
+            <Link href={`/blogs`}>
               <a
-                className={navbarStyles.a}
-                style={{
-                  borderTop:
-                    router.pathname === "/blog/[blogID]" && "2px solid",
-                  borderBottom:
-                    router.pathname === "/blog/[blogID]" && "2px solid",
-                  background: router.pathname === "/blog/[blogID]" && "#252525",
-                }}
+                className={
+                  router.pathname === "/blogs" ||
+                  router.pathname === "/blogs/[blogID]"
+                    ? navbarStyles.aActive
+                    : navbarStyles.a
+                }
               >
                 Blogs
               </a>

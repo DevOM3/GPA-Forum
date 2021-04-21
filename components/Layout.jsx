@@ -24,11 +24,11 @@ const Layout = ({ children }) => {
             dispatch({
               type: actionTypes.SET_USER,
               user: {
-                id: doc.id,
-                name: doc.data().name,
-                branch: doc.data().branch,
-                phno: doc.data().phno,
-                password: doc.data().password,
+                id: doc?.id,
+                name: doc.data()?.name,
+                branch: doc.data()?.branch,
+                phno: doc.data()?.phno,
+                password: doc.data()?.password,
               },
             });
           });
@@ -57,7 +57,7 @@ const Layout = ({ children }) => {
         router.pathname === "/")
     ) {
       setNoUser(false);
-      router.replace("/forum");
+      router.replace("/query");
     }
   }, [user, router.pathname]);
 
