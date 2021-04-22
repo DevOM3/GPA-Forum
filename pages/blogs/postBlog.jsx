@@ -14,7 +14,6 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SubtitlesIcon from '@material-ui/icons/Subtitles';
 import SendIcon from '@material-ui/icons/Send';
-import postBlogs from '../../styles/pages/Queries/postBlog.module.css'
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
