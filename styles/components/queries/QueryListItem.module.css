@@ -57,18 +57,9 @@
 }
 
 .menu {
-  position: absolute;
-  top: -11px;
-  left: calc(100% - 15px);
-  background: white;
-  border-radius: 50%;
-  border: 1px solid lightgrey;
-}
-
-@media only screen and (max-width: 1015px) {
-  .menu {
-    top: 7px;
-    left: calc(100% - 30px);
-    border: none;
-  }
+  position: absolute !important;
+  top: 11px !important;
+  left: calc(100% - 30px) !important;
+  background: white !important;
+  border-radius: 50% !important;
 }

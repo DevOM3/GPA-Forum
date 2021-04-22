@@ -12,19 +12,21 @@
   height: fit-content;
   width: fit-content;
   background: tomato;
-  border: 1px solid lightgray;
+  border: 1px solid grey;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .option {
   width: 100%;
   position: sticky;
-  top: 75px;
   background: whitesmoke;
   margin-bottom: 11px;
   color: grey;
   padding-top: 21px;
   display: flex;
+  z-index: 3;
+  top: 100px;
 }
 
 .optionButton {
@@ -53,4 +55,10 @@
   margin-right: auto;
   padding-left: 4px;
   padding-right: 4px;
+}
+
+@media only screen and (max-width: 1020px) {
+  .option {
+    top: 75px;
+  }
 }

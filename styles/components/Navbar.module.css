@@ -14,7 +14,7 @@
   position: sticky;
   top: 0;
   transition: 571ms linear !important;
-  z-index: 3;
+  z-index: 7;
 }
 
 .logo {

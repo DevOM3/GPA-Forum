@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import { useStateValue } from "../../context/StateProvider";
 import { useRouter } from "next/router";
 import Slide from "@material-ui/core/Slide";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -56,11 +57,6 @@ const PostQuery = ({ open, handleClickOpen, handleClose }) => {
     }
   };
 
-  const auto_grow = (element) => {
-    element.style.height = "44px";
-    element.style.height = element.scrollHeight + "px";
-  };
-
   useEffect(() => {
     user && setQueryType(user?.branch?.title);
   }, [user]);
@@ -80,13 +76,12 @@ const PostQuery = ({ open, handleClickOpen, handleClose }) => {
             fontSize="small"
             style={{ marginLeft: 4, color: "grey" }}
           />
-          <textarea
+          <TextareaAutosize
             placeholder={`Enter your Query`}
             autoFocus
             id="query-input"
             type="text"
             className={queryFormStyles.queryInput}
-            onInput={() => auto_grow(document.getElementById("query-input"))}
             onChange={(e) => setQuery(e.target.value)}
             value={query}
             maxLength={271}

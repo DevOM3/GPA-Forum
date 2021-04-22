@@ -1,32 +1,46 @@
 import React, { useState } from "react";
 import blogsStyles from "../../styles/pages/blogs/Blog.module.css";
 import ShareIcon from "@material-ui/icons/Share";
-import { Divider, IconButton } from "@material-ui/core";
+import { Divider, IconButton, CircularProgress } from "@material-ui/core";
 import Link from "next/link";
 import {
   FavoriteBorderRounded,
   ModeCommentOutlined,
   SendRounded,
 } from "@material-ui/icons";
-import { useEffect } from "react";
+import { db, firebase } from "../../services/firebase";
 import { motion } from "framer-motion";
 import {
   fadeAnimationVariant,
   fadeWidthAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
+import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { useStateValue } from "../../context/StateProvider";
 
-const Blog = () => {
+const Blog = ({ id }) => {
+  const [{ user }, dispatch] = useStateValue();
   const [comment, setComment] = useState("");
+  const [commenting, setCommenting] = useState(false);
 
-  const auto_grow = (element) => {
-    element.style.height = "5px";
-    element.style.height = element.scrollHeight + "px";
+  const addComment = (e) => {
+    e.preventDefault();
+
+    if (comment.trim().length < 4) {
+      alert("Your comment must be at least 3 letters long.");
+    } else {
+      setCommenting(true);
+      db.collection("Blogs")
+        .doc(id)
+        .collection("Comments")
+        .add({
+          by: user?.id,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          comment,
+        })
+        .then(() => setCommenting(false));
+    }
   };
-
-  useEffect(() => {
-    auto_grow(document.getElementById("comment-input"));
-  }, []);
 
   return (
     <motion.div
@@ -93,7 +107,7 @@ const Blog = () => {
           }}
         />
         <motion.p
-          className={blogsStyles.blogtext}
+          className={blogsStyles.blogText}
           variants={fadeAnimationVariant}
           initial="hidden"
           animate="visible"
@@ -161,18 +175,23 @@ const Blog = () => {
             fontSize="small"
             style={{ marginLeft: 4, color: "grey" }}
           />
-          <textarea
+          <TextareaAutosize
             id="comment-input"
             type="text"
             className={blogsStyles.commentInput}
-            onInput={() => auto_grow(document.getElementById("comment-input"))}
             onChange={(e) => setComment(e.target.value)}
             value={comment}
             maxLength={71}
           />
-          <IconButton>
-            <SendRounded fontSize="small" style={{ marginRight: 4 }} />
-          </IconButton>
+          {commenting ? (
+            <div className="progress-div">
+              <CircularProgress size={33} style={{ color: "black" }} />
+            </div>
+          ) : (
+            <IconButton onClick={addComment}>
+              <SendRounded fontSize="small" style={{ marginRight: 4 }} />
+            </IconButton>
+          )}
         </div>
         <Divider />
       </div>

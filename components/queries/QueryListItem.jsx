@@ -10,11 +10,9 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import {
-  fadeAnimationVariant,
-  fadeWidthAnimationVariant,
-} from "../../services/utilities";
+import { fadeWidthAnimationVariant } from "../../services/utilities";
 import { motion } from "framer-motion";
+import { ReportOutlined } from "@material-ui/icons";
 
 const options = ["Edit", "Delete"];
 
@@ -112,50 +110,61 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
         </a>
       </Link>
 
-      <div className={queryListItemStyles.menu}>
-        <IconButton
-          aria-label="more"
-          aria-controls="long-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-          style={{ padding: 4 }}
-        >
-          <MoreVertIcon fontSize="small" />
-        </IconButton>
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: "20ch",
-            },
-          }}
-        >
-          {options.map((option) => (
-            <MenuItem
-              key={option}
-              selected={option === "Pyxis"}
-              onClick={handleClose}
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              {option}
-              {option === "Edit" ? (
-                <EditRoundedIcon fontSize="small" style={{ color: "grey" }} />
-              ) : (
-                <DeleteRoundedIcon fontSize="small" style={{ color: "grey" }} />
-              )}
-            </MenuItem>
-          ))}
-        </Menu>
-      </div>
+      {user?.id === by ? (
+        <div className={queryListItemStyles.menu}>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            style={{ padding: 4 }}
+          >
+            <MoreVertIcon fontSize="small" />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: "20ch",
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option}
+                selected={option === "Pyxis"}
+                onClick={handleClose}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {option}
+                {option === "Edit" ? (
+                  <EditRoundedIcon fontSize="small" style={{ color: "grey" }} />
+                ) : (
+                  <DeleteRoundedIcon
+                    fontSize="small"
+                    style={{ color: "grey" }}
+                  />
+                )}
+              </MenuItem>
+            ))}
+          </Menu>
+        </div>
+      ) : (
+        <div className={queryListItemStyles.menu}>
+          <IconButton style={{ padding: 4 }}>
+            <ReportOutlined fontSize="small" />
+          </IconButton>
+        </div>
+      )}
     </motion.div>
   );
 };
