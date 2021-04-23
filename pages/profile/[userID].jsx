@@ -1,7 +1,6 @@
 import styles from "../../styles/pages/profile/ProfileIndex.module.css";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
-import { useStateValue } from "../../context/StateProvider";
 import { useState } from "react";
 import ProfileQuery from "../../components/profile/ProfileQuery";
 import ProfileBlog from "../../components/profile/ProfileBlog";
@@ -9,8 +8,14 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import { ShareRounded } from "@material-ui/icons";
+import { motion } from "framer-motion";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import {
+  fadeWidthAnimationVariant,
+  pageAnimationVariant,
+} from "../../services/utilities";
+import { CircularProgress } from "@material-ui/core";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -61,8 +66,14 @@ const UserProfile = () => {
     }
   }, [router.query?.userID]);
 
-  return (
-    <div className={styles.container}>
+  return userData?.name ? (
+    <motion.div
+      className={styles.container}
+      variants={pageAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       <Snackbar
         open={openBlogCopy}
         autoHideDuration={6000}
@@ -76,28 +87,101 @@ const UserProfile = () => {
         <ShareRounded />
       </IconButton>
       <div className={styles.information}>
-        <div className={styles.name}>{userData?.name}</div>
-        <p className={styles.branch}>{userData?.branch?.title}</p>
-        {/* <p className={styles.contact}>{userData?.phno}</p> */}
+        <motion.div
+          className={styles.name}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: 1.1,
+          }}
+        >
+          {userData?.name}
+        </motion.div>
+        <motion.p
+          className={styles.branch}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: 1.2,
+          }}
+        >
+          {userData?.branch?.title}
+        </motion.p>
+        <motion.p
+          className={styles.contact}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: 1.3,
+          }}
+        >
+          {userData?.phno
+            ?.split("")
+            .map((no, index) => (index > 1 && index < 7 ? "*" : no))
+            .toString()
+            .replaceAll(",", "")}
+        </motion.p>
       </div>
 
-      <div className={styles.titles}>
+      <motion.div
+        className={styles.titles}
+        variants={fadeWidthAnimationVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{
+          duration: 0.5,
+          delay: 1.3,
+        }}
+      >
         <h2
           onClick={() => setPage("Queries")}
           className={`${styles.title} ${styles.border}`}
+          style={{ backgroundColor: page === "Queries" && "#222d32" }}
         >
           Queries
         </h2>
-        <h2 onClick={() => setPage("Blogs")} className={styles.title}>
+        <h2
+          onClick={() => setPage("Blogs")}
+          className={styles.title}
+          style={{ backgroundColor: page === "Blogs" && "#222d32" }}
+        >
           Blogs
         </h2>
-      </div>
+      </motion.div>
 
-      <div className={styles.path}>
+      <motion.div
+        className={styles.path}
+        initial={{
+          opacity: 0,
+          x: "-50vw",
+        }}
+        animate={{
+          opacity: 1,
+          x: 0,
+        }}
+        exit={{
+          opacity: 0,
+          x: "-50vw",
+        }}
+        transition={{
+          duration: 0.5,
+          delay: 1.5,
+        }}
+      >
         <AccountCircleRoundedIcon />
         <p className={styles.main_path}>{userData?.name}</p>/
         <p className={styles.sub_path}>{page}</p>
-      </div>
+      </motion.div>
 
       <div className={styles.content}>
         {page === "Queries" ? (
@@ -109,6 +193,18 @@ const UserProfile = () => {
           <ProfileBlog userID={router.query.userID} />
         )}
       </div>
+    </motion.div>
+  ) : (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CircularProgress style={{ color: "black" }} />
     </div>
   );
 };

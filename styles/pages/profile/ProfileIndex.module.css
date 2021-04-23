@@ -20,7 +20,7 @@
   padding: 7px !important;
   margin: 10px !important;
   color: #222d32 !important;
-  transition: 251ms !important;
+  transition: 444ms !important;
 }
 
 .icon:hover {
@@ -60,7 +60,7 @@
   align-items: center;
   position: sticky;
   border-top: 2px solid white;
-  top: 99px;
+  top: 95px;
   z-index: 7;
 }
 
@@ -74,6 +74,7 @@
   margin: 0;
   padding: 10px;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .border {
@@ -87,7 +88,7 @@
   padding-left: 10px;
   position: sticky;
   background: white;
-  top: 147px;
+  top: 143px;
   left: 0;
   z-index: 7;
   margin-bottom: 0;

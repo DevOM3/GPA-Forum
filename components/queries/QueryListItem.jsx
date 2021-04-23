@@ -45,8 +45,8 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
           .get()
           .then((data) =>
             setByData({
-              id: data.id,
-              name: data.data().name,
+              id: data?.id,
+              name: data.data()?.name,
             })
           );
       }
