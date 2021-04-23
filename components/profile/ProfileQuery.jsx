@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import queryStyles from "../../styles/pages/queries/Query.module.css";
 import IconButton from "@material-ui/core/IconButton";
-import EditIcon from "@material-ui/icons/Edit";
-import QueryForm from "../../components/queries/QueryForm";
 import { motion } from "framer-motion";
 import {
-  fabAnimationVariant,
   pageAnimationVariant,
   sizeAnimationVariant,
 } from "../../services/utilities";
@@ -25,16 +22,15 @@ const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const Queries = () => {
+const ProfileQuery = ({ userID, branch }) => {
   const [{ user }, dispatch] = useStateValue();
-  const [open, setDialogOpen] = useState(false);
   const [optionOpen, setOptionOpen] = useState(false);
   const [filter, setFilter] = useState("None");
   const [sort, setSort] = useState("Date DESC");
   const [queries, setQueries] = useState([]);
 
   const filterOptions = [
-    user?.branch?.title,
+    branch,
     "Exam Cell",
     "Library",
     "Student Section",
@@ -42,22 +38,9 @@ const Queries = () => {
   ];
   const sortOptions = ["Date ASC", "Date DESC"];
 
-  const handleClickOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
-
   const fetchQueries = () => {
     db.collection("Queries")
-      .where("queryType", "in", [
-        user?.branch?.title,
-        "Student Section",
-        "Library",
-        "Exam Cell",
-      ])
+      .where("by", "==", userID)
       .get()
       .then((snapshot) =>
         setQueries(
@@ -137,26 +120,10 @@ const Queries = () => {
           </div>
         </div>
       </Dialog>
-      <QueryForm
-        open={open}
-        handleClose={handleClose}
-        fetchQueries={fetchQueries}
-      />
-      <motion.div
-        className="fab"
-        variants={fabAnimationVariant}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-      >
-        <IconButton onClick={handleClickOpen}>
-          <EditIcon style={{ color: "black" }} />
-        </IconButton>
-      </motion.div>
 
       <div className={queryStyles.queries}>
         <motion.div
-          className={queryStyles.option}
+          className={queryStyles.optionProfile}
           variants={sizeAnimationVariant}
           initial="hidden"
           animate="visible"
@@ -222,4 +189,4 @@ const Queries = () => {
   );
 };
 
-export default Queries;
+export default ProfileQuery;

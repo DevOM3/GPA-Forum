@@ -1,27 +1,24 @@
-import React, { useState, Component, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import queryFormStyles from "../../styles/components/queries/QueryForm.module.css";
 import { SchoolOutlined } from "@material-ui/icons";
-import { Autocomplete } from "@material-ui/lab";
 import CreateIcon from "@material-ui/icons/Create";
-import { auth, db, firebase } from "../../services/firebase";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import { db, firebase } from "../../services/firebase";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from "@material-ui/core/Button";
 import { useStateValue } from "../../context/StateProvider";
 import { useRouter } from "next/router";
 import Slide from "@material-ui/core/Slide";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const PostQuery = ({ open, handleClickOpen, handleClose }) => {
+const PostQuery = ({ open, fetchQueries, handleClose }) => {
   const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
   const [queryType, setQueryType] = useState("");
@@ -50,9 +47,10 @@ const PostQuery = ({ open, handleClickOpen, handleClose }) => {
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {
+          fetchQueries();
+          setQuery("");
           setPosting(false);
           handleClose();
-          router.reload();
         });
     }
   };
@@ -132,9 +130,15 @@ const PostQuery = ({ open, handleClickOpen, handleClose }) => {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={StoreQuery} color="primary">
-          Post
-        </Button>
+        {posting ? (
+          <div className="progress-div">
+            <CircularProgress size={24} style={{ color: "black" }} />
+          </div>
+        ) : (
+          <Button onClick={StoreQuery} color="primary">
+            Post
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

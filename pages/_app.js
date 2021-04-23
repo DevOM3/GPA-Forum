@@ -7,11 +7,11 @@ import { AnimatePresence } from "framer-motion";
 function MyApp({ Component, pageProps, router }) {
   return (
     <StateProvider reducer={reducer} initialState={initialState}>
-      <AnimatePresence exitBeforeEnter>
-        <Layout key={router.route}>
-          <Component {...pageProps} />
-        </Layout>
-      </AnimatePresence>
+      <Layout>
+        <AnimatePresence exitBeforeEnter>
+          <Component {...pageProps} key={router.route} />
+        </AnimatePresence>
+      </Layout>
     </StateProvider>
   );
 }

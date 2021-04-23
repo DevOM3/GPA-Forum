@@ -114,6 +114,16 @@
   transition: 171ms;
 }
 
+.comments {
+  padding-top: 21px;
+  padding-bottom: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
+  max-width: 800px;
+  background: white;
+}
+
 @media screen and (max-width: 775px) {
   .blog {
     width: 100%;

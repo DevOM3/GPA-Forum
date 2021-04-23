@@ -96,8 +96,29 @@ const Navbar = () => {
             </Link>
           </li>
           <li className={navbarStyles.li}>
+            <Link href={`/notices`}>
+              <a
+                className={
+                  router.pathname === "/notices"
+                    ? navbarStyles.aActive
+                    : navbarStyles.a
+                }
+              >
+                Notices
+              </a>
+            </Link>
+          </li>
+          <li className={navbarStyles.li}>
             <Link href={`/profile`}>
-              <a className={navbarStyles.a}>Profile</a>
+              <a
+                className={
+                  router.pathname === "/profile"
+                    ? navbarStyles.aActive
+                    : navbarStyles.a
+                }
+              >
+                Profile
+              </a>
             </Link>
           </li>
         </ul>

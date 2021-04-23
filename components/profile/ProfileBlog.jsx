@@ -1,16 +1,11 @@
 import React, { useState } from "react";
+import { useStateValue } from "../../context/StateProvider";
+import { db } from "../../services/firebase";
 import blogPageStyles from "../../styles/pages/blogs/BlogPage.module.css";
-import { Divider, IconButton } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import BlogPostListItem from "../../components/blogs/BlogPostListItem";
 import { motion } from "framer-motion";
-import {
-  fabAnimationVariant,
-  pageAnimationVariant,
-} from "../../services/utilities";
-import { useStateValue } from "../../context/StateProvider";
-import BlogForm from "../../components/blogs/BlogForm";
-import EditIcon from "@material-ui/icons/Edit";
-import { db } from "../../services/firebase";
+import { pageAnimationVariant } from "../../services/utilities";
 import { useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -19,9 +14,8 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const BlogPage = () => {
+const ProfileBlog = ({ userID }) => {
   const [{ user }, dispatch] = useStateValue();
-  const [open, setDialogOpen] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [openBlogCopy, setOpenBlogCopy] = useState(false);
 
@@ -37,17 +31,9 @@ const BlogPage = () => {
     setOpenBlogCopy(false);
   };
 
-  const handleClickOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
-
   const fetchBlogs = () => {
     db.collection("Blogs")
-      .orderBy("timestamp", "desc")
+      .where("by", "==", userID)
       .get()
       .then((snapshot) =>
         setBlogs(
@@ -86,18 +72,6 @@ const BlogPage = () => {
           Blog URL copied!
         </Alert>
       </Snackbar>
-      <BlogForm open={open} fetchBlogs={fetchBlogs} handleClose={handleClose} />
-      <motion.div
-        className="fab"
-        variants={fabAnimationVariant}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-      >
-        <IconButton onClick={handleClickOpen}>
-          <EditIcon style={{ color: "black" }} />
-        </IconButton>
-      </motion.div>
       {blogs.map((blog, index) => (
         <>
           <BlogPostListItem
@@ -118,4 +92,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default ProfileBlog;

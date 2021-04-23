@@ -1,0 +1,51 @@
+.inputDiv {
+  margin: 21px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 98%;
+  max-width: 800px;
+  display: flex;
+  align-items: center;
+  border-radius: 51px !important;
+  border: 1px solid lightgrey;
+  padding-left: 7px;
+  height: auto;
+}
+
+.input {
+  min-width: 14px !important;
+  border: none;
+  outline: none;
+  flex: 1;
+  background: transparent;
+  padding: 11px;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  transition: 171ms;
+  height: 44px;
+}
+
+.imagePreview {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 60vh;
+  width: 80%;
+  position: relative;
+  border: 1px solid lightgrey;
+  border-radius: 11px;
+}
+
+.imagePreview img {
+  max-height: 60vh;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.removeImageButton {
+  background: white !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+}

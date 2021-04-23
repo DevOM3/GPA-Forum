@@ -4,20 +4,21 @@
   padding-bottom: 21px;
 }
 
-.fab {
-  position: fixed !important;
-  top: calc(100vh - 100px);
-  left: calc(100vw - 80px);
-  margin-bottom: 21px !important;
-  height: fit-content;
-  width: fit-content;
-  background: tomato;
-  border: 1px solid grey;
-  border-radius: 50%;
-  z-index: 1;
+.option {
+  width: 100%;
+  position: sticky;
+  background: whitesmoke;
+  margin-bottom: 11px;
+  color: grey;
+  padding-top: 21px;
+  padding-bottom: 7px;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  top: 100px;
 }
 
-.option {
+.optionProfile {
   width: 100%;
   position: sticky;
   background: whitesmoke;
@@ -26,7 +27,7 @@
   padding-top: 21px;
   display: flex;
   z-index: 3;
-  top: 100px;
+  top: 207px;
 }
 
 .optionButton {
@@ -40,6 +41,7 @@
   padding-bottom: 7px !important;
   background: white !important;
   font-size: 15px !important;
+  margin-bottom: 7px !important;
 }
 
 .optionModal {
@@ -60,5 +62,8 @@
 @media only screen and (max-width: 1020px) {
   .option {
     top: 75px;
+  }
+  .optionProfile {
+    top: 180px;
   }
 }

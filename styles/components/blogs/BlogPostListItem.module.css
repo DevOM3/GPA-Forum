@@ -15,6 +15,7 @@
   width: 80%;
   object-fit: contain;
   margin: 3vh auto;
+  /* transition: 251ms; */
 }
 
 .topText {

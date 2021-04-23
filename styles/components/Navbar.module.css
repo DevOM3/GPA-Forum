@@ -3,7 +3,8 @@
 .nav {
   display: flex;
   justify-content: space-between;
-  background: rgb(36, 29, 29);
+  /* background: rgb(36, 29, 29); */
+  background: #1a2226;
   color: #fff;
   padding: 0px 20px;
   font-family: "Poppins", sans-serif;
@@ -14,7 +15,7 @@
   position: sticky;
   top: 0;
   transition: 571ms linear !important;
-  z-index: 7;
+  z-index: 11;
 }
 
 .logo {

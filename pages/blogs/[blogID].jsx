@@ -4,7 +4,8 @@ import ShareIcon from "@material-ui/icons/Share";
 import { Divider, IconButton, CircularProgress } from "@material-ui/core";
 import Link from "next/link";
 import {
-  FavoriteBorderRounded,
+  FavoriteBorderOutlined,
+  FavoriteRounded,
   ModeCommentOutlined,
   SendRounded,
 } from "@material-ui/icons";
@@ -17,11 +18,39 @@ import {
 } from "../../services/utilities";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import { useStateValue } from "../../context/StateProvider";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import ReactLinkify from "react-linkify";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import Comment from "../../components/blogs/Comment";
 
-const Blog = ({ id }) => {
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const Blog = () => {
+  const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
   const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
   const [commenting, setCommenting] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+  const [blogData, setBlogData] = useState({});
+  const [userData, setUserData] = useState({});
+  const [openBlogCopy, setOpenBlogCopy] = React.useState(false);
+
+  const handleClickBlogCopy = () => {
+    setOpenBlogCopy(true);
+  };
+
+  const handleCloseBlogCopy = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpenBlogCopy(false);
+  };
 
   const addComment = (e) => {
     e.preventDefault();
@@ -31,16 +60,82 @@ const Blog = ({ id }) => {
     } else {
       setCommenting(true);
       db.collection("Blogs")
-        .doc(id)
+        .doc(router.query.blogID)
         .collection("Comments")
         .add({
+          comment,
           by: user?.id,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          comment,
         })
-        .then(() => setCommenting(false));
+        .then(() => {
+          setCommenting(false);
+          setComment("");
+        });
     }
   };
+
+  const likePost = () => {
+    db.collection("Blogs")
+      .doc(router.query.blogID)
+      .update({
+        likes: blogData?.likes?.includes(user?.id)
+          ? firebase.firestore.FieldValue.arrayRemove(user?.id)
+          : firebase.firestore.FieldValue.arrayUnion(user?.id),
+      });
+  };
+
+  const sharePost = () => {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = window.location;
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+    handleClickBlogCopy();
+  };
+
+  const loadComments = () => {
+    db.collection("Blogs")
+      .doc(router.query.blogID)
+      .collection("Comments")
+      .onSnapshot((snapshot) =>
+        setComments(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            comment: doc.data().comment,
+            by: doc.data().by,
+            timestamp: doc.data().timestamp,
+          }))
+        )
+      );
+  };
+
+  useEffect(() => {
+    db.collection("Blogs")
+      .doc(router.query.blogID)
+      .onSnapshot((snapshot) => {
+        setBlogData({
+          title: snapshot.data().title,
+          text: snapshot.data().text,
+          by: snapshot.data().by,
+          timestamp: snapshot.data().timestamp,
+          likes: snapshot.data().likes,
+          views: snapshot.data().views,
+          image: snapshot.data().image,
+        });
+        db.collection("Users")
+          .doc(snapshot.data().by)
+          .get()
+          .then((data) =>
+            setUserData({
+              id: data.id,
+              name: data.name,
+            })
+          );
+      });
+    loadComments();
+  }, []);
 
   return (
     <motion.div
@@ -50,6 +145,15 @@ const Blog = ({ id }) => {
       animate="visible"
       exit="exit"
     >
+      <Snackbar
+        open={openBlogCopy}
+        autoHideDuration={6000}
+        onClose={handleCloseBlogCopy}
+      >
+        <Alert onClose={handleCloseBlogCopy} severity="success">
+          Blog URL copied!
+        </Alert>
+      </Snackbar>
       <div className={blogsStyles.blog}>
         <motion.p
           className={blogsStyles.topText}
@@ -62,7 +166,9 @@ const Blog = ({ id }) => {
             delay: 1.5,
           }}
         >
-          On: April 18, 2018 / Likes: 4 / Comments: 1 / Views: 212
+          On: {blogData?.timestamp?.toDate().toLocaleString()} / Likes:{" "}
+          {blogData?.likes?.length} / Comments: {comments?.length} / Views:{" "}
+          {blogData?.views?.length}
         </motion.p>
         <motion.p
           className={blogsStyles.title}
@@ -75,10 +181,9 @@ const Blog = ({ id }) => {
             delay: 1.7,
           }}
         >
-          Highlighting what’s important about questions & Answers on Discy
-          Community!
+          {blogData?.title}
         </motion.p>
-        <Link href={`/profile/`}>
+        <Link href={`/profile/${userData?.id}`}>
           <motion.a
             className={blogsStyles.author}
             variants={fadeAnimationVariant}
@@ -90,7 +195,7 @@ const Blog = ({ id }) => {
               delay: 1.9,
             }}
           >
-            Agdam Bagdam
+            {userData?.name}
           </motion.a>
         </Link>
         <motion.img
@@ -106,49 +211,23 @@ const Blog = ({ id }) => {
             delay: 2.1,
           }}
         />
-        <motion.p
-          className={blogsStyles.blogText}
-          variants={fadeAnimationVariant}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{
-            duration: 0.5,
-            delay: 2.3,
-          }}
-        >
-          We want to make it easier to learn more about a question and highlight
-          key facts about it — such as how popular the question is, how many
-          people are interested in it, and who the audience is. To accomplish
-          that, today we’re introducing Question Overview, a new section on the
-          question page that will make it easier to find the most important
-          information about a question and its audience. Question Overview
-          includes all of the information from the old Stats section, as well as
-          new facts such as individual question followers you may be interested
-          in (e.g. people you follow or other notable users), recent views on
-          the question, or if the question is Most Wanted in a topic. We have
-          lots of ideas for ways to make the Quora product and experience
-          better. But we also value keeping our simple so everyone can focus on
-          the most important features. Today we’re introducing Labs*, a new way
-          we can bring features we haven’t chosen to introduce broadly as an
-          option for you to try out. We hope that the products we build for Labs
-          will make your Quora experience more enjoyable. Without further ado,
-          our first ever Labs feature is: Keyboard Shortcuts! You will be able
-          to navigate and take actions on Discy awesome features on the web
-          without ever lifting your fingers off your keyboard. To get started,
-          go to your Settings page and click on the Labs tab. Keeping quality
-          high is Disuss’s number one priority as we work to achieve our
-          mission. In the coming weeks and months, we’ll be making major changes
-          to strengthen quality. These changes will reward great questions and
-          answers with better ranking and distribution and marginalize mediocre
-          and low-quality answers. In other words: high-quality answers and
-          useful knowledge shared will reach and help more people. Today, we’ve
-          published a new in-depth answer that describes what quality means on
-          Quora, and what it means to be helpful. What a helpful answer looks
-          like. In summary, helpful and high-quality answers.
-        </motion.p>
+        <ReactLinkify>
+          <motion.p
+            className={blogsStyles.blogText}
+            variants={fadeAnimationVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{
+              duration: 0.5,
+              delay: 2.3,
+            }}
+          >
+            {blogData?.text}
+          </motion.p>
+        </ReactLinkify>
         <div className={blogsStyles.buttons}>
-          <button className={blogsStyles.button}>
+          <button className={blogsStyles.button} onClick={likePost}>
             {/* <Badge
               badgeContent={4}
               color="secondary"
@@ -157,17 +236,48 @@ const Blog = ({ id }) => {
                 horizontal: "left",
               }}
             > */}
-            <FavoriteBorderRounded
-              fontSize="small"
-              style={{ marginRight: 4 }}
-            />
+            {blogData?.likes?.includes(user?.id) ? (
+              <FavoriteRounded
+                fontSize="small"
+                style={{ marginRight: 4 }}
+                color="secondary"
+              />
+            ) : (
+              <FavoriteBorderOutlined
+                fontSize="small"
+                style={{ marginRight: 4 }}
+              />
+            )}
             {/* </Badge> */}
-            Like this Article
+            {blogData?.likes?.includes(user?.id)
+              ? "Dislike this Article"
+              : "Like this Article"}
           </button>
-          <button className={blogsStyles.button}>
+          <button className={blogsStyles.button} onClick={sharePost}>
             Share this Article
             <ShareIcon fontSize="small" style={{ marginLeft: 4 }} />
           </button>
+        </div>
+        <Divider />
+        <div className={blogsStyles.comments}>
+          {/* <p
+            style={{
+              margin: 0,
+              textAlign: "center",
+              color: "#e84118",
+              cursor: "pointer",
+            }}
+            onClick={() => setShowComments(!showComments)}
+          >
+            {showComments ? "Hide Comments" : "Show Comments"}
+          </p> */}
+          {comments.map((comment) => (
+            <Comment
+              by={comment?.by}
+              comment={comment.comment}
+              timestamp={comment?.timestamp?.toDate().toLocaleString()}
+            />
+          ))}
         </div>
         <Divider />
         <div className={blogsStyles.commentInputDiv}>
@@ -177,6 +287,7 @@ const Blog = ({ id }) => {
           />
           <TextareaAutosize
             id="comment-input"
+            placeholder={`Leave a comment`}
             type="text"
             className={blogsStyles.commentInput}
             onChange={(e) => setComment(e.target.value)}

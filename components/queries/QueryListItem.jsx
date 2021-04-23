@@ -75,7 +75,7 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
             exit="exit"
             transition={{
               duration: 0.5,
-              delay: index,
+              delay: index - 0.1,
             }}
           >
             {timestamp.toDate().toLocaleString()}
@@ -88,7 +88,7 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
             exit="exit"
             transition={{
               duration: 0.5,
-              delay: index + 0.2,
+              delay: index,
             }}
           >
             <Linkify>{query}</Linkify>
@@ -102,7 +102,7 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
             exit="exit"
             transition={{
               duration: 0.5,
-              delay: index + 0.4,
+              delay: index + 0.1,
             }}
           >
             by: {byData?.name}
