@@ -144,21 +144,19 @@ const BlogPostListItem = ({
         </Link>
       </motion.p>
       <AnimatePresence>
-        {image && (
-          <motion.img
-            src={image}
-            alt="blog"
-            className={blogPostListItemStyles.image}
-            variants={fadeWidthAnimationVariant}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{
-              duration: 0.5,
-              delay: index + 0.2,
-            }}
-          />
-        )}
+        <motion.img
+          src={image ? image : "/images/logo.png"}
+          alt="blog"
+          className={blogPostListItemStyles.image}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: index + 0.2,
+          }}
+        />
       </AnimatePresence>
       <motion.p
         className={blogPostListItemStyles.blogText}

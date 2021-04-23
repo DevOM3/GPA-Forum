@@ -17,7 +17,7 @@ const Comment = ({ by, comment, timestamp }) => {
 
   return (
     <div className={commentStyles.comment}>
-      <Link href={`/profile/${user.name}`}>
+      <Link href={`/profile/${user.id}`}>
         <a className={commentStyles.by}>{user?.name}</a>
       </Link>
       <p className={commentStyles.commentText}>{comment}</p>

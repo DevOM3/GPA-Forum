@@ -203,7 +203,7 @@ const Blog = () => {
           </motion.a>
         </Link>
         <motion.img
-          src="https://neilpatel.com/wp-content/uploads/2018/10/blog.jpg"
+          src={blogData?.image ? blogData?.image : "/images/logo.png"}
           alt="blog"
           className={blogsStyles.image}
           variants={fadeWidthAnimationVariant}
