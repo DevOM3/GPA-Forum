@@ -108,7 +108,7 @@ const BlogPostListItem = ({
           delay: index - 0.1,
         }}
       >
-        On: {timestamp.toDate().toLocaleString()} / Likes: {likes.length} /
+        On: {timestamp?.toDate().toLocaleString()} / Likes: {likes.length} /
         Comments: {commentCount} / Views: {views.length}
       </motion.p>
       <motion.p
@@ -135,7 +135,11 @@ const BlogPostListItem = ({
           delay: index + 0.1,
         }}
       >
-        <Link href={`/profile/${blogUser?.id}`}>
+        <Link
+          href={
+            blogUser?.id === user?.id ? `/profile` : `/profile/${blogUser?.id}`
+          }
+        >
           <a>{blogUser?.name}</a>
         </Link>
       </motion.p>

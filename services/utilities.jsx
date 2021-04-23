@@ -198,10 +198,9 @@ export const fadeWidthAnimationVariant = {
   },
   exit: {
     opacity: 0,
-    y: 11,
     transition: {
       ease: "easeInOut",
-      duration: 0.7,
+      duration: 0.4,
     },
   },
 };

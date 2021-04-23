@@ -1,5 +1,5 @@
 import styles from "../../styles/pages/profile/ProfileIndex.module.css";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import MoreVertRounded from "@material-ui/icons/MoreVertRounded";
 import AccountCircleRoundedIcon from "@material-ui/icons/AccountCircleRounded";
 import { useStateValue } from "../../context/StateProvider";
 import { useState } from "react";
@@ -11,10 +11,44 @@ import {
   pageAnimationVariant,
 } from "../../services/utilities";
 import { motion } from "framer-motion";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import EditRounded from "@material-ui/icons/EditRounded";
+import { ShareRounded } from "@material-ui/icons";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+const ITEM_HEIGHT = 48;
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Profile = () => {
   const [{ user }, dispatch] = useStateValue();
   const [page, setPage] = useState("Queries");
+  const [openCopy, setOpenCopy] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const shareProfile = () => {
+    var dummy = document.createElement("textarea");
+    document.body.appendChild(dummy);
+    dummy.value = `https://${location.hostname}/profile/${user?.id}`.toString();
+    dummy.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummy);
+
+    setOpenCopy(true);
+    handleClose();
+  };
 
   return (
     <motion.div
@@ -24,9 +58,54 @@ const Profile = () => {
       animate="visible"
       exit="exit"
     >
-      <IconButton className={styles.icon}>
-        <EditRoundedIcon />
+      <Snackbar
+        open={openCopy}
+        autoHideDuration={6000}
+        onClose={() => setOpenCopy(false)}
+      >
+        <Alert onClose={() => setOpenCopy(false)} severity="success">
+          Profile URL copied!
+        </Alert>
+      </Snackbar>
+      <IconButton className={styles.icon} onClick={handleClick}>
+        <MoreVertRounded />
       </IconButton>
+      <Menu
+        id="long-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+            maxHeight: ITEM_HEIGHT * 4.5,
+            width: "20ch",
+          },
+        }}
+      >
+        <MenuItem
+          onClick={() => {}}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Edit
+          <EditRounded fontSize="small" style={{ color: "grey" }} />
+        </MenuItem>
+        <MenuItem
+          onClick={shareProfile}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Share
+          <ShareRounded fontSize="small" style={{ color: "grey" }} />
+        </MenuItem>
+      </Menu>
       <div className={styles.information}>
         <motion.div
           className={styles.name}

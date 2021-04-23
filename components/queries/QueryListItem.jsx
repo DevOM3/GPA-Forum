@@ -13,16 +13,29 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { fadeWidthAnimationVariant } from "../../services/utilities";
 import { motion } from "framer-motion";
 import { ReportOutlined } from "@material-ui/icons";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const options = ["Edit", "Delete"];
 
 const ITEM_HEIGHT = 48;
 
-const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
+const QueryListItem = ({
+  index,
+  id,
+  query,
+  queryType,
+  by,
+  timestamp,
+  setDeleteOpen,
+  fetchQueries,
+  setOpenEdit,
+  setCurrentID,
+}) => {
   const [byData, setByData] = useState("");
   const [{ user }, dispatch] = useStateValue();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [deleting, setDeleting] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -30,6 +43,27 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const editPost = async () => {
+    setCurrentID(id);
+    setOpenEdit(true);
+  };
+  const deletePost = async () => {
+    if (confirm("Are you sure to delete this post?")) {
+      setDeleting(true);
+      const queryRef = await db.collection("Queries").doc(id);
+      const queryComments = (await queryRef.collection("Comments").get()).docs;
+
+      for (let index = 0; index < queryComments.length; index++) {
+        await queryComments[index].delete();
+      }
+
+      await queryRef.delete();
+      setDeleteOpen(true);
+      fetchQueries();
+      setDeleting(false);
+    }
   };
 
   useEffect(() => {
@@ -53,7 +87,21 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
     }
   }, [by]);
 
-  return (
+  return deleting ? (
+    <motion.div
+      className={`${queryListItemStyles.queryListItem} progress-div`}
+      style={{ height: 100 }}
+      variants={fadeWidthAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{
+        duration: 0.5,
+      }}
+    >
+      <CircularProgress size={24} style={{ color: "black" }} />
+    </motion.div>
+  ) : (
     <motion.div
       className={queryListItemStyles.queryListItem}
       variants={fadeWidthAnimationVariant}
@@ -78,7 +126,7 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
               delay: index - 0.1,
             }}
           >
-            {timestamp.toDate().toLocaleString()}
+            {timestamp?.toDate().toLocaleString()}
           </motion.p>
           <motion.p
             className={queryListItemStyles.query}
@@ -117,12 +165,10 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
             aria-controls="long-menu"
             aria-haspopup="true"
             onClick={handleClick}
-            style={{ padding: 4 }}
           >
-            <MoreVertIcon fontSize="small" />
+            <MoreVertIcon />
           </IconButton>
           <Menu
-            id="long-menu"
             anchorEl={anchorEl}
             keepMounted
             open={open}
@@ -138,7 +184,10 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
               <MenuItem
                 key={option}
                 selected={option === "Pyxis"}
-                onClick={handleClose}
+                onClick={() => {
+                  option === "Edit" ? editPost() : deletePost();
+                  handleClose();
+                }}
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -160,8 +209,8 @@ const QueryListItem = ({ index, id, query, queryType, by, timestamp }) => {
         </div>
       ) : (
         <div className={queryListItemStyles.menu}>
-          <IconButton style={{ padding: 4 }}>
-            <ReportOutlined fontSize="small" />
+          <IconButton>
+            <ReportOutlined />
           </IconButton>
         </div>
       )}

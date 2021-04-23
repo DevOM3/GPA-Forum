@@ -82,7 +82,6 @@ const PostQuery = ({ open, fetchQueries, handleClose }) => {
             className={queryFormStyles.queryInput}
             onChange={(e) => setQuery(e.target.value)}
             value={query}
-            maxLength={271}
           />
         </div>
 

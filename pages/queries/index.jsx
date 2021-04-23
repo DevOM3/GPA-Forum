@@ -3,7 +3,8 @@ import queryStyles from "../../styles/pages/queries/Query.module.css";
 import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import QueryForm from "../../components/queries/QueryForm";
-import { motion } from "framer-motion";
+import QueryEditForm from "../../components/queries/QueryEditForm";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   fabAnimationVariant,
   pageAnimationVariant,
@@ -20,6 +21,12 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Slide from "@material-ui/core/Slide";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const Transition = React.forwardRef((props, ref) => {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -28,6 +35,10 @@ const Transition = React.forwardRef((props, ref) => {
 const Queries = () => {
   const [{ user }, dispatch] = useStateValue();
   const [open, setDialogOpen] = useState(false);
+  const [currentID, setCurrentID] = useState("");
+  const [openEdit, setOpenEdit] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
   const [optionOpen, setOptionOpen] = useState(false);
   const [filter, setFilter] = useState("None");
   const [sort, setSort] = useState("Date DESC");
@@ -86,6 +97,24 @@ const Queries = () => {
       animate="visible"
       exit="exit"
     >
+      <Snackbar
+        open={deleteOpen}
+        autoHideDuration={6000}
+        onClose={() => setDeleteOpen(false)}
+      >
+        <Alert onClose={() => setDeleteOpen(false)} severity="warning">
+          Query deleted!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={updateOpen}
+        autoHideDuration={6000}
+        onClose={() => setUpdateOpen(false)}
+      >
+        <Alert onClose={() => setUpdateOpen(false)} severity="info">
+          Query updated!
+        </Alert>
+      </Snackbar>
       <Dialog
         onClose={() => setOptionOpen(false)}
         aria-labelledby="simple-dialog-title"
@@ -142,6 +171,14 @@ const Queries = () => {
         handleClose={handleClose}
         fetchQueries={fetchQueries}
       />
+      <QueryEditForm
+        open={openEdit}
+        handleClose={setOpenEdit}
+        fetchQueries={fetchQueries}
+        setUpdateOpen={setUpdateOpen}
+        id={currentID}
+        setCurrentID={setCurrentID}
+      />
       <motion.div
         className="fab"
         variants={fabAnimationVariant}
@@ -181,42 +218,48 @@ const Queries = () => {
             />
           </IconButton>
         </motion.div>
-        {queries
-          .filter((query) =>
-            filter === user?.branch?.title
-              ? query?.queryType === user?.branch?.title
-              : filter === "Library"
-              ? query?.queryType === "Library"
-              : filter === "Exam Cell"
-              ? query?.queryType === "Exam Cell"
-              : filter === "Student Section"
-              ? query?.queryType === "Student Section"
-              : query
-          )
-          .sort((a, b) =>
-            sort === "Date ASC"
-              ? a.timestamp > b.timestamp
+        <AnimatePresence>
+          {queries
+            .filter((query) =>
+              filter === user?.branch?.title
+                ? query?.queryType === user?.branch?.title
+                : filter === "Library"
+                ? query?.queryType === "Library"
+                : filter === "Exam Cell"
+                ? query?.queryType === "Exam Cell"
+                : filter === "Student Section"
+                ? query?.queryType === "Student Section"
+                : query
+            )
+            .sort((a, b) =>
+              sort === "Date ASC"
+                ? a.timestamp > b.timestamp
+                  ? 1
+                  : b.timestamp > a.timestamp
+                  ? -1
+                  : 0
+                : a.timestamp < b.timestamp
                 ? 1
-                : b.timestamp > a.timestamp
+                : b.timestamp < a.timestamp
                 ? -1
                 : 0
-              : a.timestamp < b.timestamp
-              ? 1
-              : b.timestamp < a.timestamp
-              ? -1
-              : 0
-          )
-          .map((query, index) => (
-            <QueryListItem
-              index={index > 0 ? index / 7 : index}
-              key={query.id}
-              id={query.id}
-              query={query.query}
-              queryType={query.queryType}
-              by={query.by}
-              timestamp={query.timestamp}
-            />
-          ))}
+            )
+            .map((query, index) => (
+              <QueryListItem
+                index={index > 0 ? index / 7 : index}
+                key={query.id}
+                id={query.id}
+                query={query.query}
+                queryType={query.queryType}
+                by={query.by}
+                timestamp={query.timestamp}
+                setDeleteOpen={setDeleteOpen}
+                fetchQueries={fetchQueries}
+                setOpenEdit={setOpenEdit}
+                setCurrentID={setCurrentID}
+              />
+            ))}
+        </AnimatePresence>
       </div>
     </motion.div>
   );

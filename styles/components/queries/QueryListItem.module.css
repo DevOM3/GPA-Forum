@@ -58,8 +58,8 @@
 
 .menu {
   position: absolute !important;
-  top: 11px !important;
-  left: calc(100% - 30px) !important;
-  background: white !important;
+  top: 0px !important;
+  left: calc(100% - 48px) !important;
+  background: transparent !important;
   border-radius: 50% !important;
 }

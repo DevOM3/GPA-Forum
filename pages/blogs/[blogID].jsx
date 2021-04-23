@@ -21,9 +21,9 @@ import { useStateValue } from "../../context/StateProvider";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import ReactLinkify from "react-linkify";
+import Comment from "../../components/blogs/Comment";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
-import Comment from "../../components/blogs/Comment";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -87,7 +87,7 @@ const Blog = () => {
   const sharePost = () => {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
-    dummy.value = window.location;
+    dummy.value = `https://${window.location}`;
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
@@ -129,8 +129,8 @@ const Blog = () => {
           .get()
           .then((data) =>
             setUserData({
-              id: data.id,
-              name: data.name,
+              id: data?.id,
+              name: data.data()?.name,
             })
           );
       });
@@ -183,7 +183,11 @@ const Blog = () => {
         >
           {blogData?.title}
         </motion.p>
-        <Link href={`/profile/${userData?.id}`}>
+        <Link
+          href={
+            userData?.id === user?.id ? `/profile` : `/profile/${userData?.id}`
+          }
+        >
           <motion.a
             className={blogsStyles.author}
             variants={fadeAnimationVariant}

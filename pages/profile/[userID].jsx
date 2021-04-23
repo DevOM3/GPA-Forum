@@ -9,13 +9,14 @@ import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import { ShareRounded } from "@material-ui/icons";
 import { motion } from "framer-motion";
-import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
 import {
   fadeWidthAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
 import { CircularProgress } from "@material-ui/core";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
+import { useStateValue } from "../../context/StateProvider";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -23,6 +24,7 @@ function Alert(props) {
 
 const UserProfile = () => {
   const router = useRouter();
+  const [{ user }, dispatch] = useStateValue();
   const [page, setPage] = useState("Queries");
   const [userData, setUserData] = useState({});
   const [openBlogCopy, setOpenBlogCopy] = useState(false);
@@ -42,7 +44,7 @@ const UserProfile = () => {
   const sharePost = () => {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
-    dummy.value = window.location;
+    dummy.value = `https://${window.location}`;
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
@@ -52,17 +54,21 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (router.query?.userID) {
-      db.collection("Users")
-        .doc(router.query?.userID)
-        .get()
-        .then((data) =>
-          setUserData({
-            id: data?.id,
-            name: data.data()?.name,
-            branch: data.data()?.branch,
-            phno: data.data()?.phno,
-          })
-        );
+      if (router.query?.userID === user?.id) {
+        router.replace("/profile");
+      } else {
+        db.collection("Users")
+          .doc(router.query?.userID)
+          .get()
+          .then((data) =>
+            setUserData({
+              id: data?.id,
+              name: data.data()?.name,
+              branch: data.data()?.branch,
+              phno: data.data()?.phno,
+            })
+          );
+      }
     }
   }, [router.query?.userID]);
 

@@ -1,6 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
+import Link from "next/link";
 import { useState } from "react";
+import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import commentStyles from "../../styles/components/blogs/Comment.module.css";
 
@@ -16,7 +17,9 @@ const Comment = ({ by, comment, timestamp }) => {
 
   return (
     <div className={commentStyles.comment}>
-      <p className={commentStyles.by}>{user?.name}</p>
+      <Link href={`/profile/${user.name}`}>
+        <a className={commentStyles.by}>{user?.name}</a>
+      </Link>
       <p className={commentStyles.commentText}>{comment}</p>
       <p className={commentStyles.timestamp}>{timestamp}</p>
     </div>
