@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { IconButton } from "@material-ui/core";
+import { IconButton, CircularProgress } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteBorderOutlined from "@material-ui/icons/FavoriteBorderOutlined";
 import FavoriteRounded from "@material-ui/icons/FavoriteRounded";
@@ -12,9 +12,19 @@ import {
 } from "../../services/utilities";
 import { useState } from "react";
 import { useEffect } from "react";
-import { db, firebase } from "../../services/firebase";
+import { db, firebase, storage } from "../../services/firebase";
 import { useStateValue } from "../../context/StateProvider";
 import { useRouter } from "next/router";
+import Menu from "@material-ui/core/Menu";
+import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { ReportOutlined } from "@material-ui/icons";
+
+const options = ["Edit", "Delete"];
+
+const ITEM_HEIGHT = 48;
 
 const BlogPostListItem = ({
   index,
@@ -25,6 +35,8 @@ const BlogPostListItem = ({
   timestamp,
   by,
   handleClickBlogCopy,
+  setDeleteOpen,
+  fetchBlogs,
 }) => {
   const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
@@ -32,27 +44,46 @@ const BlogPostListItem = ({
   const [views, setViews] = useState([]);
   const [likes, setLikes] = useState([]);
   const [commentCount, setCommentCount] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const [deleting, setDeleting] = useState(false);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     db.collection("Users")
       .doc(by)
       .get()
-      .then((doc) =>
-        setBlogUser({
-          id: doc?.id,
-          name: doc.data()?.name,
-        })
-      );
+      .then((doc) => {
+        if (doc.exists) {
+          setBlogUser({
+            id: doc?.id,
+            name: doc.data()?.name,
+          });
+        }
+      });
     db.collection("Blogs")
       .doc(id)
       .onSnapshot((snapshot) => {
-        setViews(snapshot.data().views);
-        setLikes(snapshot.data().likes);
+        if (snapshot.exists) {
+          setViews(snapshot.data().views);
+          setLikes(snapshot.data().likes);
+        }
       });
     db.collection("Blogs")
       .doc(id)
       .collection("Comments")
-      .onSnapshot((snapshot) => setCommentCount(snapshot.docs.length));
+      .onSnapshot((snapshot) => {
+        if (!snapshot.empty) {
+          setCommentCount(snapshot.docs.length);
+        }
+      });
   }, []);
 
   const likePost = () => {
@@ -85,7 +116,46 @@ const BlogPostListItem = ({
     handleClickBlogCopy();
   };
 
-  return (
+  const deletePost = async () => {
+    if (confirm("Are you sure to delete this Blog post?")) {
+      setDeleting(true);
+      if (image) {
+        await storage.refFromURL(image).delete();
+      }
+      const blogRef = await db.collection("Blogs").doc(id);
+      const blogComments = (await blogRef.collection("Comments").get()).docs;
+
+      for (let index = 0; index < blogComments.length; index++) {
+        await db
+          .collection("Blogs")
+          .doc(id)
+          .collection("Comments")
+          .doc(blogComments[index].id)
+          .delete();
+      }
+
+      await blogRef.delete();
+      setDeleteOpen(true);
+      fetchBlogs();
+      setDeleting(false);
+    }
+  };
+
+  return deleting ? (
+    <motion.div
+      className={`${blogPostListItemStyles.blog} progress-div`}
+      style={{ height: 400 }}
+      variants={fadeWidthAnimationVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{
+        duration: 0.5,
+      }}
+    >
+      <CircularProgress size={24} style={{ color: "black" }} />
+    </motion.div>
+  ) : (
     <motion.div
       className={blogPostListItemStyles.blog}
       variants={fadeAnimationVariant}
@@ -97,6 +167,62 @@ const BlogPostListItem = ({
         delay: index - 0.2,
       }}
     >
+      {user?.id === by ? (
+        <div className={blogPostListItemStyles.menu}>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            keepMounted
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5,
+                width: "20ch",
+              },
+            }}
+          >
+            {options.map((option) => (
+              <MenuItem
+                key={option}
+                selected={option === "Pyxis"}
+                onClick={() => {
+                  option === "Edit" ? editPost() : deletePost();
+                  handleClose();
+                }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {option}
+                {option === "Edit" ? (
+                  <EditRoundedIcon fontSize="small" style={{ color: "grey" }} />
+                ) : (
+                  <DeleteRoundedIcon
+                    fontSize="small"
+                    style={{ color: "grey" }}
+                  />
+                )}
+              </MenuItem>
+            ))}
+          </Menu>
+        </div>
+      ) : (
+        <div className={blogPostListItemStyles.menu}>
+          <IconButton>
+            <ReportOutlined />
+          </IconButton>
+        </div>
+      )}
       <motion.p
         className={blogPostListItemStyles.topText}
         variants={fadeWidthAnimationVariant}

@@ -18,6 +18,10 @@ const ProfileBlog = ({ userID }) => {
   const [{ user }, dispatch] = useStateValue();
   const [blogs, setBlogs] = useState([]);
   const [openBlogCopy, setOpenBlogCopy] = useState(false);
+  const [currentID, setCurrentID] = useState("");
+  const [openEdit, setOpenEdit] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [updateOpen, setUpdateOpen] = useState(false);
 
   const handleClickBlogCopy = () => {
     setOpenBlogCopy(true);
@@ -72,6 +76,24 @@ const ProfileBlog = ({ userID }) => {
           Blog URL copied!
         </Alert>
       </Snackbar>
+      <Snackbar
+        open={deleteOpen}
+        autoHideDuration={6000}
+        onClose={() => setDeleteOpen(false)}
+      >
+        <Alert onClose={() => setDeleteOpen(false)} severity="warning">
+          Blog post deleted!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={updateOpen}
+        autoHideDuration={6000}
+        onClose={() => setUpdateOpen(false)}
+      >
+        <Alert onClose={() => setUpdateOpen(false)} severity="info">
+          Blog post updated!
+        </Alert>
+      </Snackbar>
       {blogs.map((blog, index) => (
         <>
           <BlogPostListItem
@@ -84,6 +106,8 @@ const ProfileBlog = ({ userID }) => {
             timestamp={blog?.timestamp}
             by={blog?.by}
             handleClickBlogCopy={handleClickBlogCopy}
+            setDeleteOpen={setDeleteOpen}
+            fetchBlogs={fetchBlogs}
           />
           <Divider style={{ width: "80%", margin: "auto" }} />
         </>

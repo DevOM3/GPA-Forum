@@ -49,6 +49,7 @@ const QueryListItem = ({
     setCurrentID(id);
     setOpenEdit(true);
   };
+
   const deletePost = async () => {
     if (confirm("Are you sure to delete this post?")) {
       setDeleting(true);
@@ -56,7 +57,12 @@ const QueryListItem = ({
       const queryComments = (await queryRef.collection("Comments").get()).docs;
 
       for (let index = 0; index < queryComments.length; index++) {
-        await queryComments[index].delete();
+        await db
+          .collection("Queries")
+          .doc(id)
+          .collection("Comments")
+          .doc(queryComments[index].id)
+          .delete();
       }
 
       await queryRef.delete();

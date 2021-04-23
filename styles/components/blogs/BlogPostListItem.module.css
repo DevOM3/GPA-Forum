@@ -8,6 +8,7 @@
   flex-direction: column;
   width: 80%;
   margin: auto;
+  position: relative;
 }
 
 .image {
@@ -78,6 +79,14 @@
   padding-left: 11px;
   padding-right: 11px;
   cursor: pointer;
+}
+
+.menu {
+  position: absolute !important;
+  top: 21px !important;
+  left: calc(100% - 48px) !important;
+  background: transparent !important;
+  border-radius: 50% !important;
 }
 
 @media screen and (max-width: 775px) {
