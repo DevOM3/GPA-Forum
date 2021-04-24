@@ -125,7 +125,7 @@ const SignUp = () => {
           });
           localStorage.setItem("forumUserID", data.id);
           setVerifyingOTP(false);
-          router.push("/query");
+          router.push("/queries");
         }
       })
       .catch((error) => {

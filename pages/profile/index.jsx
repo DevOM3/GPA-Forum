@@ -17,6 +17,7 @@ import EditRounded from "@material-ui/icons/EditRounded";
 import { ShareRounded } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import EditProfile from "../../components/profile/EditProfile";
 
 const ITEM_HEIGHT = 48;
 function Alert(props) {
@@ -29,6 +30,7 @@ const Profile = () => {
   const [openCopy, setOpenCopy] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [openEditProfile, setOpenEditProfile] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -58,6 +60,10 @@ const Profile = () => {
       animate="visible"
       exit="exit"
     >
+      <EditProfile
+        openEditProfile={openEditProfile}
+        setOpenEditProfile={setOpenEditProfile}
+      />
       <Snackbar
         open={openCopy}
         autoHideDuration={6000}
@@ -84,7 +90,10 @@ const Profile = () => {
         }}
       >
         <MenuItem
-          onClick={() => {}}
+          onClick={() => {
+            setOpenEditProfile(true);
+            handleClose();
+          }}
           style={{
             display: "flex",
             justifyContent: "space-between",
