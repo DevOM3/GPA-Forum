@@ -35,7 +35,7 @@ const Home = () => {
       };
       updateTimer();
     });
-    db.collection("Forums").onSnapshot((data) => {
+    db.collection("Queries").onSnapshot((data) => {
       let counter = 0;
       const updateTimer = () => {
         setTimeout(() => {
@@ -153,7 +153,7 @@ const Home = () => {
             initial="hidden"
             animate="visible"
           >
-            User Count
+            Users
           </motion.p>
         </div>
         <div
@@ -177,7 +177,7 @@ const Home = () => {
             initial="hidden"
             animate="visible"
           >
-            Forum Count
+            Queries
           </motion.p>
         </div>
         <div className={styles.statItem}>
@@ -195,7 +195,7 @@ const Home = () => {
             initial="hidden"
             animate="visible"
           >
-            Blog Count
+            Blogs
           </motion.p>
         </div>
       </motion.div>

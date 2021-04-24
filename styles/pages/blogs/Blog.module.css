@@ -60,6 +60,9 @@
   font-family: "Poppins", sans-serif;
   text-align: justify;
 }
+.blogText a {
+  color: #e84118;
+}
 
 .buttons {
   margin-top: 21px;

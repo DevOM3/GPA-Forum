@@ -21,6 +21,7 @@ import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ReportOutlined } from "@material-ui/icons";
+import ReactLinkify from "react-linkify";
 
 const options = ["Edit", "Delete"];
 
@@ -37,6 +38,8 @@ const BlogPostListItem = ({
   handleClickBlogCopy,
   setDeleteOpen,
   fetchBlogs,
+  setOpenEdit,
+  setCurrentID,
 }) => {
   const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
@@ -116,6 +119,10 @@ const BlogPostListItem = ({
     handleClickBlogCopy();
   };
 
+  const editPost = async () => {
+    setCurrentID(id);
+    setOpenEdit(true);
+  };
   const deletePost = async () => {
     if (confirm("Are you sure to delete this Blog post?")) {
       setDeleting(true);
@@ -237,6 +244,7 @@ const BlogPostListItem = ({
         On: {timestamp?.toDate().toLocaleString()} / Likes: {likes.length} /
         Comments: {commentCount} / Views: {views.length}
       </motion.p>
+      {/* <ReactLinkify> */}
       <motion.p
         className={blogPostListItemStyles.title}
         variants={fadeWidthAnimationVariant}
@@ -250,6 +258,7 @@ const BlogPostListItem = ({
       >
         {title}
       </motion.p>
+      {/* </ReactLinkify> */}
       <motion.p
         className={blogPostListItemStyles.author}
         variants={fadeWidthAnimationVariant}

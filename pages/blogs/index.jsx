@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import blogPageStyles from "../../styles/pages/blogs/BlogPage.module.css";
 import { Divider, IconButton } from "@material-ui/core";
 import BlogPostListItem from "../../components/blogs/BlogPostListItem";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   fabAnimationVariant,
   pageAnimationVariant,
@@ -14,6 +14,7 @@ import { db } from "../../services/firebase";
 import { useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import BlogEditForm from "../../components/blogs/BlogEditForm";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -109,6 +110,14 @@ const BlogPage = () => {
         </Alert>
       </Snackbar>
       <BlogForm open={open} fetchBlogs={fetchBlogs} handleClose={handleClose} />
+      <BlogEditForm
+        open={openEdit}
+        fetchBlogs={fetchBlogs}
+        handleClose={setOpenEdit}
+        setUpdateOpen={setUpdateOpen}
+        id={currentID}
+        setCurrentID={setCurrentID}
+      />
       <motion.div
         className="fab"
         variants={fabAnimationVariant}
@@ -120,24 +129,28 @@ const BlogPage = () => {
           <EditIcon style={{ color: "black" }} />
         </IconButton>
       </motion.div>
-      {blogs.map((blog, index) => (
-        <>
-          <BlogPostListItem
-            index={index > 0 ? index / 7 : index}
-            id={blog?.id}
-            key={blog?.id}
-            image={blog?.image}
-            title={blog?.title}
-            text={blog?.text}
-            timestamp={blog?.timestamp}
-            by={blog?.by}
-            handleClickBlogCopy={handleClickBlogCopy}
-            setDeleteOpen={setDeleteOpen}
-            fetchBlogs={fetchBlogs}
-          />
-          <Divider style={{ width: "80%", margin: "auto" }} />
-        </>
-      ))}
+      <AnimatePresence>
+        {blogs.map((blog, index) => (
+          <>
+            <BlogPostListItem
+              index={index > 0 ? index / 7 : index}
+              id={blog?.id}
+              key={blog?.id}
+              image={blog?.image}
+              title={blog?.title}
+              text={blog?.text}
+              timestamp={blog?.timestamp}
+              by={blog?.by}
+              handleClickBlogCopy={handleClickBlogCopy}
+              setDeleteOpen={setDeleteOpen}
+              fetchBlogs={fetchBlogs}
+              setCurrentID={setCurrentID}
+              setOpenEdit={setOpenEdit}
+            />
+            <Divider style={{ width: "80%", margin: "auto" }} />
+          </>
+        ))}
+      </AnimatePresence>
     </motion.div>
   );
 };

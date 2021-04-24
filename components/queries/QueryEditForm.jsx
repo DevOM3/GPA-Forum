@@ -85,7 +85,7 @@ const PostQuery = ({
     <Dialog
       TransitionComponent={Transition}
       open={open}
-      onClose={() => handleClose(true)}
+      onClose={() => handleClose(false)}
       aria-labelledby="form-dialog-title"
       fullWidth={true}
     >
