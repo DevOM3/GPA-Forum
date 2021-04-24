@@ -71,7 +71,7 @@
   place-items: center;
 }
 
-.search {
+/* .search {
   display: flex;
   width: 150px;
   justify-content: flex-end;
@@ -121,8 +121,8 @@
   transition: 0.5s;
   line-height: 40px;
   width: 0px;
-  /* text-align: center; */
-}
+  text-align: center;
+} */
 
 .hamburger {
   display: none !important;

@@ -87,7 +87,7 @@ const Blog = () => {
   const sharePost = () => {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
-    dummy.value = `https://${window.location}`;
+    dummy.value = `${window.location}`;
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);
@@ -163,7 +163,7 @@ const Blog = () => {
           exit="exit"
           transition={{
             duration: 0.5,
-            delay: 1.5,
+            delay: 1.0,
           }}
         >
           On: {blogData?.timestamp?.toDate().toLocaleString()} / Likes:{" "}
@@ -178,7 +178,7 @@ const Blog = () => {
           exit="exit"
           transition={{
             duration: 0.5,
-            delay: 1.7,
+            delay: 1.1,
           }}
         >
           {blogData?.title}
@@ -196,7 +196,7 @@ const Blog = () => {
             exit="exit"
             transition={{
               duration: 0.5,
-              delay: 1.9,
+              delay: 1.2,
             }}
           >
             {userData?.name}
@@ -212,7 +212,7 @@ const Blog = () => {
           exit="exit"
           transition={{
             duration: 1.1,
-            delay: 2.1,
+            delay: 1.3,
           }}
         />
         <ReactLinkify>
@@ -224,7 +224,7 @@ const Blog = () => {
             exit="exit"
             transition={{
               duration: 0.5,
-              delay: 2.3,
+              delay: 1.4,
             }}
           >
             {blogData?.text}

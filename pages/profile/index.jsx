@@ -43,7 +43,7 @@ const Profile = () => {
   const shareProfile = () => {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
-    dummy.value = `https://${location.hostname}/profile/${user?.id}`.toString();
+    dummy.value = `${window.location}`;
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);

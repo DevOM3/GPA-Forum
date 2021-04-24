@@ -124,7 +124,7 @@ const Navbar = () => {
         </ul>
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         className={navbarStyles.cont}
         variants={mobileNavbarAnimationVariant}
         initial="hidden"
@@ -143,7 +143,7 @@ const Navbar = () => {
             </a>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       <IconButton
         id="toggle-button"
