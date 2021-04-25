@@ -7,7 +7,10 @@ import {
   FavoriteBorderOutlined,
   FavoriteRounded,
   ModeCommentOutlined,
+  PauseCircleOutlineOutlined,
+  PlayCircleOutlineRounded,
   SendRounded,
+  StopOutlined,
 } from "@material-ui/icons";
 import { db, firebase } from "../../services/firebase";
 import { motion } from "framer-motion";
@@ -36,7 +39,7 @@ const Blog = () => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [commenting, setCommenting] = useState(false);
-  const [showComments, setShowComments] = useState(false);
+  const [speechState, setSpeechState] = useState("");
   const [blogData, setBlogData] = useState({});
   const [userData, setUserData] = useState({});
   const [openBlogCopy, setOpenBlogCopy] = React.useState(false);
@@ -142,7 +145,32 @@ const Blog = () => {
           );
       });
     loadComments();
+
+    return () => {
+      if (speechSynthesis) {
+        speechSynthesis.resume();
+        speechSynthesis.cancel();
+      }
+    };
   }, []);
+
+  const readPost = () => {
+    if ("speechSynthesis" in window) {
+      speechSynthesis && speechSynthesis.cancel();
+
+      const speechSynthesis = new SpeechSynthesisUtterance();
+      speechSynthesis.text = `Title- ${blogData?.title}.By ${userData?.name} ${blogData?.text}`;
+      speechSynthesis.addEventListener("end", () => setSpeechState(""));
+      speechSynthesis.volume = 1;
+      speechSynthesis.rate = 0.8;
+      speechSynthesis.pitch = 1;
+      speechSynthesis.lang = "en-IN";
+      window.speechSynthesis.speak(speechSynthesis);
+      setSpeechState("Speaking");
+    } else {
+      alert("Sorry, your browser doesn't support this feature!");
+    }
+  };
 
   return (
     <motion.div
@@ -222,8 +250,14 @@ const Blog = () => {
             delay: 1.3,
           }}
         />
-        <ReactLinkify>
-          <motion.p
+        <ReactLinkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
+          <motion.pre
             className={blogsStyles.blogText}
             variants={fadeAnimationVariant}
             initial="hidden"
@@ -235,7 +269,7 @@ const Blog = () => {
             }}
           >
             {blogData?.text}
-          </motion.p>
+          </motion.pre>
         </ReactLinkify>
         <div className={blogsStyles.buttons}>
           <button className={blogsStyles.button} onClick={likePost}>
@@ -264,6 +298,41 @@ const Blog = () => {
               ? "Dislike this Article"
               : "Like this Article"}
           </button>
+          {speechSynthesis &&
+            (speechState === "Speaking" || speechState === "Paused") && (
+              <div className={blogsStyles.speechButtons}>
+                <IconButton
+                  style={{ padding: 4, marginRight: 4 }}
+                  onClick={() => {
+                    if (speechState === "Paused") {
+                      speechSynthesis.resume();
+                      setSpeechState("Speaking");
+                    } else if (speechState === "Speaking") {
+                      speechSynthesis.pause();
+                      setSpeechState("Paused");
+                    }
+                  }}
+                >
+                  {speechState === "Paused" && <PlayCircleOutlineRounded />}{" "}
+                  {speechState === "Speaking" && <PauseCircleOutlineOutlined />}
+                </IconButton>
+                <IconButton
+                  style={{ padding: 4 }}
+                  onClick={() => {
+                    speechSynthesis.resume();
+                    speechSynthesis.cancel();
+                    setSpeechState("");
+                  }}
+                >
+                  <StopOutlined />
+                </IconButton>
+              </div>
+            )}{" "}
+          {speechState === "" && (
+            <button className={blogsStyles.button} onClick={readPost}>
+              Read Aloud
+            </button>
+          )}
           <button className={blogsStyles.button} onClick={sharePost}>
             Share this Article
             <ShareIcon fontSize="small" style={{ marginLeft: 4 }} />

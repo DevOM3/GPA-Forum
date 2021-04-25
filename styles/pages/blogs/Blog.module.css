@@ -58,7 +58,13 @@
   margin-right: auto;
   color: #444444;
   font-family: "Poppins", sans-serif;
-  text-align: justify;
+
+  overflow-x: auto;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
 }
 .blogText a {
   color: #e84118;
@@ -126,6 +132,16 @@
   width: 98%;
   max-width: 800px;
   background: white;
+}
+
+.speechButtons {
+  display: flex;
+  align-items: center;
+  border: 1px solid lightgrey;
+  border-radius: 51px;
+  padding: 2px;
+  padding-left: 7px;
+  padding-right: 7px;
 }
 
 @media screen and (max-width: 775px) {

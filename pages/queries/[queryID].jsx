@@ -238,7 +238,13 @@ const Query = () => {
         >
           {queryData?.timestamp?.toDate().toLocaleString()}
         </motion.p>
-        <ReactLinkify>
+        <ReactLinkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
           <motion.p
             className={queryStyles.query}
             variants={fadeAnimationVariant}

@@ -52,7 +52,13 @@ const Solution = ({ postID, id, by, solution, timestamp, upVotes }) => {
         <p className={solutionStyles.timestamp}>
           {moment(timestamp).fromNow()}
         </p>
-        <ReactLinkify>
+        <ReactLinkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
           <p className={solutionStyles.commentText}>{solution}</p>
         </ReactLinkify>
       </div>
