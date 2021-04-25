@@ -72,7 +72,8 @@ const Navbar = () => {
             <Link href={`/queries`}>
               <a
                 className={
-                  router.pathname === "/queries"
+                  router.pathname === "/queries" ||
+                  router.pathname === "/queries/[queryID]"
                     ? navbarStyles.aActive
                     : navbarStyles.a
                 }

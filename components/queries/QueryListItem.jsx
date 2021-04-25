@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import queryListItemStyles from "../../styles/components/queries/QueryListItem.module.css";
 import Linkify from "react-linkify";
-import { db } from "../../services/firebase";
+import { db, firebase } from "../../services/firebase";
 import { useStateValue } from "../../context/StateProvider";
 import Link from "next/link";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,14 +10,25 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import DeleteRoundedIcon from "@material-ui/icons/DeleteRounded";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { ShareRounded, ThumbUp, ThumbUpOutlined } from "@material-ui/icons";
 import { fadeWidthAnimationVariant } from "../../services/utilities";
 import { motion } from "framer-motion";
 import { ReportOutlined } from "@material-ui/icons";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Badge, withStyles } from "@material-ui/core";
+import { report } from "../../services/report";
 
-const options = ["Edit", "Delete"];
+const optionsSelf = ["Edit", "Delete", "Share"];
+const optionsAll = ["Share", "Report"];
 
 const ITEM_HEIGHT = 48;
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}))(Badge);
 
 const QueryListItem = ({
   index,
@@ -30,7 +41,11 @@ const QueryListItem = ({
   fetchQueries,
   setOpenEdit,
   setCurrentID,
+  setCopyOpen,
 }) => {
+  const [queryText, setQueryText] = useState(query);
+  const [queryUpVotes, setQueryUpVotes] = useState([]);
+  const [solutionCount, setSolutionCount] = useState(0);
   const [byData, setByData] = useState("");
   const [{ user }, dispatch] = useStateValue();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -45,30 +60,49 @@ const QueryListItem = ({
     setAnchorEl(null);
   };
 
+  const sharePost = () => {
+    const path = `${location}/${id}`;
+    navigator.clipboard.writeText(path);
+
+    setCopyOpen(true);
+  };
+
+  const reportPost = async () => {
+    if (report(queryText)) {
+      deleteQuery();
+    } else {
+      alert("This query is all right!");
+    }
+  };
+
   const editPost = async () => {
     setCurrentID(id);
     setOpenEdit(true);
   };
 
+  const deleteQuery = async () => {
+    setDeleting(true);
+    const queryRef = await db.collection("Queries").doc(id);
+    const querySolutions = (await queryRef.collection("Solutions").get()).docs;
+
+    for (let index = 0; index < querySolutions.length; index++) {
+      await db
+        .collection("Queries")
+        .doc(id)
+        .collection("Solutions")
+        .doc(querySolutions[index].id)
+        .delete();
+    }
+
+    await queryRef.delete();
+    setDeleteOpen(true);
+    fetchQueries();
+    setDeleting(false);
+  };
+
   const deletePost = async () => {
     if (confirm("Are you sure to delete this post?")) {
-      setDeleting(true);
-      const queryRef = await db.collection("Queries").doc(id);
-      const queryComments = (await queryRef.collection("Comments").get()).docs;
-
-      for (let index = 0; index < queryComments.length; index++) {
-        await db
-          .collection("Queries")
-          .doc(id)
-          .collection("Comments")
-          .doc(queryComments[index].id)
-          .delete();
-      }
-
-      await queryRef.delete();
-      setDeleteOpen(true);
-      fetchQueries();
-      setDeleting(false);
+      deleteQuery();
     }
   };
 
@@ -92,6 +126,31 @@ const QueryListItem = ({
       }
     }
   }, [by]);
+
+  useEffect(() => {
+    db.collection("Queries")
+      .doc(id)
+      .onSnapshot((snapshot) => {
+        if (snapshot.exists) {
+          setQueryText(snapshot.data()?.query);
+          setQueryUpVotes(snapshot.data()?.upVotes);
+        }
+      });
+    db.collection("Queries")
+      .doc(id)
+      .collection("Solutions")
+      .onSnapshot((snapshot) => setSolutionCount(snapshot.docs.length));
+  }, []);
+
+  const upVoteQuery = () => {
+    db.collection("Queries")
+      .doc(id)
+      .update({
+        upVotes: queryUpVotes?.includes(user?.id)
+          ? firebase.firestore.FieldValue.arrayRemove(user?.id)
+          : firebase.firestore.FieldValue.arrayUnion(user?.id),
+      });
+  };
 
   return deleting ? (
     <motion.div
@@ -145,7 +204,7 @@ const QueryListItem = ({
               delay: index,
             }}
           >
-            <Linkify>{query}</Linkify>
+            <Linkify>{queryText}</Linkify>
           </motion.p>
           {/* <p className={queryListItemStyles.queryType}>{queryType}</p> */}
           <motion.p
@@ -159,67 +218,123 @@ const QueryListItem = ({
               delay: index + 0.1,
             }}
           >
-            by: {byData?.name}
+            by {byData?.name}
           </motion.p>
         </a>
       </Link>
 
-      {user?.id === by ? (
-        <div className={queryListItemStyles.menu}>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-                maxHeight: ITEM_HEIGHT * 4.5,
-                width: "20ch",
-              },
+      <div className={queryListItemStyles.bottom}>
+        <div className={queryListItemStyles.bottomLeft}>
+          <Link href={`/queries/${id}#solutions`}>
+            <a className={queryListItemStyles.solutions}>
+              Solutions: {solutionCount}
+            </a>
+          </Link>
+        </div>
+        <IconButton
+          style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+          onClick={upVoteQuery}
+        >
+          <StyledBadge
+            badgeContent={queryUpVotes?.length}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
             }}
           >
-            {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={() => {
-                  option === "Edit" ? editPost() : deletePost();
-                  handleClose();
-                }}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                {option}
-                {option === "Edit" ? (
-                  <EditRoundedIcon fontSize="small" style={{ color: "grey" }} />
-                ) : (
-                  <DeleteRoundedIcon
-                    fontSize="small"
-                    style={{ color: "grey" }}
-                  />
-                )}
-              </MenuItem>
-            ))}
-          </Menu>
-        </div>
-      ) : (
-        <div className={queryListItemStyles.menu}>
-          <IconButton>
-            <ReportOutlined />
-          </IconButton>
-        </div>
-      )}
+            {queryUpVotes?.includes(user?.id) ? (
+              <ThumbUp style={{ marginLeft: 4 }} color="primary" />
+            ) : (
+              <ThumbUpOutlined style={{ marginLeft: 4 }} />
+            )}
+          </StyledBadge>
+        </IconButton>
+      </div>
+
+      <div className={queryListItemStyles.menu}>
+        <IconButton
+          aria-label="more"
+          aria-controls="long-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={open}
+          onClose={handleClose}
+          PaperProps={{
+            style: {
+              maxHeight: ITEM_HEIGHT * 4.5,
+              width: "20ch",
+            },
+          }}
+        >
+          {user?.id === by
+            ? optionsSelf.map((option) => (
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={() => {
+                    option === "Edit"
+                      ? editPost()
+                      : option === "Delete"
+                      ? deletePost()
+                      : sharePost();
+                    handleClose();
+                  }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  {option}
+                  {option === "Edit" ? (
+                    <EditRoundedIcon
+                      fontSize="small"
+                      style={{ color: "grey" }}
+                    />
+                  ) : option === "Share" ? (
+                    <ShareRounded fontSize="small" style={{ color: "grey" }} />
+                  ) : (
+                    <DeleteRoundedIcon
+                      fontSize="small"
+                      style={{ color: "grey" }}
+                    />
+                  )}
+                </MenuItem>
+              ))
+            : optionsAll.map((option) => (
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={() => {
+                    option === "Share" ? sharePost() : reportPost();
+                    handleClose();
+                  }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  {option}
+                  {option === "Share" ? (
+                    <ShareRounded fontSize="small" style={{ color: "grey" }} />
+                  ) : (
+                    <ReportOutlined
+                      fontSize="small"
+                      style={{ color: "grey" }}
+                    />
+                  )}
+                </MenuItem>
+              ))}
+        </Menu>
+      </div>
     </motion.div>
   );
 };

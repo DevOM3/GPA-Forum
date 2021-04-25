@@ -24,6 +24,7 @@ import ReactLinkify from "react-linkify";
 import Comment from "../../components/blogs/Comment";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
+import { report } from "../../services/report";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -58,19 +59,25 @@ const Blog = () => {
     if (comment.trim().length < 4) {
       alert("Your comment must be at least 3 letters long.");
     } else {
-      setCommenting(true);
-      db.collection("Blogs")
-        .doc(router.query.blogID)
-        .collection("Comments")
-        .add({
-          comment,
-          by: user?.id,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-        .then(() => {
-          setCommenting(false);
-          setComment("");
-        });
+      if (!report(comment)) {
+        setCommenting(true);
+        db.collection("Blogs")
+          .doc(router.query.blogID)
+          .collection("Comments")
+          .add({
+            comment,
+            by: user?.id,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          .then(() => {
+            setCommenting(false);
+            setComment("");
+          });
+      } else {
+        alert(
+          "You cannot use slangs in Solution. \nKeep the platform clean 🙏."
+        );
+      }
     }
   };
 
@@ -300,7 +307,7 @@ const Blog = () => {
           />
           {commenting ? (
             <div className="progress-div">
-              <CircularProgress size={33} style={{ color: "black" }} />
+              <CircularProgress size={21} style={{ color: "black" }} />
             </div>
           ) : (
             <IconButton onClick={addComment}>

@@ -44,6 +44,7 @@ const PostQuery = ({ open, fetchQueries, handleClose }) => {
           query,
           queryType,
           by: user?.id,
+          upVotes: [],
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {

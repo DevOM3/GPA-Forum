@@ -39,6 +39,7 @@ const ProfileQuery = ({ userID, branch }) => {
   const [filter, setFilter] = useState("None");
   const [sort, setSort] = useState("Date DESC");
   const [queries, setQueries] = useState([]);
+  const [copyOpen, setCopyOpen] = useState(false);
 
   const filterOptions = [
     branch,
@@ -96,6 +97,15 @@ const ProfileQuery = ({ userID, branch }) => {
       >
         <Alert onClose={() => setUpdateOpen(false)} severity="info">
           Query updated!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={copyOpen}
+        autoHideDuration={6000}
+        onClose={() => setCopyOpen(false)}
+      >
+        <Alert onClose={() => setCopyOpen(false)} severity="success">
+          Query link copied!
         </Alert>
       </Snackbar>
       <Dialog
@@ -224,6 +234,7 @@ const ProfileQuery = ({ userID, branch }) => {
                 fetchQueries={fetchQueries}
                 setOpenEdit={setOpenEdit}
                 setCurrentID={setCurrentID}
+                setCopyOpen={setCopyOpen}
               />
             ))}
         </AnimatePresence>

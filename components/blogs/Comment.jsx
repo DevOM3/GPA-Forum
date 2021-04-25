@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import commentStyles from "../../styles/components/blogs/Comment.module.css";
+import moment from "moment";
 
 const Comment = ({ by, comment, timestamp }) => {
   const [user, setUser] = useState({});
@@ -20,8 +21,8 @@ const Comment = ({ by, comment, timestamp }) => {
       <Link href={`/profile/${user.id}`}>
         <a className={commentStyles.by}>{user?.name}</a>
       </Link>
+      <p className={commentStyles.timestamp}>{moment(timestamp).fromNow()}</p>
       <p className={commentStyles.commentText}>{comment}</p>
-      <p className={commentStyles.timestamp}>{timestamp}</p>
     </div>
   );
 };

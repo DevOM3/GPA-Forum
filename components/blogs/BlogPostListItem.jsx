@@ -22,6 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ReportOutlined } from "@material-ui/icons";
 import ReactLinkify from "react-linkify";
+import { report } from "../../services/report";
 
 const options = ["Edit", "Delete"];
 
@@ -119,32 +120,44 @@ const BlogPostListItem = ({
     handleClickBlogCopy();
   };
 
+  const reportBlog = () => {
+    if (report(title) || report(text)) {
+      deleteBlog();
+    } else {
+      alert("This blog is all right!");
+    }
+  };
+
+  const deleteBlog = async () => {
+    setDeleting(true);
+    if (image) {
+      await storage.refFromURL(image).delete();
+    }
+    const blogRef = await db.collection("Blogs").doc(id);
+    const blogComments = (await blogRef.collection("Comments").get()).docs;
+
+    for (let index = 0; index < blogComments.length; index++) {
+      await db
+        .collection("Blogs")
+        .doc(id)
+        .collection("Comments")
+        .doc(blogComments[index].id)
+        .delete();
+    }
+
+    await blogRef.delete();
+    setDeleteOpen(true);
+    fetchBlogs();
+    setDeleting(false);
+  };
+
   const editPost = async () => {
     setCurrentID(id);
     setOpenEdit(true);
   };
   const deletePost = async () => {
     if (confirm("Are you sure to delete this Blog post?")) {
-      setDeleting(true);
-      if (image) {
-        await storage.refFromURL(image).delete();
-      }
-      const blogRef = await db.collection("Blogs").doc(id);
-      const blogComments = (await blogRef.collection("Comments").get()).docs;
-
-      for (let index = 0; index < blogComments.length; index++) {
-        await db
-          .collection("Blogs")
-          .doc(id)
-          .collection("Comments")
-          .doc(blogComments[index].id)
-          .delete();
-      }
-
-      await blogRef.delete();
-      setDeleteOpen(true);
-      fetchBlogs();
-      setDeleting(false);
+      deleteBlog();
     }
   };
 
@@ -174,76 +187,84 @@ const BlogPostListItem = ({
         delay: index - 0.2,
       }}
     >
-      {user?.id === by ? (
-        <div className={blogPostListItemStyles.menu}>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-              style: {
-                maxHeight: ITEM_HEIGHT * 4.5,
-                width: "20ch",
-              },
-            }}
-          >
-            {options.map((option) => (
-              <MenuItem
-                key={option}
-                selected={option === "Pyxis"}
-                onClick={() => {
-                  option === "Edit" ? editPost() : deletePost();
-                  handleClose();
-                }}
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                {option}
-                {option === "Edit" ? (
-                  <EditRoundedIcon fontSize="small" style={{ color: "grey" }} />
-                ) : (
-                  <DeleteRoundedIcon
-                    fontSize="small"
-                    style={{ color: "grey" }}
-                  />
-                )}
-              </MenuItem>
-            ))}
-          </Menu>
-        </div>
-      ) : (
-        <div className={blogPostListItemStyles.menu}>
-          <IconButton>
-            <ReportOutlined />
-          </IconButton>
-        </div>
-      )}
-      <motion.p
-        className={blogPostListItemStyles.topText}
-        variants={fadeWidthAnimationVariant}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{
-          duration: 0.5,
-          delay: index - 0.1,
-        }}
-      >
-        On: {timestamp?.toDate().toLocaleString()} / Likes: {likes.length} /
-        Comments: {commentCount} / Views: {views.length}
-      </motion.p>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <IconButton disabled>
+          <MoreVertIcon style={{ color: "white" }} />
+        </IconButton>
+        <motion.p
+          className={blogPostListItemStyles.topText}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: index - 0.1,
+          }}
+        >
+          On: {timestamp?.toDate().toLocaleString()} / Likes: {likes.length} /
+          Comments: {commentCount} / Views: {views.length}
+        </motion.p>
+        {user?.id === by ? (
+          <div className={blogPostListItemStyles.menu}>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              keepMounted
+              open={open}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5,
+                  width: "20ch",
+                },
+              }}
+            >
+              {options.map((option) => (
+                <MenuItem
+                  key={option}
+                  selected={option === "Pyxis"}
+                  onClick={() => {
+                    option === "Edit" ? editPost() : deletePost();
+                    handleClose();
+                  }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  {option}
+                  {option === "Edit" ? (
+                    <EditRoundedIcon
+                      fontSize="small"
+                      style={{ color: "grey" }}
+                    />
+                  ) : (
+                    <DeleteRoundedIcon
+                      fontSize="small"
+                      style={{ color: "grey" }}
+                    />
+                  )}
+                </MenuItem>
+              ))}
+            </Menu>
+          </div>
+        ) : (
+          <div className={blogPostListItemStyles.menu}>
+            <IconButton onClick={reportBlog}>
+              <ReportOutlined />
+            </IconButton>
+          </div>
+        )}
+      </div>
       {/* <ReactLinkify> */}
       <motion.p
         className={blogPostListItemStyles.title}

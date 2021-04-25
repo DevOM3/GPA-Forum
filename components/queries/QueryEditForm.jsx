@@ -56,8 +56,7 @@ const PostQuery = ({
           queryType,
         })
         .then(() => {
-          fetchQueries();
-          setQuery("");
+          // fetchQueries();
           setPosting(false);
           setUpdateOpen(true);
           handleClose();

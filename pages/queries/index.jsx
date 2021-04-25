@@ -40,6 +40,7 @@ const Queries = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [updateOpen, setUpdateOpen] = useState(false);
   const [optionOpen, setOptionOpen] = useState(false);
+  const [copyOpen, setCopyOpen] = useState(false);
   const [filter, setFilter] = useState("None");
   const [sort, setSort] = useState("Date DESC");
   const [queries, setQueries] = useState([]);
@@ -113,6 +114,15 @@ const Queries = () => {
       >
         <Alert onClose={() => setUpdateOpen(false)} severity="info">
           Query updated!
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={copyOpen}
+        autoHideDuration={6000}
+        onClose={() => setCopyOpen(false)}
+      >
+        <Alert onClose={() => setCopyOpen(false)} severity="success">
+          Query link copied!
         </Alert>
       </Snackbar>
       <Dialog
@@ -247,16 +257,17 @@ const Queries = () => {
             .map((query, index) => (
               <QueryListItem
                 index={index > 0 ? index / 7 : index}
-                key={query.id}
-                id={query.id}
-                query={query.query}
-                queryType={query.queryType}
-                by={query.by}
-                timestamp={query.timestamp}
+                key={query?.id}
+                id={query?.id}
+                query={query?.query}
+                queryType={query?.queryType}
+                by={query?.by}
+                timestamp={query?.timestamp}
                 setDeleteOpen={setDeleteOpen}
                 fetchQueries={fetchQueries}
                 setOpenEdit={setOpenEdit}
                 setCurrentID={setCurrentID}
+                setCopyOpen={setCopyOpen}
               />
             ))}
         </AnimatePresence>
