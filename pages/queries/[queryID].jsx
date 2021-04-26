@@ -357,7 +357,6 @@ const Query = () => {
             className={queryStyles.commentInput}
             onChange={(e) => setSolution(e.target.value)}
             value={solution}
-            maxLength={71}
           />
           {uploadingSolutions ? (
             <div className="progress-div">

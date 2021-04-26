@@ -383,7 +383,7 @@ const Blog = () => {
             className={blogsStyles.commentInput}
             onChange={(e) => setComment(e.target.value)}
             value={comment}
-            maxLength={71}
+            maxLength={521}
           />
           {commenting ? (
             <div className="progress-div">
