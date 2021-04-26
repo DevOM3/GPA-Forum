@@ -33,6 +33,7 @@ const Layout = ({ children }) => {
                 },
               });
             } else {
+              localStorage.clear();
               router.replace("/auth/login");
             }
           });
