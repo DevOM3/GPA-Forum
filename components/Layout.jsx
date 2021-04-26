@@ -21,16 +21,20 @@ const Layout = ({ children }) => {
           .collection("Users")
           .doc(userID)
           .onSnapshot((doc) => {
-            dispatch({
-              type: actionTypes.SET_USER,
-              user: {
-                id: doc?.id,
-                name: doc.data()?.name,
-                branch: doc.data()?.branch,
-                phno: doc.data()?.phno,
-                password: doc.data()?.password,
-              },
-            });
+            if (doc.exists) {
+              dispatch({
+                type: actionTypes.SET_USER,
+                user: {
+                  id: doc?.id,
+                  name: doc.data()?.name,
+                  branch: doc.data()?.branch,
+                  phno: doc.data()?.phno,
+                  password: doc.data()?.password,
+                },
+              });
+            } else {
+              router.replace("/auth/login");
+            }
           });
         setNoUser(false);
       } else {
