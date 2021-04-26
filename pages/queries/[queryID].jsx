@@ -336,6 +336,7 @@ const Query = () => {
           {solutions.map((solution) => (
             <Solution
               postID={router.query.queryID}
+              key={solution?.id}
               id={solution?.id}
               by={solution?.by}
               solution={solution?.solution}

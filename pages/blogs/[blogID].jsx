@@ -12,7 +12,7 @@ import {
   SendRounded,
   StopOutlined,
 } from "@material-ui/icons";
-import { db, firebase } from "../../services/firebase";
+import { db, firebase, storage } from "../../services/firebase";
 import { motion } from "framer-motion";
 import {
   fadeAnimationVariant,
@@ -353,6 +353,7 @@ const Blog = () => {
           </p> */}
           {comments.map((comment) => (
             <Comment
+              key={comment?.id}
               by={comment?.by}
               comment={comment.comment}
               timestamp={comment?.timestamp?.toDate().toLocaleString()}
