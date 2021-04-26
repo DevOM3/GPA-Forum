@@ -25,7 +25,17 @@ const Solution = ({ postID, id, by, solution, timestamp, upVotes }) => {
     db.collection("Users")
       .doc(by)
       .get()
-      .then((data) => setUserData({ id: data.id, name: data.data().name }));
+      .then((data) => {
+        if (data.exists) {
+          setUserData({ id: data.id, name: data.data().name });
+        } else {
+          db.collection("Queries")
+            .doc(router.query.queryID)
+            .collection("Solutions")
+            .doc(id)
+            .delete();
+        }
+      });
   }, []);
 
   const upVote = () => {

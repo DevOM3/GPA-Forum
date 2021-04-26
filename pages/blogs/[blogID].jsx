@@ -126,23 +126,25 @@ const Blog = () => {
       .doc(router.query.blogID)
       .onSnapshot((snapshot) => {
         setBlogData({
-          title: snapshot.data().title,
-          text: snapshot.data().text,
-          by: snapshot.data().by,
-          timestamp: snapshot.data().timestamp,
-          likes: snapshot.data().likes,
-          views: snapshot.data().views,
-          image: snapshot.data().image,
+          title: snapshot.data()?.title,
+          text: snapshot.data()?.text,
+          by: snapshot.data()?.by,
+          timestamp: snapshot.data()?.timestamp,
+          likes: snapshot.data()?.likes,
+          views: snapshot.data()?.views,
+          image: snapshot.data()?.image,
         });
         db.collection("Users")
-          .doc(snapshot.data().by)
+          .doc(snapshot.data()?.by)
           .get()
-          .then((data) =>
-            setUserData({
-              id: data?.id,
-              name: data.data()?.name,
-            })
-          );
+          .then((data) => {
+            if (data.exists) {
+              setUserData({
+                id: data?.id,
+                name: data.data()?.name,
+              });
+            }
+          });
       });
     loadComments();
 
@@ -158,14 +160,21 @@ const Blog = () => {
     if ("speechSynthesis" in window) {
       speechSynthesis && speechSynthesis.cancel();
 
-      const speechSynthesis = new SpeechSynthesisUtterance();
-      speechSynthesis.text = `Title- ${blogData?.title}.By ${userData?.name} ${blogData?.text}`;
-      speechSynthesis.addEventListener("end", () => setSpeechState(""));
-      speechSynthesis.volume = 1;
-      speechSynthesis.rate = 0.8;
-      speechSynthesis.pitch = 1;
-      speechSynthesis.lang = "en-IN";
-      window.speechSynthesis.speak(speechSynthesis);
+      const speech = new SpeechSynthesisUtterance();
+      speech.text = `Title- ${blogData?.title}. By ${userData?.name}. ${blogData?.text}`;
+      speech.addEventListener("end", () => setSpeechState(""));
+      speech.voice = speechSynthesis
+        .getVoices()
+        .filter(
+          (voice) =>
+            voice.name.includes(
+              "Microsoft Zira Desktop - English (United States)"
+            ) || voice.name.includes("English India")
+        )[0];
+      speech.voiceURI = "native";
+      speech.volume = 1;
+      speech.lang = "en-IN";
+      window.speechSynthesis.speak(speech);
       setSpeechState("Speaking");
     } else {
       alert("Sorry, your browser doesn't support this feature!");
@@ -354,6 +363,7 @@ const Blog = () => {
           {comments.map((comment) => (
             <Comment
               key={comment?.id}
+              id={comment?.id}
               by={comment?.by}
               comment={comment.comment}
               timestamp={comment?.timestamp?.toDate().toLocaleString()}

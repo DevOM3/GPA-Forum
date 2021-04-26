@@ -5,15 +5,27 @@ import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import commentStyles from "../../styles/components/blogs/Comment.module.css";
 import moment from "moment";
+import { useRouter } from "next/router";
 
-const Comment = ({ by, comment, timestamp }) => {
+const Comment = ({ id, by, comment, timestamp }) => {
+  const router = useRouter();
   const [user, setUser] = useState({});
 
   useEffect(() => {
     db.collection("Users")
       .doc(by)
       .get()
-      .then((data) => setUser({ id: data.id, name: data.data().name }));
+      .then((data) => {
+        if (data.exists) {
+          setUser({ id: data?.id, name: data.data()?.name });
+        } else {
+          db.collection("Blogs")
+            .doc(router.query.blogID)
+            .collection("Comments")
+            .doc(id)
+            .delete();
+        }
+      });
   }, []);
 
   return (
