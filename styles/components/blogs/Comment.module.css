@@ -28,6 +28,10 @@
   text-align: justify;
 }
 
+.commentText a {
+  color: #1234ef;
+}
+
 .timestamp {
   margin: 0;
   margin-bottom: 2px;
