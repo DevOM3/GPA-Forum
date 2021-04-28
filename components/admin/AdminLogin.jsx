@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { IconButton, CircularProgress } from "@material-ui/core";
-import loginStyles from "../../styles/components/admin/Login.module.css";
+import loginStyles from "../../styles/pages/auth/Login.module.css";
 import {
   LockOutlined,
   PhoneIphoneOutlined,
