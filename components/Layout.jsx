@@ -44,7 +44,8 @@ const Layout = ({ children }) => {
           router.pathname !== "/" &&
           router.pathname !== "/auth/login" &&
           router.pathname !== "/auth/signup" &&
-          router.pathname !== "/auth/forgot-password"
+          router.pathname !== "/auth/forgot-password" &&
+          router.pathname !== "/admin"
         ) {
           router.replace("/auth/login");
         } else {
@@ -64,6 +65,15 @@ const Layout = ({ children }) => {
     ) {
       setNoUser(false);
       router.replace("/queries");
+    } else if (
+      !user &&
+      router.pathname !== "/auth/forgot-password" &&
+      router.pathname !== "/auth/signup" &&
+      router.pathname !== "/auth/login" &&
+      router.pathname !== "/admin" &&
+      router.pathname !== "/"
+    ) {
+      router.replace("/auth/login");
     }
     if (user) {
       dispatch({
@@ -78,6 +88,7 @@ const Layout = ({ children }) => {
       (router.pathname === "/auth/forgot-password" ||
         router.pathname === "/auth/signup" ||
         router.pathname === "/auth/login" ||
+        router.pathname === "/admin" ||
         router.pathname === "/")) ? (
     <div>
       <Head>
@@ -114,7 +125,7 @@ const Layout = ({ children }) => {
         router.pathname !== "/" &&
         router.pathname !== "/admin" && <Navbar />}
       {children}
-      <Footer />
+      {router.pathname !== "/admin" && <Footer />}
     </div>
   ) : (
     <div
