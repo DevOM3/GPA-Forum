@@ -76,7 +76,7 @@ const Layout = ({ children }) => {
     <div>
       <Head>
         <title>
-          GPA Forum |{" "}
+          GPAForum |{" "}
           {router.pathname === "/auth/forgot-password"
             ? "Forgot Password"
             : router.pathname === "/auth/signup"
