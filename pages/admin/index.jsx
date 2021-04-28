@@ -1,14 +1,40 @@
 import styles from "../../styles/components/admin/Dashboard.module.css";
 import React, { useState } from "react";
+import Login from "../../components/admin/AdminLogin";
 
 const Dashboard = () => {
   const [toggle, setToggle] = useState(false);
+  const [id, setID] = useState("");
+  const [password, setPassword] = useState("");
+  const [loggedIn,setLoggedIn] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   const onToggle = (e) => {
     setToggle(!toggle);
   };
+  const ID = "16287689"
+  const PASSWORD = "qwertyuiop1234567890"
+  const login = (e) => {
+    e.preventDefault();
+    setLoggingIn(true)
+    if(id === ID && password === PASSWORD){
+        setLoggedIn(true);
+    }
+    else if(id !== ID || password !== PASSWORD){
+        alert("Your username or password does not match")
+    }
+  };
 
-  return (
+  return loggedIn === false ? (
+      <Login
+      id={id}
+      setID={setID}
+      password={password}
+      setPassword={setPassword}
+      login={login}
+      setLoggingIn={setLoggingIn}
+      />
+    ) : (
     <div className={styles.container}>
       <span className={styles.hamburger} onClick={onToggle}>
         &#9776;
