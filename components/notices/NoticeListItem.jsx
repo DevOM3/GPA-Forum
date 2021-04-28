@@ -55,7 +55,7 @@ const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
       >
         {timestamp?.toDate().toLocaleString()}
       </motion.p>
-      <motion.p
+      <motion.pre
         className={noticeListItemStyles.notice}
         variants={fadeWidthAnimationVariant}
         initial="hidden"
@@ -67,7 +67,7 @@ const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
         }}
       >
         <Linkify>{noticeText}</Linkify>
-      </motion.p>
+      </motion.pre>
       <p className={noticeListItemStyles.department}>{department}</p>
     </motion.div>
   );
