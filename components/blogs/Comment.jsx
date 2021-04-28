@@ -7,6 +7,8 @@ import commentStyles from "../../styles/components/blogs/Comment.module.css";
 import moment from "moment";
 import { useRouter } from "next/router";
 import ReactLinkify from "react-linkify";
+import { MoreVertOutlined } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core";
 
 const Comment = ({ id, by, comment, timestamp }) => {
   const router = useRouter();
@@ -31,19 +33,26 @@ const Comment = ({ id, by, comment, timestamp }) => {
 
   return (
     <div className={commentStyles.comment}>
-      <Link href={`/profile/${user.id}`}>
-        <a className={commentStyles.by}>{user?.name}</a>
-      </Link>
-      <p className={commentStyles.timestamp}>{moment(timestamp).fromNow()}</p>
-      <ReactLinkify
-        componentDecorator={(decoratedHref, decoratedText, key) => (
-          <a target="blank" href={decoratedHref} key={key}>
-            {decoratedText}
-          </a>
-        )}
-      >
-        <p className={commentStyles.commentText}>{comment}</p>
-      </ReactLinkify>
+      <div className={commentStyles.left}>
+        <Link href={`/profile/${user.id}`}>
+          <a className={commentStyles.by}>{user?.name}</a>
+        </Link>
+        <p className={commentStyles.timestamp}>{moment(timestamp).fromNow()}</p>
+        <ReactLinkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
+          <p className={commentStyles.commentText}>{comment}</p>
+        </ReactLinkify>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <IconButton>
+          <MoreVertOutlined />
+        </IconButton>
+      </div>
     </div>
   );
 };

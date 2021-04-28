@@ -5,10 +5,16 @@
   border-radius: 7px;
   margin-top: 7px;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
   background: white;
   padding: 7px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex: 1;
 }
 
 .by {
