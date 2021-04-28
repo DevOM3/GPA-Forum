@@ -14,7 +14,7 @@ import {
   pageAnimationVariant,
 } from "../../services/utilities";
 
-const Login = ({id, setID, password, setPassword, login, loggingIn}) => {  
+const Login = ({ id, setID, password, setPassword, login, loggingIn }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
