@@ -7,7 +7,7 @@ import solutionStyles from "../../styles/components/blogs/Comment.module.css";
 import moment from "moment";
 import { useStateValue } from "../../context/StateProvider";
 import { Badge, withStyles, IconButton } from "@material-ui/core";
-import { ThumbUp, ThumbUpOutlined } from "@material-ui/icons";
+import { MoreVertOutlined, ThumbUp, ThumbUpOutlined } from "@material-ui/icons";
 import ReactLinkify from "react-linkify";
 
 const StyledBadge = withStyles((theme) => ({
@@ -72,25 +72,27 @@ const Solution = ({ postID, id, by, solution, timestamp, upVotes }) => {
           <p className={solutionStyles.commentText}>{solution}</p>
         </ReactLinkify>
       </div>
-      <IconButton
-        style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-        onClick={upVote}
-      >
-        <StyledBadge
-          badgeContent={upVotes?.length}
-          color="secondary"
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "left",
-          }}
-        >
-          {upVotes?.includes(user?.id) ? (
-            <ThumbUp style={{ marginLeft: 4 }} color="primary" />
-          ) : (
-            <ThumbUpOutlined style={{ marginLeft: 4 }} />
-          )}
-        </StyledBadge>
-      </IconButton>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <IconButton style={{ padding: 4 }} onClick={upVote}>
+          <MoreVertOutlined />
+        </IconButton>
+        <IconButton style={{ padding: 4 }} onClick={upVote}>
+          <StyledBadge
+            badgeContent={upVotes?.length}
+            color="secondary"
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            {upVotes?.includes(user?.id) ? (
+              <ThumbUp style={{ marginLeft: 4 }} color="primary" />
+            ) : (
+              <ThumbUpOutlined style={{ marginLeft: 4 }} />
+            )}
+          </StyledBadge>
+        </IconButton>
+      </div>
     </div>
   );
 };
