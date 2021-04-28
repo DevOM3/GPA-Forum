@@ -33,7 +33,7 @@ const Transition = React.forwardRef((props, ref) => {
 });
 
 const Queries = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, searchString }, dispatch] = useStateValue();
   const [open, setDialogOpen] = useState(false);
   const [currentID, setCurrentID] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
@@ -253,6 +253,15 @@ const Queries = () => {
                 : b.timestamp < a.timestamp
                 ? -1
                 : 0
+            )
+            .filter(
+              (query) =>
+                query?.query
+                  .toLowerCase()
+                  .includes(searchString.toLowerCase()) ||
+                query?.queryType
+                  .toLowerCase()
+                  .includes(searchString.toLowerCase())
             )
             .map((query, index) => (
               <QueryListItem

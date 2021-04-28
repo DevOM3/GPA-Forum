@@ -28,7 +28,7 @@ const Transition = React.forwardRef((props, ref) => {
 });
 
 const Notices = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, searchString }, dispatch] = useStateValue();
   const [open, setDialogOpen] = useState(false);
   const [currentID, setCurrentID] = useState("");
   const [openEdit, setOpenEdit] = useState(false);
@@ -196,6 +196,15 @@ const Notices = () => {
                 : b.timestamp < a.timestamp
                 ? -1
                 : 0
+            )
+            .filter(
+              (notice) =>
+                notice?.notice
+                  .toLowerCase()
+                  .includes(searchString.toLowerCase()) ||
+                notice?.department
+                  .toLowerCase()
+                  .includes(searchString.toLowerCase())
             )
             .map((notice, index) => (
               <NoticeListItem

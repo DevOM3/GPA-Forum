@@ -65,6 +65,12 @@ const Layout = ({ children }) => {
       setNoUser(false);
       router.replace("/queries");
     }
+    if (user) {
+      dispatch({
+        type: actionTypes.SET_SEARCH_STRING,
+        searchString: "",
+      });
+    }
   }, [user, router.pathname]);
 
   return user ||

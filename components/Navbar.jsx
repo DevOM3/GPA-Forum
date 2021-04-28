@@ -15,10 +15,11 @@ import navbarStyles from "../styles/components/Navbar.module.css";
 import Link from "next/link";
 import { useStateValue } from "../context/StateProvider";
 import { useRouter } from "next/router";
+import { actionTypes } from "../context/reducer";
 
 const Navbar = () => {
   const router = useRouter();
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, searchString }, dispatch] = useStateValue();
   const [showMe, setShowMe] = useState(false);
 
   const toggle = (e) => {
@@ -125,26 +126,38 @@ const Navbar = () => {
         </ul>
       </motion.div>
 
-      {/* <motion.div
+      <motion.div
         className={navbarStyles.cont}
         variants={mobileNavbarAnimationVariant}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        <div className={navbarStyles.search}>
-          <div className={navbarStyles.searchbox}>
+        <div
+          className={navbarStyles.search}
+          onClick={() => document.getElementById("search").click()}
+        >
+          <div
+            className={navbarStyles.searchbox}
+            onClick={() => document.getElementById("search").click()}
+          >
             <input
               type="text"
+              id="search"
               placeholder="Search"
               className={navbarStyles.searchtext}
+              value={searchString}
+              onChange={(e) =>
+                dispatch({
+                  type: actionTypes.SET_SEARCH_STRING,
+                  searchString: e.target.value,
+                })
+              }
             />
-            <a href="#" className={navbarStyles.searchbtn}>
-              <SearchRounded />
-            </a>
+            <SearchRounded className={navbarStyles.searchbtn} />
           </div>
         </div>
-      </motion.div> */}
+      </motion.div>
 
       <IconButton
         id="toggle-button"

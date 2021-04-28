@@ -21,7 +21,7 @@ function Alert(props) {
 }
 
 const BlogPage = () => {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user, searchString }, dispatch] = useStateValue();
   const [open, setDialogOpen] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [openBlogCopy, setOpenBlogCopy] = useState(false);
@@ -130,26 +130,32 @@ const BlogPage = () => {
         </IconButton>
       </motion.div>
       <AnimatePresence>
-        {blogs.map((blog, index) => (
-          <>
-            <BlogPostListItem
-              index={index > 0 ? index / 7 : index}
-              id={blog?.id}
-              key={blog?.id}
-              image={blog?.image}
-              title={blog?.title}
-              text={blog?.text}
-              timestamp={blog?.timestamp}
-              by={blog?.by}
-              handleClickBlogCopy={handleClickBlogCopy}
-              setDeleteOpen={setDeleteOpen}
-              fetchBlogs={fetchBlogs}
-              setCurrentID={setCurrentID}
-              setOpenEdit={setOpenEdit}
-            />
-            <Divider style={{ width: "80%", margin: "auto" }} />
-          </>
-        ))}
+        {blogs
+          .filter(
+            (blog) =>
+              blog?.title.toLowerCase().includes(searchString.toLowerCase()) ||
+              blog?.text.toLowerCase().includes(searchString.toLowerCase())
+          )
+          .map((blog, index) => (
+            <>
+              <BlogPostListItem
+                index={index > 0 ? index / 7 : index}
+                id={blog?.id}
+                key={blog?.id}
+                image={blog?.image}
+                title={blog?.title}
+                text={blog?.text}
+                timestamp={blog?.timestamp}
+                by={blog?.by}
+                handleClickBlogCopy={handleClickBlogCopy}
+                setDeleteOpen={setDeleteOpen}
+                fetchBlogs={fetchBlogs}
+                setCurrentID={setCurrentID}
+                setOpenEdit={setOpenEdit}
+              />
+              <Divider style={{ width: "80%", margin: "auto" }} />
+            </>
+          ))}
       </AnimatePresence>
     </motion.div>
   );
