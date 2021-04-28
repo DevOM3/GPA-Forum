@@ -80,7 +80,7 @@ const Notices = () => {
 
   useEffect(() => {
     if (user) {
-        fetchNotices();
+      fetchNotices();
     }
   }, [user]);
 

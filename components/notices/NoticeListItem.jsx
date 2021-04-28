@@ -18,13 +18,7 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-const NoticeListItem = ({
-  index,
-  id,
-  notice,
-  department,
-  timestamp,
-}) => {
+const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
   const [noticeText, setNoticeText] = useState(notice);
   useEffect(() => {
     db.collection("Notices")
@@ -36,10 +30,9 @@ const NoticeListItem = ({
       });
   }, []);
 
-
   return (
     <motion.div
-      className={noticeListItemStyles.queryListItem}
+      className={noticeListItemStyles.noticeListItem}
       variants={fadeWidthAnimationVariant}
       initial="hidden"
       animate="visible"
@@ -49,33 +42,33 @@ const NoticeListItem = ({
         delay: index - 0.2,
       }}
     >
-          <motion.p
-            className={noticeListItemStyles.date}
-            variants={fadeWidthAnimationVariant}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{
-              duration: 0.5,
-              delay: index - 0.1,
-            }}
-          >
-            {timestamp?.toDate().toLocaleString()}
-          </motion.p>
-          <motion.p
-            className={noticeListItemStyles.notice}
-            variants={fadeWidthAnimationVariant}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            transition={{
-              duration: 0.5,
-              delay: index,
-            }}
-          >
-            <Linkify>{noticeText}</Linkify>
-          </motion.p>
-          <p className={noticeListItemStyles.department}>{department}</p>
+      <motion.p
+        className={noticeListItemStyles.date}
+        variants={fadeWidthAnimationVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{
+          duration: 0.5,
+          delay: index - 0.1,
+        }}
+      >
+        {timestamp?.toDate().toLocaleString()}
+      </motion.p>
+      <motion.p
+        className={noticeListItemStyles.notice}
+        variants={fadeWidthAnimationVariant}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{
+          duration: 0.5,
+          delay: index,
+        }}
+      >
+        <Linkify>{noticeText}</Linkify>
+      </motion.p>
+      <p className={noticeListItemStyles.department}>{department}</p>
     </motion.div>
   );
 };
