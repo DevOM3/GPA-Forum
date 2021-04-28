@@ -1,0 +1,76 @@
+.student_profile {
+  display: flex;
+  border: 3px solid #1a2226;
+  background: #222d32;
+  margin: 0px 350px;
+  margin-top: 10px;
+  color: #fff;
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  border-radius: 5px;
+}
+
+.delete_icon {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  right: 366px;
+  padding: 5px;
+  color: #fff;
+  background: #374850;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.delete_icon:hover {
+  color: #e84118;
+  background: #fdfdfd;
+}
+
+.profile_info {
+  padding: 10px;
+}
+
+.student_name,
+.student_branch,
+.student_cont {
+  padding: 0;
+  margin: 0;
+  margin: 2px;
+}
+
+@media only screen and (max-width: 1400px) and (min-width: 1200px) {
+  .student_profile {
+    margin: 5px 280px;
+  }
+  .delete_icon {
+    right: 281px;
+  }
+}
+
+@media only screen and (max-width: 1199px) and (min-width: 800px) {
+  .student_profile {
+    margin: 5px 210px;
+  }
+  .delete_icon {
+    right: 211px;
+  }
+}
+
+@media only screen and (max-width: 800px) and (min-width: 0px) {
+  .student_profile {
+    margin: 5px 125px;
+  }
+  .delete_icon {
+    right: 126px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .student_profile {
+    margin: 5px 10px;
+  }
+  .delete_icon {
+    right: 11px;
+  }
+}

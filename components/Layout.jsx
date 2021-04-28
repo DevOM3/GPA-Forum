@@ -111,7 +111,8 @@ const Layout = ({ children }) => {
       {router.pathname !== "/auth/forgot-password" &&
         router.pathname !== "/auth/signup" &&
         router.pathname !== "/auth/login" &&
-        router.pathname !== "/" && <Navbar />}
+        router.pathname !== "/" &&
+        router.pathname !== "/admin" && <Navbar />}
       {children}
       <Footer />
     </div>

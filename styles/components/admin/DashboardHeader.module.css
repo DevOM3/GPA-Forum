@@ -1,0 +1,53 @@
+.path {
+  border-bottom: 2px solid #e1e3e3;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 0 28px 16px;
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.path_link {
+  color: #7c7f85;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.admin_icon {
+  margin-right: 5px;
+}
+
+/* Serach Box */
+.search {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+  margin-top: 2px;
+  border-bottom: 2px solid #e1e3e3;
+}
+
+.search_group {
+  width: fit-content;
+  border-radius: 30px;
+  background: #374850;
+  border: 1px solid #374850;
+  box-shadow: 0 0 5px rgb(0 0 0 / 20%);
+}
+
+.search_group:hover > .icon {
+  color: #fff;
+}
+
+.search_box {
+  background: none;
+  border: none;
+  outline: none;
+  color: #fff;
+  padding: 4px 6px;
+}
+
+.icon {
+  padding: 1px 6px;
+  color: #999;
+}

@@ -1,5 +1,11 @@
-import styles from "../../styles/components/admin/Dashboard.module.css";
+import styles from "../../styles/components/admin/AdminDashboard.module.css";
 import React, { useState } from "react";
+
+// imports dashboard components
+import Profile from "../../components/admin/Profile";
+import Notice from "../../components/admin/Notice";
+import Queries from "../../components/admin/Query";
+import Blogs from "../../components/admin/Blogs";
 
 const Dashboard = () => {
   const [toggle, setToggle] = useState(false);
@@ -7,6 +13,9 @@ const Dashboard = () => {
   const onToggle = (e) => {
     setToggle(!toggle);
   };
+
+  // Open dashboard
+  const [page, setPage] = useState("Notice");
 
   return (
     <div className={styles.container}>
@@ -19,7 +28,7 @@ const Dashboard = () => {
           className={styles.admin}
           style={{
             left: toggle ? "0px" : "-230px",
-            "z-index": toggle ? "3" : "1",
+            zIndex: toggle ? "3" : "1",
           }}
         >
           <div className={styles.admin_dash_name}>
@@ -28,21 +37,19 @@ const Dashboard = () => {
           </div>
 
           <div className={styles.profile}>
-            <div className={styles.profile_picture}>DK</div>
-            <p className={styles.profile_name}>Dhananjay Kuber</p>
-          </div>
-
-          <div className={styles.search}>
-            <div className={styles.search_group}>
-              <input
-                type="text"
-                placeholder="Search..."
-                className={styles.search_box}
-              />
-              <span className={styles.icon}>
-                <i className="fa fa-search" aria-hidden="true"></i>
-              </span>
-            </div>
+            <div className={styles.profile_picture}>A</div>
+            <p className={styles.profile_name} style={{ marginRight: "10px" }}>
+              GPA Admin
+            </p>
+            <p
+              className={styles.dot}
+              style={{
+                background: "green",
+                width: "9px",
+                height: "9px",
+                borderRadius: "16px",
+              }}
+            ></p>
           </div>
 
           <div className={styles.main_nav_title}>
@@ -50,19 +57,35 @@ const Dashboard = () => {
           </div>
 
           <div className={styles.admin_links}>
-            <div className={styles.link}>
+            <div
+              className={styles.link}
+              style={{ borderLeftColor: page === "Queries" && "#367fa9" }}
+              onClick={() => setPage("Queries")}
+            >
               <i className="fa fa-comments"></i>
-              <p className={styles.link_name}>Forum</p>
+              <p className={styles.link_name}>Queries</p>
             </div>
-            <div className={styles.link}>
+            <div
+              className={styles.link}
+              style={{ borderLeftColor: page === "Blogs" && "#367fa9" }}
+              onClick={() => setPage("Blogs")}
+            >
               <i className="fab fa-blogger"></i>
               <p className={styles.link_name}>Blogs</p>
             </div>
-            <div className={styles.link}>
+            <div
+              className={styles.link}
+              style={{ borderLeftColor: page === "Notice" && "#367fa9" }}
+              onClick={() => setPage("Notice")}
+            >
               <i className="fa fa-comment-medical"></i>
               <p className={styles.link_name}>Notice</p>
             </div>
-            <div className={styles.link}>
+            <div
+              className={styles.link}
+              style={{ borderLeftColor: page === "Profiles" && "#367fa9" }}
+              onClick={() => setPage("Profiles")}
+            >
               <i className="fas fa-user-circle"></i>
               <p className={styles.link_name}>Profiles</p>
             </div>
@@ -70,26 +93,17 @@ const Dashboard = () => {
         </div>
 
         <div className={styles.dashboard}>
-          {/* content here */}
-
-          <div className={styles.path}>
-            <i className={`fas fa-user-shield ${styles.admin_icon}`}></i>Admin/
-            <span className={styles.path_link}>Notice</span>
-          </div>
-
-          <h2 className={styles.path_title}>NOTICE FORM</h2>
-
-          <form action="" className={styles.notice_form}>
-            <div className={styles.notice_input_grp}>
-              <input
-                type="text"
-                placeholder="Type notice here..."
-                className={styles.notice_input}
-              />
-              <i class="fas fa-user-edit"></i>
-            </div>
-            <button className={styles.notice_submit}>Add notice</button>
-          </form>
+          {page === "Queries" ? (
+            <Queries />
+          ) : page === "Blogs" ? (
+            <Blogs />
+          ) : page === "Notice" ? (
+            <Notice />
+          ) : page === "Profiles" ? (
+            <Profile />
+          ) : (
+            <Profile />
+          )}
         </div>
       </div>
     </div>
