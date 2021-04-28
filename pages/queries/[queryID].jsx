@@ -245,7 +245,7 @@ const Query = () => {
             </a>
           )}
         >
-          <motion.p
+          <motion.pre
             className={queryStyles.query}
             variants={fadeAnimationVariant}
             initial="hidden"
@@ -257,7 +257,7 @@ const Query = () => {
             }}
           >
             {queryData?.query}
-          </motion.p>
+          </motion.pre>
         </ReactLinkify>
         <p className={queryStyles.queryType}>{queryData?.queryType}</p>
         <motion.div
