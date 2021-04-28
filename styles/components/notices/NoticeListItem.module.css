@@ -37,10 +37,6 @@
   padding-left: 11px;
   font-size: 16px;
   font-family: "Poppins", sans-serif;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .department {
