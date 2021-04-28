@@ -6,6 +6,7 @@ import { useStateValue } from "../context/StateProvider";
 import { db } from "../services/firebase";
 import { CircularProgress } from "@material-ui/core";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Layout = ({ children }) => {
   const router = useRouter();
@@ -73,7 +74,38 @@ const Layout = ({ children }) => {
         router.pathname === "/auth/login" ||
         router.pathname === "/")) ? (
     <div>
-      <Navbar />
+      <Head>
+        <title>
+          GPA Forum |{" "}
+          {router.pathname === "/auth/forgot-password"
+            ? "Forgot Password"
+            : router.pathname === "/auth/signup"
+            ? "Sign Up"
+            : router.pathname === "/auth/login"
+            ? "Login"
+            : router.pathname === "/queries" ||
+              router.pathname === "/queries/[queryID]"
+            ? "Queries"
+            : router.pathname === "/blogs" ||
+              router.pathname === "/blogs/[blogID]"
+            ? "Blogs"
+            : router.pathname === "/profile" ||
+              router.pathname === "/profile/[userID]"
+            ? "Profile"
+            : router.pathname === "/notices"
+            ? "Notices"
+            : router.pathname === "/admin"
+            ? "Admin"
+            : router.pathname === "/"
+            ? "Home"
+            : ""}
+        </title>
+        <link rel="icon" href="/images/logo.png" />
+      </Head>
+      {router.pathname !== "/auth/forgot-password" &&
+        router.pathname !== "/auth/signup" &&
+        router.pathname !== "/auth/login" &&
+        router.pathname !== "/" && <Navbar />}
       {children}
       <Footer />
     </div>
@@ -87,6 +119,9 @@ const Layout = ({ children }) => {
         alignItems: "center",
       }}
     >
+      <Head>
+        <title>GPA Forum</title>
+      </Head>
       <CircularProgress style={{ color: "black" }} />
     </div>
   );

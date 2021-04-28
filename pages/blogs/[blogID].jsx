@@ -28,6 +28,7 @@ import Comment from "../../components/blogs/Comment";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { report } from "../../services/report";
+import ShowMoreText from "react-show-more-text";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;

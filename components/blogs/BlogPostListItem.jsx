@@ -112,7 +112,7 @@ const BlogPostListItem = ({
   const sharePost = () => {
     var dummy = document.createElement("textarea");
     document.body.appendChild(dummy);
-    dummy.value = `${window.location.hostname}/blogs/${id}`;
+    dummy.value = `${window.location}/blogs/${id}`;
     dummy.select();
     document.execCommand("copy");
     document.body.removeChild(dummy);

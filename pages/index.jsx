@@ -1,5 +1,4 @@
 import { PersonOutlineOutlined } from "@material-ui/icons";
-import Head from "next/head";
 import { useEffect } from "react";
 import { useState } from "react";
 import styles from "../styles/pages/Home.module.css";
@@ -71,10 +70,6 @@ const Home = () => {
       animate="visible"
       exit="exit"
     >
-      <Head>
-        <title>GPA Forum</title>
-        <link rel="icon" href="/images/logo.png" />
-      </Head>
       <div className={styles.image_and_title}>
         <motion.img
           src="/images/logo.png"
