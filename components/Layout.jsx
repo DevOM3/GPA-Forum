@@ -88,7 +88,6 @@ const Layout = ({ children }) => {
     router.pathname !== "/auth/forgot-password" &&
     router.pathname !== "/auth/signup" &&
     router.pathname !== "/auth/login" &&
-    router.pathname !== "/admin" &&
     router.pathname !== "/") ||
     (noUser &&
       (router.pathname === "/auth/forgot-password" ||

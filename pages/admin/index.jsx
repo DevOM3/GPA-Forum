@@ -7,6 +7,7 @@ import Profile from "../../components/admin/Profile";
 import Notice from "../../components/admin/Notice";
 import Queries from "../../components/admin/Query";
 import Blogs from "../../components/admin/Blogs";
+import { useEffect } from "react";
 
 const Dashboard = () => {
   const [toggle, setToggle] = useState(false);
@@ -33,6 +34,10 @@ const Dashboard = () => {
       alert("Your username or password does not match");
     }
   };
+
+  useEffect(() => {
+    window.innerWidth <= 1000 && setToggle(false);
+  }, [page]);
 
   return loggedIn ? (
     <div className={styles.container}>
