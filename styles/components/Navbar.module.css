@@ -131,8 +131,8 @@
 .hamburger {
   display: none !important;
   position: absolute !important;
-  right: 25px !important;
-  top: 10px !important;
+  right: 7px !important;
+  top: 12.5px !important;
   font-size: 2.2rem !important;
   transition: 571ms linear !important;
 }
@@ -169,11 +169,11 @@
     padding: 11px !important;
   }
   .logo {
-    padding: 15px;
+    padding-left: 4px !important;
+    padding-top: 4px !important;
+    padding-bottom: 15px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
     background: none;
   }
   .links .search {
