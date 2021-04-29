@@ -11,12 +11,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 51px;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
 }
 
 .title {
   font-family: "RocknRoll One", sans-serif;
   text-align: center;
+  color: white;
 }
 
 .top_text {
@@ -85,6 +89,20 @@
 @media only screen and (min-width: 550px) {
   .button:hover {
     animation: buttonAnimation 1515ms infinite;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .image_and_title {
+    border-bottom-left-radius: 40%;
+    border-bottom-right-radius: 40%;
+    padding-top: 51px;
+    padding-bottom: 51px;
+  }
+}
+@media only screen and (max-width: 300px) {
+  .image_and_title {
+    border-bottom-left-radius: 30%;
+    border-bottom-right-radius: 30%;
   }
 }
 
