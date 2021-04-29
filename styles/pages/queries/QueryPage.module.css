@@ -124,6 +124,21 @@
   margin-left: 11px;
 }
 
+.sortButton {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid lightgrey;
+  border-radius: 7px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  cursor: pointer;
+  position: sticky;
+  left: 0;
+}
+
 @media screen and (max-width: 775px) {
   .queryCard {
     width: 100%;
