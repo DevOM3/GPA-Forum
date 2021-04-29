@@ -137,11 +137,10 @@ const BlogPage = () => {
               blog?.text.toLowerCase().includes(searchString.toLowerCase())
           )
           .map((blog, index) => (
-            <>
+            <div key={blog?.id}>
               <BlogPostListItem
                 index={index > 0 ? index / 7 : index}
                 id={blog?.id}
-                key={blog?.id}
                 image={blog?.image}
                 title={blog?.title}
                 text={blog?.text}
@@ -154,7 +153,7 @@ const BlogPage = () => {
                 setOpenEdit={setOpenEdit}
               />
               <Divider style={{ width: "80%", margin: "auto" }} />
-            </>
+            </div>
           ))}
       </AnimatePresence>
     </motion.div>

@@ -49,6 +49,13 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (window.innerWidth <= 1020) {
+      setShowMe(false);
+      document.getElementById("toggle-button").style.transform = "rotate(0deg)";
+    }
+  }, [router.pathname]);
+
   return (
     <motion.nav
       className={navbarStyles.nav}

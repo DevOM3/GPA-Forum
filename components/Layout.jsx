@@ -74,6 +74,7 @@ const Layout = ({ children }) => {
       router.pathname !== "/"
     ) {
       router.replace("/auth/login");
+      setNoUser(true);
     }
     if (user) {
       dispatch({
@@ -83,7 +84,12 @@ const Layout = ({ children }) => {
     }
   }, [user, router.pathname]);
 
-  return user ||
+  return (user &&
+    router.pathname !== "/auth/forgot-password" &&
+    router.pathname !== "/auth/signup" &&
+    router.pathname !== "/auth/login" &&
+    router.pathname !== "/admin" &&
+    router.pathname !== "/") ||
     (noUser &&
       (router.pathname === "/auth/forgot-password" ||
         router.pathname === "/auth/signup" ||
