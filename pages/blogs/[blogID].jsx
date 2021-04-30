@@ -165,10 +165,15 @@ const Blog = () => {
       const speech = new SpeechSynthesisUtterance(
         `Title- ${blogData?.title}. By ${userData?.name}. ${blogData?.text}`
       );
-      const voices = window.speechSynthesis.getVoices();
-      speech.voice = voices[0];
       speech.rate = 0.7;
       speech.pitch = 1;
+      speech.voice = speechSynthesis
+        .getVoices()
+        .filter(
+          (voice) =>
+            voice.name.toLocaleLowerCase().includes("zira") ||
+            voice.name.toLocaleLowerCase().includes("india")
+        )[0];
       speech.addEventListener("end", () => setSpeechState(""));
       window.speechSynthesis.speak(speech);
       setSpeechState("Speaking");
