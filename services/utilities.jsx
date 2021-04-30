@@ -244,17 +244,20 @@ export const sizeAnimationVariant = {
   },
 };
 
-// export const svgVariant = {
-//   initial={    opacity: 0,
-//     pathLength: 0,
-// },
-//   animate={
-//     opacity: 1,
-//     pathLength: 1,
-//     transition: {
-//       duration: 2,
-//       ease: "easeInOut",
-//       delay: 4,
-//     }
-//   }
-// };
+import { makeStyles } from "@material-ui/core";
+import { Tooltip } from "@material-ui/core";
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
+export const BootstrapTooltip = (props) => {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+};

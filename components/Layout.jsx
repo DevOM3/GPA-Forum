@@ -66,7 +66,7 @@ const Layout = ({ children }) => {
       setNoUser(false);
       router.replace("/queries");
     } else if (
-      !user &&
+      noUser &&
       router.pathname !== "/auth/forgot-password" &&
       router.pathname !== "/auth/signup" &&
       router.pathname !== "/auth/login" &&

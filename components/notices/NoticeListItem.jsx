@@ -4,22 +4,20 @@ import Linkify from "react-linkify";
 import { db } from "../../services/firebase";
 import { fadeWidthAnimationVariant } from "../../services/utilities";
 import { motion } from "framer-motion";
-import { Badge, withStyles } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
+import { Share } from "@material-ui/icons";
+import { BootstrapTooltip } from "../../services/utilities";
 
-const optionsSelf = ["Edit", "Delete", "Share"];
-const optionsAll = ["Share", "Report"];
-
-const ITEM_HEIGHT = 48;
-
-const StyledBadge = withStyles((theme) => ({
-  badge: {
-    border: `2px solid ${theme.palette.background.paper}`,
-    padding: "0 4px",
-  },
-}))(Badge);
-
-const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
+const NoticeListItem = ({
+  index,
+  id,
+  notice,
+  department,
+  timestamp,
+  setCopyOpen,
+}) => {
   const [noticeText, setNoticeText] = useState(notice);
+
   useEffect(() => {
     db.collection("Notices")
       .doc(id)
@@ -32,6 +30,7 @@ const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
 
   return (
     <motion.div
+      id={id}
       className={noticeListItemStyles.noticeListItem}
       variants={fadeWidthAnimationVariant}
       initial="hidden"
@@ -42,6 +41,24 @@ const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
         delay: index - 0.2,
       }}
     >
+      <BootstrapTooltip title="Share">
+        <IconButton
+          onClick={() =>
+            navigator.clipboard
+              .writeText(
+                `${
+                  location.href.includes("#")
+                    ? location.href.split("#")[0]
+                    : location
+                }#${id}`
+              )
+              .then(() => setCopyOpen(true))
+          }
+          className={noticeListItemStyles.shareButton}
+        >
+          <Share />
+        </IconButton>
+      </BootstrapTooltip>
       <motion.p
         className={noticeListItemStyles.date}
         variants={fadeWidthAnimationVariant}
@@ -66,7 +83,15 @@ const NoticeListItem = ({ index, id, notice, department, timestamp }) => {
           delay: index,
         }}
       >
-        <Linkify>{noticeText}</Linkify>
+        <Linkify
+          componentDecorator={(decoratedHref, decoratedText, key) => (
+            <a target="blank" href={decoratedHref} key={key}>
+              {decoratedText}
+            </a>
+          )}
+        >
+          {noticeText}
+        </Linkify>
       </motion.pre>
       <p className={noticeListItemStyles.department}>{department}</p>
     </motion.div>

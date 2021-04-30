@@ -17,6 +17,7 @@ import { ReportOutlined } from "@material-ui/icons";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Badge, withStyles } from "@material-ui/core";
 import { report } from "../../services/report";
+import { BootstrapTooltip } from "../../services/utilities";
 
 const optionsSelf = ["Edit", "Delete", "Share"];
 const optionsAll = ["Share", "Report"];
@@ -231,36 +232,42 @@ const QueryListItem = ({
             </a>
           </Link>
         </div>
-        <IconButton
-          style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-          onClick={upVoteQuery}
+        <BootstrapTooltip
+          title={!queryUpVotes?.includes(user?.id) ? "UpVote" : "DownVote"}
         >
-          <StyledBadge
-            badgeContent={queryUpVotes?.length}
-            color="secondary"
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
+          <IconButton
+            style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+            onClick={upVoteQuery}
           >
-            {queryUpVotes?.includes(user?.id) ? (
-              <ThumbUp style={{ marginLeft: 4 }} color="primary" />
-            ) : (
-              <ThumbUpOutlined style={{ marginLeft: 4 }} />
-            )}
-          </StyledBadge>
-        </IconButton>
+            <StyledBadge
+              badgeContent={queryUpVotes?.length}
+              color="secondary"
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+            >
+              {queryUpVotes?.includes(user?.id) ? (
+                <ThumbUp style={{ marginLeft: 4 }} color="primary" />
+              ) : (
+                <ThumbUpOutlined style={{ marginLeft: 4 }} />
+              )}
+            </StyledBadge>
+          </IconButton>
+        </BootstrapTooltip>
       </div>
 
       <div className={queryListItemStyles.menu}>
-        <IconButton
-          aria-label="more"
-          aria-controls="long-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MoreVertIcon />
-        </IconButton>
+        <BootstrapTooltip title="Options">
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </BootstrapTooltip>
         <Menu
           anchorEl={anchorEl}
           keepMounted

@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import BlogEditForm from "../../components/blogs/BlogEditForm";
+import { BootstrapTooltip } from "../../services/utilities";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -118,17 +119,19 @@ const BlogPage = () => {
         id={currentID}
         setCurrentID={setCurrentID}
       />
-      <motion.div
-        className="fab"
-        variants={fabAnimationVariant}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-      >
-        <IconButton onClick={handleClickOpen}>
-          <EditIcon style={{ color: "black" }} />
-        </IconButton>
-      </motion.div>
+      <BootstrapTooltip title="Add Blog">
+        <motion.div
+          className="fab"
+          variants={fabAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <IconButton onClick={handleClickOpen}>
+            <EditIcon style={{ color: "black" }} />
+          </IconButton>
+        </motion.div>
+      </BootstrapTooltip>
       <AnimatePresence>
         {blogs
           .filter(

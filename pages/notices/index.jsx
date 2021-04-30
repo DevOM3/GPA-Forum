@@ -17,6 +17,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import Slide from "@material-ui/core/Slide";
 import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
 import NoticeListItem from "../../components/notices/NoticeListItem";
 
 function Alert(props) {
@@ -29,11 +30,6 @@ const Transition = React.forwardRef((props, ref) => {
 
 const Notices = () => {
   const [{ user, searchString }, dispatch] = useStateValue();
-  const [open, setDialogOpen] = useState(false);
-  const [currentID, setCurrentID] = useState("");
-  const [openEdit, setOpenEdit] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [updateOpen, setUpdateOpen] = useState(false);
   const [optionOpen, setOptionOpen] = useState(false);
   const [copyOpen, setCopyOpen] = useState(false);
   const [filter, setFilter] = useState("None");
@@ -49,14 +45,6 @@ const Notices = () => {
   ];
   const sortOptions = ["Date ASC", "Date DESC"];
 
-  const handleClickOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
-
   const fetchNotices = () => {
     db.collection("Notices")
       .where("department", "in", [
@@ -66,7 +54,7 @@ const Notices = () => {
         "Exam Cell",
       ])
       .get()
-      .then((snapshot) =>
+      .then((snapshot) => {
         setNotices(
           snapshot.docs.map((doc) => ({
             id: doc.id,
@@ -74,8 +62,14 @@ const Notices = () => {
             notice: doc.data().notice,
             timestamp: doc.data().time,
           }))
-        )
-      );
+        );
+        if (location.href.includes("#")) {
+          scrollTo(
+            0,
+            document.getElementById(location.href.split("#")[1]).offsetTop - 171
+          );
+        }
+      });
   };
 
   useEffect(() => {
@@ -92,6 +86,15 @@ const Notices = () => {
       animate="visible"
       exit="exit"
     >
+      <Snackbar
+        open={copyOpen}
+        autoHideDuration={6000}
+        onClose={() => setCopyOpen(false)}
+      >
+        <Alert onClose={() => setCopyOpen(false)} severity="info">
+          Notice link copied!
+        </Alert>
+      </Snackbar>
       <Dialog
         onClose={() => setOptionOpen(false)}
         aria-labelledby="simple-dialog-title"
@@ -214,6 +217,7 @@ const Notices = () => {
                 notice={notice?.notice}
                 department={notice?.department}
                 timestamp={notice?.timestamp}
+                setCopyOpen={setCopyOpen}
               />
             ))}
         </AnimatePresence>

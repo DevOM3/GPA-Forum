@@ -29,6 +29,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { report } from "../../services/report";
 import ShowMoreText from "react-show-more-text";
+import { BootstrapTooltip } from "../../services/utilities";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -304,9 +305,7 @@ const Blog = () => {
               />
             )}
             {/* </Badge> */}
-            {blogData?.likes?.includes(user?.id)
-              ? "Dislike this Article"
-              : "Like this Article"}
+            {blogData?.likes?.includes(user?.id) ? "Dislike" : "Like"}
           </button>
           {speechSynthesis &&
             (speechState === "Speaking" || speechState === "Paused") && (
@@ -344,7 +343,7 @@ const Blog = () => {
             </button>
           )}
           <button className={blogsStyles.button} onClick={sharePost}>
-            Share this Article
+            Share
             <ShareIcon fontSize="small" style={{ marginLeft: 4 }} />
           </button>
         </div>

@@ -13,6 +13,14 @@
   text-decoration: none;
 }
 
+.shareButton {
+  position: absolute !important;
+  top: 0px !important;
+  left: calc(100% - 48px) !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+}
+
 .noticeListItem p {
   margin: 0;
 }
@@ -44,6 +52,10 @@
   white-space: -pre-wrap;
   white-space: -o-pre-wrap;
   word-wrap: break-word;
+}
+
+.notice a {
+  color: #e94118;
 }
 
 .department {

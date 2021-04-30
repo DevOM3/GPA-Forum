@@ -20,6 +20,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import EditProfile from "../../components/profile/EditProfile";
 import { actionTypes } from "../../context/reducer";
 import { useRouter } from "next/router";
+import { BootstrapTooltip } from "../../services/utilities";
 
 const ITEM_HEIGHT = 48;
 function Alert(props) {
@@ -80,9 +81,11 @@ const Profile = () => {
           Profile URL copied!
         </Alert>
       </Snackbar>
-      <IconButton className={styles.icon} onClick={handleClick}>
-        <MoreVertRounded />
-      </IconButton>
+      <BootstrapTooltip title="Options">
+        <IconButton className={styles.icon} onClick={handleClick}>
+          <MoreVertRounded />
+        </IconButton>
+      </BootstrapTooltip>
       <Menu
         id="long-menu"
         anchorEl={anchorEl}

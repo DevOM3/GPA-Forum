@@ -23,6 +23,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ReportOutlined } from "@material-ui/icons";
 import ReactLinkify from "react-linkify";
 import { report } from "../../services/report";
+import { BootstrapTooltip } from "../../services/utilities";
 
 const options = ["Edit", "Delete"];
 
@@ -207,14 +208,16 @@ const BlogPostListItem = ({
         </motion.p>
         {user?.id === by ? (
           <div className={blogPostListItemStyles.menu}>
-            <IconButton
-              aria-label="more"
-              aria-controls="long-menu"
-              aria-haspopup="true"
-              onClick={handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
+            <BootstrapTooltip title="Options">
+              <IconButton
+                aria-label="more"
+                aria-controls="long-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            </BootstrapTooltip>
             <Menu
               anchorEl={anchorEl}
               keepMounted
@@ -259,9 +262,11 @@ const BlogPostListItem = ({
           </div>
         ) : (
           <div className={blogPostListItemStyles.menu}>
-            <IconButton onClick={reportBlog}>
-              <ReportOutlined />
-            </IconButton>
+            <BootstrapTooltip title="Report">
+              <IconButton onClick={reportBlog}>
+                <ReportOutlined />
+              </IconButton>
+            </BootstrapTooltip>
           </div>
         )}
       </div>
@@ -328,34 +333,38 @@ const BlogPostListItem = ({
         {text}
       </motion.p>
       <div className={blogPostListItemStyles.buttons}>
-        <IconButton
-          style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-          className={blogPostListItemStyles.button}
-          onClick={likePost}
-        >
-          {likes.includes(user?.id) ? (
-            <FavoriteRounded
-              fontSize="small"
-              style={{ marginLeft: 4 }}
-              color="secondary"
-            />
-          ) : (
-            <FavoriteBorderOutlined
-              fontSize="small"
-              style={{ marginLeft: 4 }}
-            />
-          )}
-        </IconButton>
+        <BootstrapTooltip title={likes.includes(user?.id) ? "Dislike" : "Like"}>
+          <IconButton
+            style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+            className={blogPostListItemStyles.button}
+            onClick={likePost}
+          >
+            {likes.includes(user?.id) ? (
+              <FavoriteRounded
+                fontSize="small"
+                style={{ marginLeft: 4 }}
+                color="secondary"
+              />
+            ) : (
+              <FavoriteBorderOutlined
+                fontSize="small"
+                style={{ marginLeft: 4 }}
+              />
+            )}
+          </IconButton>
+        </BootstrapTooltip>
         <button onClick={readMore} className={blogPostListItemStyles.button}>
           Read More
         </button>
-        <IconButton
-          style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-          className={blogPostListItemStyles.button}
-          onClick={sharePost}
-        >
-          <ShareIcon fontSize="small" style={{ marginLeft: 4 }} />
-        </IconButton>
+        <BootstrapTooltip title="Share">
+          <IconButton
+            style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+            className={blogPostListItemStyles.button}
+            onClick={sharePost}
+          >
+            <ShareIcon fontSize="small" style={{ marginLeft: 4 }} />
+          </IconButton>
+        </BootstrapTooltip>
       </div>
     </motion.div>
   );

@@ -1,4 +1,4 @@
-import { IconButton, Tooltip } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import {
   ExitToAppOutlined,
   KeyboardArrowLeftRounded,
@@ -16,22 +16,7 @@ import Link from "next/link";
 import { useStateValue } from "../context/StateProvider";
 import { useRouter } from "next/router";
 import { actionTypes } from "../context/reducer";
-import { makeStyles } from "@material-ui/core";
-
-const useStylesBootstrap = makeStyles((theme) => ({
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
-}));
-
-function BootstrapTooltip(props) {
-  const classes = useStylesBootstrap();
-
-  return <Tooltip arrow classes={classes} {...props} />;
-}
+import { BootstrapTooltip } from "../services/utilities";
 
 const Navbar = () => {
   const router = useRouter();
@@ -186,15 +171,14 @@ const Navbar = () => {
                   })
                 }
               />
-              <SearchRounded className={navbarStyles.searchbtn} />
+              <BootstrapTooltip title="Search">
+                <SearchRounded className={navbarStyles.searchbtn} />
+              </BootstrapTooltip>
             </div>
           </div>
         </motion.div>
         <BootstrapTooltip title="Log Out">
-          <IconButton
-            onClick={logOut}
-            style={{ background: "white", padding: 8, marginLeft: 4 }}
-          >
+          <IconButton onClick={logOut} className={navbarStyles.logOutButton}>
             <ExitToAppOutlined style={{ color: "#EE5833" }} />
           </IconButton>
         </BootstrapTooltip>

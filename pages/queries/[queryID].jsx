@@ -30,6 +30,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { Badge, withStyles } from "@material-ui/core";
 import { report } from "../../services/report";
 import Solution from "../../components/queries/Solution";
+import { BootstrapTooltip } from "../../services/utilities";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -272,53 +273,65 @@ const Query = () => {
             delay: 1.5,
           }}
         >
-          <IconButton
-            style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-            className={queryStyles.button}
-            onClick={likePost}
+          <BootstrapTooltip
+            title={
+              !queryData.upVotes?.includes(user?.id) ? "UpVote" : "DownVote"
+            }
           >
-            <StyledBadge
-              badgeContent={queryData.upVotes?.length}
-              color="secondary"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
+            <IconButton
+              style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+              className={queryStyles.button}
+              onClick={likePost}
             >
-              {queryData.upVotes?.includes(user?.id) ? (
-                <ThumbUp style={{ marginLeft: 4 }} color="primary" />
-              ) : (
-                <ThumbUpOutlined style={{ marginLeft: 4 }} />
-              )}
-            </StyledBadge>
-          </IconButton>
-          <IconButton
-            style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-            className={queryStyles.button}
-            onClick={sharePost}
-          >
-            <ShareIcon style={{ marginLeft: 4 }} />
-          </IconButton>
+              <StyledBadge
+                badgeContent={queryData.upVotes?.length}
+                color="secondary"
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                {queryData.upVotes?.includes(user?.id) ? (
+                  <ThumbUp style={{ marginLeft: 4 }} color="primary" />
+                ) : (
+                  <ThumbUpOutlined style={{ marginLeft: 4 }} />
+                )}
+              </StyledBadge>
+            </IconButton>
+          </BootstrapTooltip>
+          <BootstrapTooltip title="Share">
+            <IconButton
+              style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+              className={queryStyles.button}
+              onClick={sharePost}
+            >
+              <ShareIcon style={{ marginLeft: 4 }} />
+            </IconButton>
+          </BootstrapTooltip>
           {user?.id === queryData?.by ? (
-            <IconButton
-              style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-              className={queryStyles.button}
-              onClick={() => {
-                if (confirm("Are you sure to delete this Query?")) {
-                  deletePost();
-                }
-              }}
-            >
-              <DeleteOutlined style={{ marginLeft: 4 }} />
-            </IconButton>
+            <BootstrapTooltip title="Delete Query">
+              <IconButton
+                style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+                className={queryStyles.button}
+                onClick={() => {
+                  if (confirm("Are you sure to delete this Query?")) {
+                    deletePost();
+                  }
+                }}
+              >
+                <DeleteOutlined style={{ marginLeft: 4 }} />
+              </IconButton>
+            </BootstrapTooltip>
           ) : (
-            <IconButton
-              style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
-              className={queryStyles.button}
-              onClick={reportPost}
-            >
-              <ReportOutlined style={{ marginLeft: 4 }} />
-            </IconButton>
+            <BootstrapTooltip title="Report">
+              <IconButton
+                style={{ paddingLeft: 7, paddingTop: 11, paddingRight: 11 }}
+                className={queryStyles.button}
+                onClick={reportPost}
+              >
+                <ReportOutlined style={{ marginLeft: 4 }} />
+              </IconButton>
+            </BootstrapTooltip>
           )}
         </motion.div>
         <Divider />
