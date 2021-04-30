@@ -165,14 +165,14 @@ const Blog = () => {
       const speech = new SpeechSynthesisUtterance();
       speech.text = `Title- ${blogData?.title}. By ${userData?.name}. ${blogData?.text}`;
       speech.addEventListener("end", () => setSpeechState(""));
-      speech.voice = speechSynthesis
-        .getVoices()
-        .filter(
-          (voice) =>
-            voice.name.includes(
-              "Microsoft Zira Desktop - English (United States)"
-            ) || voice.name.includes("India")
-        )[0];
+      // speech.voice = speechSynthesis
+      //   .getVoices()
+      //   .filter(
+      //     (voice) =>
+      //       voice.name.includes(
+      //         "Microsoft Zira Desktop - English (United States)"
+      //       ) || voice.name.includes("India")
+      //   )[0];
       speech.voiceURI = "native";
       speech.volume = 1;
       speech.lang = "en-IN";
