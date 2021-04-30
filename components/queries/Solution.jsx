@@ -87,7 +87,7 @@ const Solution = ({ postID, id,queryBy, by,query, solution, timestamp, upVotes }
             .then(() => {
               setPosting(false);
               setEditDialogOpen(false);
-              alert("Solution updated successfully");
+           
             });
 
   };
