@@ -14,10 +14,12 @@ import { motion } from "framer-motion";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import EditRounded from "@material-ui/icons/EditRounded";
-import { ShareRounded } from "@material-ui/icons";
+import { MeetingRoomOutlined, ShareRounded } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import EditProfile from "../../components/profile/EditProfile";
+import { actionTypes } from "../../context/reducer";
+import { useRouter } from "next/router";
 
 const ITEM_HEIGHT = 48;
 function Alert(props) {
@@ -25,6 +27,7 @@ function Alert(props) {
 }
 
 const Profile = () => {
+  const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
   const [page, setPage] = useState("Queries");
   const [openCopy, setOpenCopy] = useState(false);
@@ -45,6 +48,15 @@ const Profile = () => {
 
     setOpenCopy(true);
     handleClose();
+  };
+
+  const logOut = () => {
+    localStorage.removeItem("forumUserID");
+    dispatch({
+      type: actionTypes.SET_USER,
+      user: null,
+    });
+    router.replace("/auth/login");
   };
 
   return (
@@ -108,6 +120,17 @@ const Profile = () => {
         >
           Share
           <ShareRounded fontSize="small" style={{ color: "grey" }} />
+        </MenuItem>
+        <MenuItem
+          onClick={logOut}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          Log Out
+          <MeetingRoomOutlined fontSize="small" style={{ color: "grey" }} />
         </MenuItem>
       </Menu>
       <div className={styles.information}>
