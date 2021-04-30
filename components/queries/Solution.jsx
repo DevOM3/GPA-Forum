@@ -9,10 +9,10 @@ import { useStateValue } from "../../context/StateProvider";
 import { Badge, withStyles, IconButton } from "@material-ui/core";
 import { MoreVertOutlined, ThumbUp, ThumbUpOutlined } from "@material-ui/icons";
 import ReactLinkify from "react-linkify";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -30,16 +30,24 @@ const StyledBadge = withStyles((theme) => ({
   },
 }))(Badge);
 
-const Solution = ({ postID, id,queryBy, by,query, solution, timestamp, upVotes }) => {
-  
+const Solution = ({
+  postID,
+  id,
+  queryBy,
+  by,
+  query,
+  solution,
+  timestamp,
+  upVotes,
+}) => {
   const [{ user }, dispatch] = useStateValue();
   const [openMoreVertOutlined, setOpenMoreVertOutlined] = useState(false);
   const [userData, setUserData] = useState({});
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const[editDialogOpen,setEditDialogOpen] = useState(false);
-  const[editedSolution,setEditedSolution] = useState(solution);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editedSolution, setEditedSolution] = useState(solution);
   const [posting, setPosting] = useState(false);
-  
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -78,25 +86,26 @@ const Solution = ({ postID, id,queryBy, by,query, solution, timestamp, upVotes }
     setEditDialogOpen(true);
     setPosting(true);
     db.collection("Queries")
-            .doc(postID)
-            .collection("Solutions")
-            .doc(id)
-            .update({
-              solution : editedSolution,
-            })
-            .then(() => {
-              setPosting(false);
-              setEditDialogOpen(false);
-           
-            });
-
+      .doc(postID)
+      .collection("Solutions")
+      .doc(id)
+      .update({
+        solution: editedSolution,
+      })
+      .then(() => {
+        setPosting(false);
+        setEditDialogOpen(false);
+        handleClose();
+      });
   };
-  const deleteSolution = () =>{
-    db.collection("Queries")
-            .doc(postID)
-            .collection("Solutions")
-            .doc(id)
-            .delete();
+  const deleteSolution = () => {
+    if (confirm("Are you sure to delete this Solution?")) {
+      db.collection("Queries")
+        .doc(postID)
+        .collection("Solutions")
+        .doc(id)
+        .delete();
+    }
   };
   return (
     <div
@@ -117,89 +126,99 @@ const Solution = ({ postID, id,queryBy, by,query, solution, timestamp, upVotes }
             </a>
           )}
         >
-          <p className={solutionStyles.commentText}>{solution}</p>
+          <pre className={solutionStyles.commentText}>{solution}</pre>
         </ReactLinkify>
       </div>
       <div style={{ display: "flex", flexDirection: "column" }}>
-      { (user?.id === by || user?.id === queryBy) ? 
-        (
-          <div>
-      <MoreVertOutlined onClick = {handleClick} />
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        {(user?.id === by ) ? (
-          <div>
-              <MenuItem onClick = {() => setEditDialogOpen(true)} style={{ color: "grey" }}><EditIcon />Edit
+        {user?.id === by && (
+          <>
+            <IconButton onClick={handleClick} style={{ padding: 4 }}>
+              <MoreVertOutlined />
+            </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <MenuItem
+                onClick={() => setEditDialogOpen(true)}
+                style={{
+                  color: "grey",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                Edit
+                <EditIcon style={{ marginLeft: 21 }} />
               </MenuItem>
-              <MenuItem onClick={deleteSolution} style={{ color: "grey" }}><DeleteIcon/>Delete</MenuItem>
-              
-            </div>
-
-        ):(
-          <div>
-             
-              <MenuItem onClick={deleteSolution} style={{ color: "grey" }}><DeleteIcon/>Delete</MenuItem>
-            </div>
+              <MenuItem
+                onClick={deleteSolution}
+                style={{
+                  color: "grey",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                Delete
+                <DeleteIcon style={{ marginLeft: 21 }} />
+              </MenuItem>
+            </Menu>
+          </>
         )}
-      </Menu>
-      </div>
-        ):(
-          <div>
-  
-      </div>
+        {user?.id !== by && user?.id === queryBy && (
+          <IconButton onClick={deleteSolution} style={{ padding: 4 }}>
+            <DeleteIcon />
+          </IconButton>
         )}
-      <Dialog
-        // TransitionComponent={Transition}
-        open={editDialogOpen}
-        onClose={() => handleClose(false)}
-        aria-labelledby="form-dialog-title"
-        fullWidth={true}
-      >
-        <DialogTitle id="form-dialog-title">Edit Comment</DialogTitle>
+        <Dialog
+          // TransitionComponent={Transition}
+          open={editDialogOpen}
+          onClose={() => handleClose(false)}
+          aria-labelledby="form-dialog-title"
+          fullWidth={true}
+        >
+          <DialogTitle id="form-dialog-title">Edit Comment</DialogTitle>
           <DialogContent>
             <div className={queryFormStyles.queryInputDiv}>
               <CreateIcon
                 fontSize="small"
                 style={{ marginLeft: 4, color: "grey" }}
               />
-                <TextareaAutosize
-                      
-                      autoFocus
-                      id="query-input"
-                      type="text"
-                      className={queryFormStyles.queryInput}
-                      onChange={(e) => setEditedSolution(e.target.value)}
-                      value={editedSolution}
-                    />
-                    </div>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={() => setEditDialogOpen(false)} color="primary">
-                      Cancel
-                    </Button>
-                    {posting ? (
-                      <div className="progress-div">
-                        <CircularProgress size={24} style={{ color: "black" }} />
-                      </div>
-                    ) : (
-                      <Button onClick={editComment} color="primary">
-                        Update
-                      </Button>
-                    )}
-                  </DialogActions>
-                    </Dialog>
-        <IconButton style={{ padding: 4 }} onClick={upVote}>
-        </IconButton>
+              <TextareaAutosize
+                autoFocus
+                id="query-input"
+                type="text"
+                className={queryFormStyles.queryInput}
+                onChange={(e) => setEditedSolution(e.target.value)}
+                value={editedSolution}
+              />
+            </div>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setEditDialogOpen(false)} color="primary">
+              Cancel
+            </Button>
+            {posting ? (
+              <div className="progress-div">
+                <CircularProgress size={24} style={{ color: "black" }} />
+              </div>
+            ) : (
+              <Button onClick={editComment} color="primary">
+                Update
+              </Button>
+            )}
+          </DialogActions>
+        </Dialog>
+        <IconButton style={{ padding: 4 }} onClick={upVote}></IconButton>
         <IconButton style={{ padding: 4 }} onClick={upVote}>
           <StyledBadge
             badgeContent={upVotes?.length}

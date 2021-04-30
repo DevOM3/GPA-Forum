@@ -368,8 +368,7 @@ const Blog = () => {
               by={comment?.by}
               comment={comment.comment}
               timestamp={comment?.timestamp?.toDate().toLocaleString()}
-              blogBy = {blogData?.by}
-
+              blogBy={blogData?.by}
             />
           ))}
         </div>

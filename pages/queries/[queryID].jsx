@@ -50,7 +50,8 @@ const Query = () => {
   const [uploadingSolutions, setUploadingSolution] = useState(false);
   const [queryData, setQueryData] = useState({});
   const [userData, setUserData] = useState({});
-  const [openQueryCopy, setOpenQueryCopy] = React.useState(false);
+  const [openQueryCopy, setOpenQueryCopy] = useState(false);
+  const [sortByUpVotes, setSortByUpVotes] = useState(true);
 
   const handleClickQueryCopy = () => {
     setOpenQueryCopy(true);
@@ -333,19 +334,31 @@ const Query = () => {
           >
             {showsolutions ? "Hide solutions" : "Show solutions"}
           </p> */}
-          {solutions.map((solution) => (
-            <Solution
-              postID={router.query.queryID}
-              key={solution?.id}
-              id={solution?.id}
-              queryBy = {queryData.by}
-              by={solution?.by}
-              query ={solution?.solution}
-              solution={solution?.solution}
-              timestamp={solution?.timestamp?.toDate().toLocaleString()}
-              upVotes={solution?.upVotes}
-            />
-          ))}
+          <p
+            onClick={() => setSortByUpVotes(!sortByUpVotes)}
+            className={queryStyles.sortButton}
+          >
+            {sortByUpVotes ? "Sort by Timestamp" : "Sort by UpVotes"}
+          </p>
+          {solutions
+            .sort((a, b) =>
+              sortByUpVotes
+                ? b.upVotes.length - a.upVotes.length
+                : b.timestamp - a.timestamp
+            )
+            .map((solution) => (
+              <Solution
+                postID={router.query.queryID}
+                key={solution?.id}
+                id={solution?.id}
+                queryBy={queryData.by}
+                by={solution?.by}
+                query={solution?.solution}
+                solution={solution?.solution}
+                timestamp={solution?.timestamp?.toDate().toLocaleString()}
+                upVotes={solution?.upVotes}
+              />
+            ))}
         </div>
         <Divider />
         <div className={queryStyles.commentInputDiv}>
