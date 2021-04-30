@@ -43,6 +43,7 @@
 
 .commentText a {
   color: #1234ef;
+  word-wrap: break-word;
 }
 
 .timestamp {
