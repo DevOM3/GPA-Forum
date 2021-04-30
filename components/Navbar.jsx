@@ -1,6 +1,6 @@
-import { IconButton } from "@material-ui/core";
+import { IconButton, Tooltip } from "@material-ui/core";
 import {
-  KeyboardArrowDownRounded,
+  ExitToAppOutlined,
   KeyboardArrowLeftRounded,
   MenuRounded,
   SearchRounded,
@@ -16,6 +16,22 @@ import Link from "next/link";
 import { useStateValue } from "../context/StateProvider";
 import { useRouter } from "next/router";
 import { actionTypes } from "../context/reducer";
+import { makeStyles } from "@material-ui/core";
+
+const useStylesBootstrap = makeStyles((theme) => ({
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+}));
+
+function BootstrapTooltip(props) {
+  const classes = useStylesBootstrap();
+
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 const Navbar = () => {
   const router = useRouter();
@@ -31,6 +47,14 @@ const Navbar = () => {
     }
 
     setShowMe(!showMe);
+  };
+  const logOut = () => {
+    localStorage.removeItem("forumUserID");
+    dispatch({
+      type: actionTypes.SET_USER,
+      user: null,
+    });
+    router.replace("/auth/login");
   };
 
   useEffect(() => {
@@ -133,38 +157,48 @@ const Navbar = () => {
         </ul>
       </motion.div>
 
-      <motion.div
-        className={navbarStyles.cont}
-        variants={mobileNavbarAnimationVariant}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-      >
-        <div
-          className={navbarStyles.search}
-          onClick={() => document.getElementById("search").click()}
+      <div className={navbarStyles.searchAndLogOut}>
+        <motion.div
+          className={navbarStyles.cont}
+          variants={mobileNavbarAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
         >
           <div
-            className={navbarStyles.searchbox}
+            className={navbarStyles.search}
             onClick={() => document.getElementById("search").click()}
           >
-            <input
-              type="text"
-              id="search"
-              placeholder="Search"
-              className={navbarStyles.searchtext}
-              value={searchString}
-              onChange={(e) =>
-                dispatch({
-                  type: actionTypes.SET_SEARCH_STRING,
-                  searchString: e.target.value,
-                })
-              }
-            />
-            <SearchRounded className={navbarStyles.searchbtn} />
+            <div
+              className={navbarStyles.searchbox}
+              onClick={() => document.getElementById("search").click()}
+            >
+              <input
+                type="text"
+                id="search"
+                placeholder="Search"
+                className={navbarStyles.searchtext}
+                value={searchString}
+                onChange={(e) =>
+                  dispatch({
+                    type: actionTypes.SET_SEARCH_STRING,
+                    searchString: e.target.value,
+                  })
+                }
+              />
+              <SearchRounded className={navbarStyles.searchbtn} />
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+        <BootstrapTooltip title="Log Out">
+          <IconButton
+            onClick={logOut}
+            style={{ background: "white", padding: 8, marginLeft: 4 }}
+          >
+            <ExitToAppOutlined style={{ color: "#EE5833" }} />
+          </IconButton>
+        </BootstrapTooltip>
+      </div>
 
       <IconButton
         id="toggle-button"

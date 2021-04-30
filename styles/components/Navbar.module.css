@@ -66,6 +66,11 @@
   transition: 444ms;
 }
 
+.searchAndLogOut {
+  display: flex;
+  align-items: center;
+}
+
 .cont {
   display: grid;
   place-items: center;
