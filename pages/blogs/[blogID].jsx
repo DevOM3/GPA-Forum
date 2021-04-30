@@ -171,7 +171,7 @@ const Blog = () => {
           (voice) =>
             voice.name.includes(
               "Microsoft Zira Desktop - English (United States)"
-            ) || voice.name.includes("English India")
+            ) || voice.name.includes("India")
         )[0];
       speech.voiceURI = "native";
       speech.volume = 1;
