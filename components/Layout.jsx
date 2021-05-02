@@ -95,7 +95,7 @@ const Layout = ({ children }) => {
         router.pathname === "/auth/login" ||
         router.pathname === "/admin" ||
         router.pathname === "/")) ? (
-    <div>
+    <div style={{ overflow: "scroll", height: "100vh" }}>
       <Head>
         <title>
           GPAForum |{" "}

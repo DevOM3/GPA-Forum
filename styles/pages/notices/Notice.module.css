@@ -1,69 +1,68 @@
 .notice {
-    min-height: 100vh;
-    background: whitesmoke;
-    padding-bottom: 21px;
+  background: whitesmoke;
+  padding-bottom: 21px;
 }
 
 .option {
-    width: 100%;
-    position: sticky;
-    background: whitesmoke;
-    margin-bottom: 11px;
-    color: grey;
-    padding-top: 21px;
-    padding-bottom: 7px;
-    display: grid;
-    place-items: center;
-    z-index: 3;
-    top: 100px;
+  width: 100%;
+  position: sticky;
+  background: whitesmoke;
+  margin-bottom: 11px;
+  color: grey;
+  padding-top: 21px;
+  padding-bottom: 7px;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  top: 100px;
 }
 
 .optionProfile {
-    width: 100%;
-    position: sticky;
-    background: whitesmoke;
-    margin-bottom: 11px;
-    color: grey;
-    padding-top: 21px;
-    display: flex;
-    z-index: 3;
-    top: 205px;
+  width: 100%;
+  position: sticky;
+  background: whitesmoke;
+  margin-bottom: 11px;
+  color: grey;
+  padding-top: 21px;
+  display: flex;
+  z-index: 3;
+  top: 205px;
 }
 
 .optionButton {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    border-radius: 4px !important;
-    border: 1px solid lightgray !important;
-    width: 100% !important;
-    padding-top: 7px !important;
-    padding-bottom: 7px !important;
-    background: white !important;
-    font-size: 15px !important;
-    margin-bottom: 7px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 4px !important;
+  border: 1px solid lightgray !important;
+  width: 100% !important;
+  padding-top: 7px !important;
+  padding-bottom: 7px !important;
+  background: white !important;
+  font-size: 15px !important;
+  margin-bottom: 7px !important;
 }
 
 .optionModal {
-    margin-right: 11px;
-    margin-left: 11px;
+  margin-right: 11px;
+  margin-left: 11px;
 }
 
 .notices {
-    min-height: 100vh;
-    width: 100%;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 4px;
-    padding-right: 4px;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 @media only screen and (max-width: 1020px) {
-    .option {
-        top: 75px;
-    }
-    .optionProfile {
-        top: 180px;
-    }
+  .option {
+    top: 75px;
+  }
+  .optionProfile {
+    top: 180px;
+  }
 }
