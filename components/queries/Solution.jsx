@@ -117,7 +117,7 @@ const Solution = ({
           <a className={solutionStyles.by}>{userData?.name}</a>
         </Link>
         <p className={solutionStyles.timestamp}>
-          {moment(timestamp).fromNow(true)}
+          {moment(timestamp).from(moment.now())}
         </p>
         <ReactLinkify
           componentDecorator={(decoratedHref, decoratedText, key) => (

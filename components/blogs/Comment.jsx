@@ -103,7 +103,7 @@ const Comment = ({ id, by, comment, timestamp, blogBy }) => {
           <a className={commentStyles.by}>{userData?.name}</a>
         </Link>
         <p className={commentStyles.timestamp}>
-          {moment(timestamp).fromNow(true)}
+          {moment(timestamp).from(moment.now())}
         </p>
         <ReactLinkify
           componentDecorator={(decoratedHref, decoratedText, key) => (
