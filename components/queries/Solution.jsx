@@ -117,7 +117,10 @@ const Solution = ({
           <a className={solutionStyles.by}>{userData?.name}</a>
         </Link>
         <p className={solutionStyles.timestamp}>
-          {moment(timestamp).fromNow()}
+          {moment(timestamp).fromNow() === "3 months ago" ||
+          moment(timestamp).fromNow() === "Invalid date"
+            ? timestamp
+            : moment(timestamp).fromNow()}
         </p>
         <ReactLinkify
           componentDecorator={(decoratedHref, decoratedText, key) => (

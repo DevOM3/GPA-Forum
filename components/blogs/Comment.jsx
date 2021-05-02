@@ -102,7 +102,12 @@ const Comment = ({ id, by, comment, timestamp, blogBy }) => {
         <Link href={`/profile/${userData.id}`}>
           <a className={commentStyles.by}>{userData?.name}</a>
         </Link>
-        <p className={commentStyles.timestamp}>{moment(timestamp).fromNow()}</p>
+        <p className={commentStyles.timestamp}>
+          {moment(timestamp).fromNow() === "3 months ago" ||
+          moment(timestamp).fromNow() === "Invalid date"
+            ? timestamp
+            : moment(timestamp).fromNow()}
+        </p>
         <ReactLinkify
           componentDecorator={(decoratedHref, decoratedText, key) => (
             <a target="blank" href={decoratedHref} key={key}>
