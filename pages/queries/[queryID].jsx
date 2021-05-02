@@ -335,8 +335,10 @@ const Query = () => {
           )}
         </motion.div>
         <Divider />
-        <div className={queryStyles.comments} id="solutions">
-          {/* <p
+        {solutions.length > 0 && (
+          <>
+            <div className={queryStyles.comments} id="solutions">
+              {/* <p
             style={{
               margin: 0,
               textAlign: "center",
@@ -347,33 +349,35 @@ const Query = () => {
           >
             {showsolutions ? "Hide solutions" : "Show solutions"}
           </p> */}
-          <p
-            onClick={() => setSortByUpVotes(!sortByUpVotes)}
-            className={queryStyles.sortButton}
-          >
-            {sortByUpVotes ? "Sort by Timestamp" : "Sort by UpVotes"}
-          </p>
-          {solutions
-            .sort((a, b) =>
-              sortByUpVotes
-                ? b.upVotes.length - a.upVotes.length
-                : b.timestamp - a.timestamp
-            )
-            .map((solution) => (
-              <Solution
-                postID={router.query.queryID}
-                key={solution?.id}
-                id={solution?.id}
-                queryBy={queryData.by}
-                by={solution?.by}
-                query={solution?.solution}
-                solution={solution?.solution}
-                timestamp={solution?.timestamp?.toDate().toLocaleString()}
-                upVotes={solution?.upVotes}
-              />
-            ))}
-        </div>
-        <Divider />
+              <p
+                onClick={() => setSortByUpVotes(!sortByUpVotes)}
+                className={queryStyles.sortButton}
+              >
+                {sortByUpVotes ? "Sort by Timestamp" : "Sort by UpVotes"}
+              </p>
+              {solutions
+                .sort((a, b) =>
+                  sortByUpVotes
+                    ? b.upVotes.length - a.upVotes.length
+                    : b.timestamp - a.timestamp
+                )
+                .map((solution) => (
+                  <Solution
+                    postID={router.query.queryID}
+                    key={solution?.id}
+                    id={solution?.id}
+                    queryBy={queryData.by}
+                    by={solution?.by}
+                    query={solution?.solution}
+                    solution={solution?.solution}
+                    timestamp={solution?.timestamp?.toDate().toLocaleString()}
+                    upVotes={solution?.upVotes}
+                  />
+                ))}
+            </div>
+            <Divider />
+          </>
+        )}
         <div className={queryStyles.commentInputDiv}>
           <ModeCommentOutlined
             fontSize="small"
