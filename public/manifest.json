@@ -1,8 +1,8 @@
 {
-  "name": "GPAForum PWA",
+  "name": "GPAForum",
   "short_name": "GPAForum",
-  "theme_color": "#ffffff",
-  "background_color": "#004740",
+  "theme_color": "#1A2226",
+  "background_color": "#1A2226",
   "display": "fullscreen",
   "orientation": "portrait",
   "scope": "/",
