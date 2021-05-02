@@ -21,18 +21,18 @@ function MyApp({ Component, pageProps, router }) {
 
         <link rel="manifest" href="/manifest.json" />
         <link
-          href="/images/logo.png"
+          href="/images/logo-rounded.png"
           rel="icon"
           type="image/png"
           sizes="16x16"
         />
         <link
-          href="/images/logo.png"
+          href="/images/logo-rounded.png"
           rel="icon"
           type="image/png"
           sizes="32x32"
         />
-        <link rel="apple-touch-icon" href="/images/logo.png"></link>
+        <link rel="apple-touch-icon" href="/images/logo-rounded.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
       <StateProvider reducer={reducer} initialState={initialState}>
