@@ -74,7 +74,7 @@ const PostQuery = ({ open, fetchQueries, handleClose }) => {
     probability = Math.round(probability);
 
     setPosting(false);
-    if (probability >= 5) {
+    if (probability >= 7) {
       setId(bestMatchedQueries.bestMatchIndex);
       setSimilarQuery(queries[bestMatchedQueries.bestMatchIndex].query);
       setOpenSimilarQueryDialog(true);

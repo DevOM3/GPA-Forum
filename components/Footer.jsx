@@ -34,7 +34,7 @@ const Footer = () => {
           </a>
           <div
             className={`${footerStyles.searchDivMobile} ${footerStyles.searchDiv}`}
-            onClick={() => window.scroll(0, 0)}
+            onClick={() => document.getElementById("main").scroll(0, 0)}
           >
             &nbsp;Go up
             <ArrowUpwardRounded style={{ marginLeft: 7 }} fontSize="small" />
