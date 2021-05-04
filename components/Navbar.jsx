@@ -76,7 +76,7 @@ const Navbar = () => {
     >
       <Link href={user ? `/queries` : `/`}>
         <a className={navbarStyles.logo}>
-          <img src="/images/navlogo.svg" />
+          <img src="/public/navlogo.svg" />
         </a>
       </Link>
       <motion.div
