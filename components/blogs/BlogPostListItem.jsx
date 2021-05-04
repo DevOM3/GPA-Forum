@@ -121,15 +121,14 @@ const BlogPostListItem = ({
     handleClickBlogCopy();
   };
 
-  const reportBlog = () => {
+  const reportBlog = async () => {
     if (report(title) || report(text)) {
       const blogRef = await db.collection("Blogs").doc(id);
       if ((await blogRef.get()).data().reports >= REPORT_THRESHOLD) {
         setDeleting(true);
-        suspendUser((await queryRef.get()).data().by)
+        suspendUser((await queryRef.get()).data().by);
         setDeleting(false);
       } else {
-
         deleteBlog();
       }
     } else {
