@@ -1,17 +1,25 @@
+import { BootstrapTooltip, speak } from "../services/utilities";
 import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { actionTypes } from "../context/reducer";
 import { useStateValue } from "../context/StateProvider";
 import { db } from "../services/firebase";
-import { CircularProgress } from "@material-ui/core";
+import { CircularProgress, IconButton } from "@material-ui/core";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
+import { motion } from "framer-motion";
+import { fabAnimationVariant } from "../services/utilities";
+import { MicNoneRounded } from "@material-ui/icons";
 
 const Layout = ({ children }) => {
   const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
   const [noUser, setNoUser] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(async () => {
     if (!user) {
@@ -84,6 +92,143 @@ const Layout = ({ children }) => {
     }
   }, [user, router.pathname]);
 
+  const commands = [
+    {
+      command: [
+        "Navigate to the Queries page",
+        "Navigate to the Query page",
+        "Go to Queries page",
+        "Go to Query page",
+        "Head towards Queries page",
+        "Head towards Query page",
+        "Show Queries page",
+        "Show Query page",
+        "Visit Queries page",
+        "Visit Query page",
+        "Open * Queries page",
+        "Open * Query page",
+        "* Queries page *",
+        "* Query page *",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak("Navigating to Queries page", window);
+        router.push("/queries");
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "Navigate to the Blogs page",
+        "Go to Blogs page",
+        "Head towards Blogs page",
+        "Show Blogs page",
+        "Visit Blogs page",
+        "Open * Blogs page",
+        "Open * Blocked page",
+        "Open * Block page",
+        "Navigate * Block page",
+        "* Blogs page * ",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak("Navigating to Blogs page", window);
+        router.push("/blogs");
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "Navigate to the Notices page",
+        "Go to Notices page",
+        "Head towards Notices page",
+        "Show Notices page",
+        "Visit Notices page",
+        "Open * Notices page",
+        "* Notices *",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak("Navigating to Notices page", window);
+        router.push("/notices");
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "Navigate to the Profile page",
+        "Go to Profile page",
+        "Head towards Profile page",
+        "Show Profile page",
+        "Visit Profile page",
+        "Open * Profile page",
+        "* Profile *",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak("Navigating to Profile page", window);
+        router.push("/profile");
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "* my name *",
+        "what is my name *",
+        "tell me my name *",
+        "who am i",
+        "introduce me *",
+      ],
+      callback: () => {
+        speak(`Your name is, ${user?.name}!`, window);
+        resetTranscript();
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "* my branch *",
+        "which is my branch *",
+        "what is my branch *",
+        "tell me my branch *",
+        "* branch am i",
+        "introduce my branch",
+      ],
+      callback: () => {
+        speak(`You are studying in ${user?.branch?.title}!`, window);
+        resetTranscript();
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "* previous page *",
+        "* go back *",
+        "navigate back",
+        "navigate to previous page *",
+      ],
+      callback: () => {
+        setMessage("Back");
+        resetTranscript();
+      },
+      isFuzzyMatch: true,
+    },
+  ];
+
+  const { transcript, resetTranscript, listening } = useSpeechRecognition({
+    commands,
+  });
+
+  useEffect(() => {
+    if (!listening) {
+      resetTranscript();
+    }
+  }, [listening]);
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
+  }
+
   return (user &&
     router.pathname !== "/auth/forgot-password" &&
     router.pathname !== "/auth/signup" &&
@@ -95,7 +240,10 @@ const Layout = ({ children }) => {
         router.pathname === "/auth/login" ||
         router.pathname === "/admin" ||
         router.pathname === "/")) ? (
-    <div id="main" style={{ overflow: "scroll", height: "100vh" }}>
+    <div
+      id="main"
+      style={{ overflow: "scroll", height: "100vh", position: "relative" }}
+    >
       <Head>
         <title>
           GPAForum |{" "}
@@ -124,6 +272,26 @@ const Layout = ({ children }) => {
         </title>
         <link rel="icon" href="/images/logo.png" />
       </Head>
+      <BootstrapTooltip title="Sitebot-Voice Assistant">
+        <motion.div
+          className="voice-fab"
+          variants={fabAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <IconButton
+            onClick={() =>
+              SpeechRecognition.startListening({
+                // continuous: SpeechRecognition.browserSupportsSpeechRecognition(),
+                language: "en-IN",
+              })
+            }
+          >
+            <MicNoneRounded style={{ color: "black" }} />
+          </IconButton>
+        </motion.div>
+      </BootstrapTooltip>
       {router.pathname !== "/auth/forgot-password" &&
         router.pathname !== "/auth/signup" &&
         router.pathname !== "/auth/login" &&
