@@ -261,3 +261,18 @@ export const BootstrapTooltip = (props) => {
 
   return <Tooltip arrow classes={classes} {...props} />;
 };
+
+
+
+export const speak = (data, window) => {
+  const speech = new SpeechSynthesisUtterance(data);
+  speech.pitch = 1;
+  speech.voice = speechSynthesis
+    .getVoices()
+    .filter(
+      (voice) =>
+        voice.name.toLocaleLowerCase().includes("zira") ||
+        voice.name.toLocaleLowerCase().includes("india")
+    )[0];
+  window.speechSynthesis.speak(speech);
+};
