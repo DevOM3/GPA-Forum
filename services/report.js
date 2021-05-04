@@ -8,7 +8,7 @@ export const report = (text) => {
   return !(text === reportedText);
 };
 
-export const suspendUser = (by) => {
+export const suspendUser = async (by) => {
   // Delete Query
   const queries = await (
     await db.collection("Queries").where("by", "==", by).get()
@@ -37,9 +37,8 @@ export const suspendUser = (by) => {
   }
 
   // Delete Blog
-  const blogs = await (
-    await db.collection("Blogs").where("by", "==", by).get()
-  ).docs;
+  const blogs = await (await db.collection("Blogs").where("by", "==", by).get())
+    .docs;
   for (let index = 0; index < blogs.length; index++) {
     const comments = (
       await db
@@ -49,11 +48,7 @@ export const suspendUser = (by) => {
         .get()
     ).docs;
 
-    for (
-      let commentIndex = 0;
-      commentIndex < comments.length;
-      commentIndex++
-    ) {
+    for (let commentIndex = 0; commentIndex < comments.length; commentIndex++) {
       await db
         .collection("Blogs")
         .doc(blogs[index].id)
@@ -70,6 +65,6 @@ export const suspendUser = (by) => {
   }
 
   db.collection("Users").doc(by).delete();
-}
+};
 
-export const REPORT_THRESHOLD = 2; 
+export const REPORT_THRESHOLD = 2;
