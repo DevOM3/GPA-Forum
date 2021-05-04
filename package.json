@@ -21,6 +21,8 @@
     "react-dom": "17.0.2",
     "react-linkify": "^1.0.0-alpha",
     "react-show-more-text": "^1.4.6",
+    "react-speech-recognition": "^3.8.0",
+    "regenerator-runtime": "^0.13.7",
     "string-similarity": "^4.0.4"
   }
 }

@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime";
 import "../styles/globals.css";
 import Layout from "../components/Layout";
 import { StateProvider } from "../context/StateProvider";
