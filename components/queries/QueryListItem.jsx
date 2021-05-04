@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 import { ReportOutlined } from "@material-ui/icons";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Badge, withStyles } from "@material-ui/core";
-import { report } from "../../services/report";
+import { report, REPORT_THRESHOLD, suspendUser } from "../../services/report";
 import { BootstrapTooltip } from "../../services/utilities";
 
 const optionsSelf = ["Edit", "Delete", "Share"];
@@ -70,7 +70,14 @@ const QueryListItem = ({
 
   const reportPost = async () => {
     if (report(queryText)) {
-      deleteQuery();
+      const queryRef = await db.collection("Queries").doc(id);
+      if ((await queryRef.get()).data().reports >= REPORT_THRESHOLD) {
+        setDeleting(true);
+        await suspendUser((await queryRef.get()).data().by);
+        setDeleting(false);
+      } else {
+        deleteQuery(queryRef);
+      }
     } else {
       alert("This query is all right!");
     }
@@ -81,9 +88,8 @@ const QueryListItem = ({
     setOpenEdit(true);
   };
 
-  const deleteQuery = async () => {
+  const deleteQuery = async (queryRef) => {
     setDeleting(true);
-    const queryRef = await db.collection("Queries").doc(id);
     const querySolutions = (await queryRef.collection("Solutions").get()).docs;
 
     for (let index = 0; index < querySolutions.length; index++) {

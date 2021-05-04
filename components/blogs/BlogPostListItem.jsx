@@ -22,7 +22,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { ReportOutlined } from "@material-ui/icons";
 import ReactLinkify from "react-linkify";
-import { report } from "../../services/report";
+import { report, REPORT_THRESHOLD, suspendUser } from "../../services/report";
 import { BootstrapTooltip } from "../../services/utilities";
 
 const options = ["Edit", "Delete"];
@@ -123,18 +123,25 @@ const BlogPostListItem = ({
 
   const reportBlog = () => {
     if (report(title) || report(text)) {
-      deleteBlog();
+      const blogRef = await db.collection("Blogs").doc(id);
+      if ((await blogRef.get()).data().reports >= REPORT_THRESHOLD) {
+        setDeleting(true);
+        suspendUser((await queryRef.get()).data().by)
+        setDeleting(false);
+      } else {
+
+        deleteBlog();
+      }
     } else {
       alert("This blog is all right!");
     }
   };
 
-  const deleteBlog = async () => {
+  const deleteBlog = async (blogRef) => {
     setDeleting(true);
     if (image) {
       await storage.refFromURL(image).delete();
     }
-    const blogRef = await db.collection("Blogs").doc(id);
     const blogComments = (await blogRef.collection("Comments").get()).docs;
 
     for (let index = 0; index < blogComments.length; index++) {

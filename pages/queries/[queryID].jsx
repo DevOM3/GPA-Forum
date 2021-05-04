@@ -28,7 +28,7 @@ import ReactLinkify from "react-linkify";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { Badge, withStyles } from "@material-ui/core";
-import { report } from "../../services/report";
+import { report, REPORT_THRESHOLD, suspendUser } from "../../services/report";
 import Solution from "../../components/queries/Solution";
 import { BootstrapTooltip } from "../../services/utilities";
 
@@ -136,9 +136,8 @@ const Query = () => {
       );
   };
 
-  const deletePost = async () => {
+  const deletePost = async (queryRef) => {
     router.back();
-    const queryRef = await db.collection("Queries").doc(router.query.queryID);
     const querySolutions = (await queryRef.collection("Solutions").get()).docs;
 
     for (let index = 0; index < querySolutions.length; index++) {
@@ -158,7 +157,13 @@ const Query = () => {
       alert(
         "We found slangs in this query, we are deleting this query right now.\nThank you for contributing to make this platform clean . "
       );
-      deletePost();
+      const queryRef = await db.collection("Queries").doc(router.query.queryID);
+      if ((await queryRef.get()).data().reports >= REPORT_THRESHOLD) {
+        router.back();
+        await suspendUser((await queryRef.get()).data().by);
+      } else {
+        deleteQuery(queryRef);
+      }
     } else {
       alert("This query is all right!");
     }

@@ -75,7 +75,9 @@ const Navbar = () => {
       exit="exit"
     >
       <Link href={user ? `/queries` : `/`}>
-        <a className={navbarStyles.logo}>GPAForum</a>
+        <a className={navbarStyles.logo}>
+          <img src="/public/navlogo.svg" />
+        </a>
       </Link>
       <motion.div
         className={navbarStyles.links}
