@@ -109,7 +109,7 @@ const Layout = ({ children }) => {
         "Open * Query page",
         "* Queries page *",
         "* Query page *",
-        "Show queries",
+        "Show (me) queries",
       ],
       callback: () => {
         resetTranscript();
@@ -130,7 +130,7 @@ const Layout = ({ children }) => {
         "Open * Block page",
         "Navigate * Block page",
         "* Blogs page * ",
-        "Show blogs",
+        "Show (me) blogs",
       ],
       callback: () => {
         resetTranscript();
@@ -155,7 +155,7 @@ const Layout = ({ children }) => {
         "Open * Notice page",
         "* Notices *",
         " Notice *",
-        "Show notices",
+        "Show (me) notices",
       ],
       callback: () => {
         resetTranscript();
@@ -383,26 +383,31 @@ const Layout = ({ children }) => {
         </title>
         <link rel="icon" href="/images/logo.png" />
       </Head>
-      <BootstrapTooltip title="Sitebot - Voice Assistant">
-        <motion.div
-          className="voice-fab"
-          variants={fabAnimationVariant}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
-          <IconButton
-            onClick={() =>
-              SpeechRecognition.startListening({
-                // continuous: SpeechRecognition.browserSupportsSpeechRecognition(),
-                language: "en-IN",
-              })
-            }
-          >
-            <MicNoneRounded style={{ color: "black" }} />
-          </IconButton>
-        </motion.div>
-      </BootstrapTooltip>
+      {router.pathname !== "/auth/forgot-password" &&
+        router.pathname !== "/auth/signup" &&
+        router.pathname !== "/auth/login" &&
+        router.pathname !== "/" && (
+          <BootstrapTooltip title="Sitebot - Voice Assistant">
+            <motion.div
+              className="voice-fab"
+              variants={fabAnimationVariant}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <IconButton
+                onClick={() =>
+                  SpeechRecognition.startListening({
+                    // continuous: SpeechRecognition.browserSupportsSpeechRecognition(),
+                    language: "en-IN",
+                  })
+                }
+              >
+                <MicNoneRounded style={{ color: "black" }} />
+              </IconButton>
+            </motion.div>
+          </BootstrapTooltip>
+        )}
       {router.pathname !== "/auth/forgot-password" &&
         router.pathname !== "/auth/signup" &&
         router.pathname !== "/auth/login" &&
