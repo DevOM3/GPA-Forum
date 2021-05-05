@@ -109,6 +109,7 @@ const Layout = ({ children }) => {
         "Open * Query page",
         "* Queries page *",
         "* Query page *",
+        "Show queries",
       ],
       callback: () => {
         resetTranscript();
@@ -129,6 +130,7 @@ const Layout = ({ children }) => {
         "Open * Block page",
         "Navigate * Block page",
         "* Blogs page * ",
+        "Show blogs",
       ],
       callback: () => {
         resetTranscript();
@@ -140,12 +142,20 @@ const Layout = ({ children }) => {
     {
       command: [
         "Navigate to the Notices page",
+        "Navigate to the Notice page",
         "Go to Notices page",
+        "Go to Notice page",
         "Head towards Notices page",
+        "Head towards Notice page",
         "Show Notices page",
+        "Show Notice page",
         "Visit Notices page",
+        "Visit Notice page",
         "Open * Notices page",
+        "Open * Notice page",
         "* Notices *",
+        " Notice *",
+        "Show notices",
       ],
       callback: () => {
         resetTranscript();
@@ -163,6 +173,7 @@ const Layout = ({ children }) => {
         "Visit Profile page",
         "Open * Profile page",
         "* Profile *",
+        "show my profile (please) *",
       ],
       callback: () => {
         resetTranscript();
@@ -177,11 +188,12 @@ const Layout = ({ children }) => {
         "what is my name *",
         "tell me my name *",
         "who am i",
-        "introduce me *",
+        "introduce me (please) *",
+        "introduce myself (please) *",
       ],
       callback: () => {
-        speak(`Your name is, ${user?.name}!`, window);
         resetTranscript();
+        speak(`Your name is, ${user?.name}!`, window);
       },
       isFuzzyMatch: true,
     },
@@ -195,8 +207,8 @@ const Layout = ({ children }) => {
         "introduce my branch",
       ],
       callback: () => {
-        speak(`You are studying in ${user?.branch?.title}!`, window);
         resetTranscript();
+        speak(`You are studying in ${user?.branch?.title}!`, window);
       },
       isFuzzyMatch: true,
     },
@@ -208,8 +220,26 @@ const Layout = ({ children }) => {
         "navigate to previous page *",
       ],
       callback: () => {
-        setMessage("Back");
         resetTranscript();
+        router.back();
+        speak("Navigating to the previous page", window);
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: ["log (me) out *", "log out", "lock out", "locked out"],
+      callback: () => {
+        resetTranscript();
+        speak(
+          `Logging you out, ${user?.name.split(" ")[0]}, please wait!`,
+          window
+        );
+        localStorage.removeItem("forumUserID");
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: null,
+        });
+        router.replace("/auth/login").then(() => router.reload());
       },
       isFuzzyMatch: true,
     },
@@ -272,7 +302,7 @@ const Layout = ({ children }) => {
         </title>
         <link rel="icon" href="/images/logo.png" />
       </Head>
-      <BootstrapTooltip title="Sitebot-Voice Assistant">
+      <BootstrapTooltip title="Sitebot - Voice Assistant">
         <motion.div
           className="voice-fab"
           variants={fabAnimationVariant}
@@ -319,23 +349,3 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
-
-// import Fab from "@material-ui/core/Fab";
-// import EditIcon from "@material-ui/icons/Edit";
-
-{
-  /* <Fab
-      style={{
-        position: "sticky",
-        top: "calc(100vh - 100px)",
-        left: "calc(100vw - 100px)",
-        width: 71,
-        height: 71,
-        zIndex: 4,
-      }}
-      color="secondary"
-      aria-label="edit"
-    >
-      <EditIcon fontSize="large" />
-    </Fab> */
-}
