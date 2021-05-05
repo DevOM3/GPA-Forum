@@ -243,6 +243,87 @@ const Layout = ({ children }) => {
       },
       isFuzzyMatch: true,
     },
+    {
+      command: [
+        "(what) (the) time ",
+        "time *",
+        "tell me (the) time",
+        "what's the time",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak(
+          `${
+            user?.name.split(" ")[0]
+          }, the time is ${new Date().toLocaleTimeString()}`,
+          window
+        );
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "(what) (is) (the) date *",
+        "date *",
+        "tell me date (today) *",
+        "what's the date (today)",
+      ],
+      callback: () => {
+        resetTranscript();
+        speak(
+          `${
+            user?.name.split(" ")[0]
+          }, the date is ${new Date().toLocaleDateString()}`,
+          window
+        );
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "(what) (is) my query count *",
+        "my query count *",
+        "my queries count *",
+        "* how many queries (do) i (have) (posted) *",
+      ],
+      callback: async () => {
+        resetTranscript();
+        const count = await (
+          await db.collection("Queries").where("by", "==", user?.id).get()
+        ).docs.length;
+        speak(
+          count > 0
+            ? `Currently, you have posted ${count} ${
+                count > 1 ? "queries" : "query"
+              }!`
+            : `You have not posted any query!`,
+          window
+        );
+      },
+      isFuzzyMatch: true,
+    },
+    {
+      command: [
+        "(what) (is) my blog count *",
+        "my blog count *",
+        "how many blogs (do) i (have) (posted) *",
+      ],
+      callback: async () => {
+        resetTranscript();
+        const count = await (
+          await db.collection("Blogs").where("by", "==", user?.id).get()
+        ).docs.length;
+        speak(
+          count > 0
+            ? `Currently, you have posted ${count} ${
+                count > 1 ? "blogs" : "blog"
+              }!`
+            : `You have not posted any blog!`,
+          window
+        );
+      },
+      isFuzzyMatch: true,
+    },
   ];
 
   const { transcript, resetTranscript, listening } = useSpeechRecognition({
