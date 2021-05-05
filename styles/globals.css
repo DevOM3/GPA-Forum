@@ -169,6 +169,21 @@ a {
   animation: line-animation 2s ease forwards 4s;
 }
 
+#nav-svg {
+  animation: fill-animation 0.71s ease forwards 2.51s;
+}
+
+#nav-svg g path:nth-child(1) {
+  stroke-dasharray: 494.0540771484375;
+  stroke-dashoffset: 494.0540771484375;
+  animation: line-animation 2s ease forwards 2.1s;
+}
+#nav-svg g path:nth-child(2) {
+  stroke-dasharray: 48.69285202026367;
+  stroke-dashoffset: 48.69285202026367;
+  animation: line-animation 2s ease forwards 2.4s;
+}
+
 @keyframes line-animation {
   to {
     stroke-dashoffset: 0;
