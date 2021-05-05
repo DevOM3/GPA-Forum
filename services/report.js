@@ -67,4 +67,4 @@ export const suspendUser = async (by) => {
   db.collection("Users").doc(by).delete();
 };
 
-export const REPORT_THRESHOLD = 2;
+export const REPORT_THRESHOLD = 20;

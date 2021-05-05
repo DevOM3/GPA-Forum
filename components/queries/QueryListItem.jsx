@@ -71,12 +71,24 @@ const QueryListItem = ({
   const reportPost = async () => {
     if (report(queryText)) {
       const queryRef = await db.collection("Queries").doc(id);
-      if ((await queryRef.get()).data().reports >= REPORT_THRESHOLD) {
+      const by = (await queryRef.get()).data()?.by;
+      const reportSnap = await db.collection("Users").doc(by).get();
+
+      if (reportSnap.exists && reportSnap.data()?.reports >= REPORT_THRESHOLD) {
         setDeleting(true);
-        await suspendUser((await queryRef.get()).data().by);
+        await deleteQuery(queryRef);
+        await suspendUser(by);
         setDeleting(false);
       } else {
-        deleteQuery(queryRef);
+        await deleteQuery(queryRef);
+        if (reportSnap.exists) {
+          await db
+            .collection("Users")
+            .doc(by)
+            .update({
+              reports: firebase.firestore.FieldValue.increment(1),
+            });
+        }
       }
     } else {
       alert("This query is all right!");
@@ -102,12 +114,6 @@ const QueryListItem = ({
     }
 
     await queryRef.delete();
-    await db
-      .collection("Users")
-      .doc((await queryRef.get()).data().by)
-      .update({
-        reports: firebase.firestore.FieldValue.increment(),
-      });
     setDeleteOpen(true);
     fetchQueries();
     setDeleting(false);

@@ -124,12 +124,24 @@ const BlogPostListItem = ({
   const reportBlog = async () => {
     if (report(title) || report(text)) {
       const blogRef = await db.collection("Blogs").doc(id);
-      if ((await blogRef.get()).data().reports >= REPORT_THRESHOLD) {
+      const by = (await blogRef.get()).data()?.by;
+      const reportSnap = await db.collection("Users").doc(by).get();
+
+      if (reportSnap.exists && reportSnap.data()?.reports >= REPORT_THRESHOLD) {
         setDeleting(true);
-        suspendUser((await queryRef.get()).data().by);
+        await deleteBlog(blogRef);
+        await suspendUser(by);
         setDeleting(false);
       } else {
-        deleteBlog();
+        await deleteBlog(blogRef);
+        if (reportSnap.exists) {
+          await db
+            .collection("Users")
+            .doc(by)
+            .update({
+              reports: firebase.firestore.FieldValue.increment(1),
+            });
+        }
       }
     } else {
       alert("This blog is all right!");
@@ -153,12 +165,6 @@ const BlogPostListItem = ({
     }
 
     await blogRef.delete();
-    await db
-      .collection("Users")
-      .doc((await blogRef.get()).data().by)
-      .update({
-        reports: firebase.firestore.FieldValue.increment(),
-      });
     setDeleteOpen(true);
     fetchBlogs();
     setDeleting(false);
@@ -170,7 +176,8 @@ const BlogPostListItem = ({
   };
   const deletePost = async () => {
     if (confirm("Are you sure to delete this Blog post?")) {
-      deleteBlog();
+      const blogRef = await db.collection("Blogs").doc(id);
+      deleteBlog(blogRef);
     }
   };
 

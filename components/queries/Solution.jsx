@@ -22,6 +22,7 @@ import CreateIcon from "@material-ui/icons/Create";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import queryFormStyles from "../../styles/components/queries/QueryForm.module.css";
 import Button from "@material-ui/core/Button";
+import { useRouter } from "next/router";
 
 const StyledBadge = withStyles((theme) => ({
   badge: {
@@ -40,10 +41,11 @@ const Solution = ({
   timestamp,
   upVotes,
 }) => {
+  const router = useRouter();
   const [{ user }, dispatch] = useStateValue();
   const [openMoreVertOutlined, setOpenMoreVertOutlined] = useState(false);
   const [userData, setUserData] = useState({});
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [editedSolution, setEditedSolution] = useState(solution);
   const [posting, setPosting] = useState(false);
@@ -54,6 +56,7 @@ const Solution = ({
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   useEffect(() => {
     db.collection("Users")
       .doc(by)
@@ -71,16 +74,19 @@ const Solution = ({
       });
   }, []);
 
-  const upVote = () => {
-    db.collection("Queries")
+  const upVote = async () => {
+    const snapshot = await db
+      .collection("Queries")
       .doc(postID)
       .collection("Solutions")
-      .doc(id)
-      .update({
+      .doc(id);
+    if ((await snapshot.get()).exists) {
+      await snapshot.update({
         upVotes: upVotes?.includes(user?.id)
           ? firebase.firestore.FieldValue.arrayRemove(user?.id)
           : firebase.firestore.FieldValue.arrayUnion(user?.id),
       });
+    }
   };
   const editComment = () => {
     setEditDialogOpen(true);
@@ -107,6 +113,7 @@ const Solution = ({
         .delete();
     }
   };
+
   return (
     <div
       className={solutionStyles.comment}
