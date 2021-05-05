@@ -153,6 +153,12 @@ const BlogPostListItem = ({
     }
 
     await blogRef.delete();
+    await db
+      .collection("Users")
+      .doc((await blogRef.get()).data().by)
+      .update({
+        reports: firebase.firestore.FieldValue.increment(),
+      });
     setDeleteOpen(true);
     fetchBlogs();
     setDeleting(false);

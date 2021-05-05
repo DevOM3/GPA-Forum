@@ -150,6 +150,12 @@ const Query = () => {
     }
 
     await queryRef.delete();
+    await db
+      .collection("Users")
+      .doc((await queryRef.get()).data().by)
+      .update({
+        reports: firebase.firestore.FieldValue.increment(),
+      });
   };
 
   const reportPost = async () => {
