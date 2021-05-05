@@ -179,6 +179,20 @@ const Profile = () => {
         >
           {user?.phno}
         </motion.p>
+        <motion.p
+          className={styles.contact}
+          className={styles.name}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: 1.5,
+          }}
+        >
+          Reports: {user?.reports}
+        </motion.p>
       </div>
 
       <motion.div

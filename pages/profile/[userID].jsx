@@ -66,6 +66,7 @@ const UserProfile = () => {
               name: data.data()?.name,
               branch: data.data()?.branch,
               phno: data.data()?.phno,
+              reports: data.data()?.reports,
             })
           );
       }
@@ -135,6 +136,19 @@ const UserProfile = () => {
             .map((no, index) => (index > 1 && index < 7 ? "*" : no))
             .toString()
             .replaceAll(",", "")}
+        </motion.p>
+        <motion.p
+          className={styles.contact}
+          variants={fadeWidthAnimationVariant}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            duration: 0.5,
+            delay: 1.5,
+          }}
+        >
+          Reports: {userData?.reports}
         </motion.p>
       </div>
 
