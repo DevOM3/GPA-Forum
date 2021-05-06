@@ -39,6 +39,7 @@ const Layout = ({ children }) => {
                   branch: doc.data()?.branch,
                   phno: doc.data()?.phno,
                   password: doc.data()?.password,
+                  reports: doc.data()?.reports
                 },
               });
             } else {

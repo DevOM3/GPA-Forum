@@ -1,12 +1,25 @@
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import styles from "../../styles/components/admin/Profile.module.css";
-import { CircularProgress } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { db, storage } from "../../services/firebase";
 import Link from "next/link";
+import { Rating } from "@material-ui/lab";
+import ReportModal from "../report/ReportModal";
 
 const User = (props) => {
   const [deleting, setDeleting] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+
+  const handleReportModalOpen =() => {
+      setReportModalOpen(true)
+  }
+
+  const handleReportModalClose = () => {
+    setReportModalOpen(false)
+  }
+
+
   const deleteUser = async () => {
     if (
       confirm(
@@ -87,6 +100,12 @@ const User = (props) => {
     </div>
   ) : (
     <div className={styles.student_profile}>
+      <ReportModal
+        reportModalOpen={reportModalOpen}
+        handleReportModalClose={handleReportModalClose}
+        id={props.id}
+        reports={props.reports}
+      />
       <div className={styles.delete_icon}>
         <DeleteForeverIcon onClick={deleteUser} />
       </div>
@@ -95,8 +114,12 @@ const User = (props) => {
           <p className={styles.student_name}>{props.name}</p>
           <p className={styles.student_branch}>{props.branch}</p>
           <p className={styles.student_cont}>{props.phno}</p>
+            <Rating name="read-only" value={5-(props.reports/4)} readOnly/>
         </a>
       </Link>
+      <Button style={{color:"white",fontSize:"15px",fontWeight:600,justifyContent:"flex-end"}} onClick={handleReportModalOpen}>
+              Go to report
+      </Button>
     </div>
   );
 };

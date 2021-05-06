@@ -8,16 +8,18 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 import { ShareRounded } from "@material-ui/icons";
+import Button from "@material-ui/core/Button";
 import { motion } from "framer-motion";
 import {
   fadeWidthAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
-import { CircularProgress } from "@material-ui/core";
+import {  CircularProgress } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useStateValue } from "../../context/StateProvider";
-
+import ReportModal from '../../components/report/ReportModal'
+import { Rating } from "@material-ui/lab";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -28,10 +30,19 @@ const UserProfile = () => {
   const [page, setPage] = useState("Queries");
   const [userData, setUserData] = useState({});
   const [openBlogCopy, setOpenBlogCopy] = useState(false);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
 
   const handleClickBlogCopy = () => {
     setOpenBlogCopy(true);
   };
+
+  const handleReportModalOpen =() => {
+    setReportModalOpen(true)
+  }
+
+  const handleReportModalClose = () => {
+    setReportModalOpen(false)
+  }
 
   const handleCloseBlogCopy = (event, reason) => {
     if (reason === "clickaway") {
@@ -71,6 +82,8 @@ const UserProfile = () => {
           );
       }
     }
+
+    console.log(userData?.reports)
   }, [router.query?.userID]);
 
   return userData?.name ? (
@@ -81,6 +94,12 @@ const UserProfile = () => {
       animate="visible"
       exit="exit"
     >
+      <ReportModal
+      reportModalOpen={reportModalOpen}
+      handleReportModalClose={handleReportModalClose}
+      id={userData?.id}
+      reports={userData?.reports}
+      />
       <Snackbar
         open={openBlogCopy}
         autoHideDuration={6000}
@@ -148,8 +167,11 @@ const UserProfile = () => {
             delay: 1.5,
           }}
         >
-          Reports: {userData?.reports}
+          Reports: <Rating name="read-only" value={5-(userData?.reports/4)} readOnly/>
         </motion.p>
+          <Button style={{color:"white",fontSize:"15px",fontWeight:600}} onClick={handleReportModalOpen}>
+            Go to report
+          </Button>
       </div>
 
       <motion.div

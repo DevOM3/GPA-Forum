@@ -39,6 +39,12 @@
   margin: 2px;
 }
 
+.review {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 @media only screen and (max-width: 1400px) and (min-width: 1200px) {
   .student_profile {
     margin: 5px 280px;

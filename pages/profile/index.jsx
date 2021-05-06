@@ -13,6 +13,7 @@ import {
 import { motion } from "framer-motion";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Button from "@material-ui/core/Button";
 import EditRounded from "@material-ui/icons/EditRounded";
 import { MeetingRoomOutlined, ShareRounded } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -21,6 +22,8 @@ import EditProfile from "../../components/profile/EditProfile";
 import { actionTypes } from "../../context/reducer";
 import { useRouter } from "next/router";
 import { BootstrapTooltip } from "../../services/utilities";
+import ReportModal from '../../components/report/ReportModal'
+import { Rating } from "@material-ui/lab";
 
 const ITEM_HEIGHT = 48;
 function Alert(props) {
@@ -33,12 +36,21 @@ const Profile = () => {
   const [page, setPage] = useState("Queries");
   const [openCopy, setOpenCopy] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [reportModalOpen, setReportModalOpen] = useState(false);
   const open = Boolean(anchorEl);
   const [openEditProfile, setOpenEditProfile] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
+  const handleReportModalOpen =() => {
+      setReportModalOpen(true)
+  }
+
+  const handleReportModalClose = () => {
+    setReportModalOpen(false)
+  }
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -68,6 +80,12 @@ const Profile = () => {
       animate="visible"
       exit="exit"
     >
+      <ReportModal
+      reportModalOpen={reportModalOpen}
+      handleReportModalClose={handleReportModalClose}
+      id={user?.id}
+      reports={user?.reports}
+      />
       <EditProfile
         openEditProfile={openEditProfile}
         setOpenEditProfile={setOpenEditProfile}
@@ -191,8 +209,11 @@ const Profile = () => {
             delay: 1.5,
           }}
         >
-          Reports: {user?.reports}
+          Reports: <Rating style={{marginTop:"10px"}} name="read-only" value={5-(user?.reports/4)} readOnly/>
         </motion.p>
+          <Button style={{color:"white",fontSize:"15px",fontWeight:600}} onClick={handleReportModalOpen}>
+            Go to report
+          </Button>
       </div>
 
       <motion.div

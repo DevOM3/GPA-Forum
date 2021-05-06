@@ -16,6 +16,7 @@ const Profile = () => {
           name: doc.data().name,
           branch: doc.data().branch,
           phno: doc.data().phno,
+          reports: doc.data().reports
         }))
       )
     );
@@ -64,6 +65,7 @@ const Profile = () => {
               branch={user?.branch?.title}
               phno={user?.phno}
               id={user?.id}
+              reports={user?.reports}
             />
           ))}
       </div>
