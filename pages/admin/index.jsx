@@ -8,6 +8,7 @@ import Notice from "../../components/admin/Notice";
 import Queries from "../../components/admin/Query";
 import Blogs from "../../components/admin/Blogs";
 import { useEffect } from "react";
+import Head from "next/head";
 
 const Dashboard = () => {
   const [toggle, setToggle] = useState(false);
@@ -41,6 +42,17 @@ const Dashboard = () => {
 
   return loggedIn ? (
     <div className={styles.container}>
+      <Head>
+        <meta property="og:title" content="GPAForum | Admin Panel" />
+        <meta
+          name="description"
+          content="Administrative control for GPAForum."
+        />
+        <meta
+          name="og:description"
+          content="Administrative control for GPAForum."
+        />
+      </Head>
       <span className={styles.hamburger} onClick={onToggle}>
         &#9776;
       </span>

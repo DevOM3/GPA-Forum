@@ -24,6 +24,7 @@ import Slide from "@material-ui/core/Slide";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { BootstrapTooltip } from "../../services/utilities";
+import Head from "next/head";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -99,6 +100,17 @@ const Queries = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Queries" />
+        <meta
+          name="description"
+          content="View Personalized Queries of GPA personnel corresponding to your Branch and whole GPA."
+        />
+        <meta
+          name="og:description"
+          content="Queries of GPA personnel related to your Branch and whole GPA."
+        />
+      </Head>
       <Snackbar
         open={deleteOpen}
         autoHideDuration={6000}

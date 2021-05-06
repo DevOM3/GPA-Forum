@@ -16,6 +16,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import BlogEditForm from "../../components/blogs/BlogEditForm";
 import { BootstrapTooltip } from "../../services/utilities";
+import Head from "next/head";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -83,6 +84,14 @@ const BlogPage = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Blogs" />
+        <meta name="description" content="See blogs from all GPAForum users" />
+        <meta
+          name="og:description"
+          content="See blogs from all GPAForum users"
+        />
+      </Head>
       <Snackbar
         open={openBlogCopy}
         autoHideDuration={6000}

@@ -13,6 +13,7 @@ import {
   pageAnimationVariant,
 } from "../services/utilities";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Home = () => {
   const router = useRouter();
@@ -75,19 +76,18 @@ const Home = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Home" />
+        <meta
+          name="description"
+          content="Sign Up to be the indivisible part of GPA forever."
+        />
+        <meta
+          name="og:description"
+          content="Sign Up to be the indivisible part of GPA forever."
+        />
+      </Head>
       <div className={styles.image_and_title} style={{ background: "#1a2226" }}>
-        {/* <motion.img
-          src="/images/logo.png"
-          alt=""
-          variants={homeTopAnimationVariant}
-          initial="hidden"
-          animate="visible"
-          transition={{
-            delay: 0.2,
-            duration: 0.5,
-            ease: "easeIn",
-          }}
-        /> */}
         <svg
           id="svg"
           width="268"

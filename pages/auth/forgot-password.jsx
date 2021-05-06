@@ -16,6 +16,7 @@ import {
 } from "../../services/utilities";
 import { actionTypes } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
+import Head from "next/head";
 
 const ForgotPassword = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -104,6 +105,11 @@ const ForgotPassword = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Forgot Password" />
+        <meta name="description" content="Reset your password." />
+        <meta name="og:description" content="Reset your password." />
+      </Head>
       <form className={forgotStyles.form} onSubmit={verifyOTP}>
         <img src="/images/circle.svg" alt="" />
         <div className={forgotStyles.mainForm}>

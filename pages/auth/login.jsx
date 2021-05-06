@@ -18,6 +18,7 @@ import {
 } from "../../services/utilities";
 import { actionTypes } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
+import Head from "next/head";
 
 const Login = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -69,6 +70,17 @@ const Login = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Login" />
+        <meta
+          name="description"
+          content="Login to GPAForum from your account"
+        />
+        <meta
+          name="og:description"
+          content="Login to GPAForum from your account"
+        />
+      </Head>
       <form className={loginStyles.form} onSubmit={login}>
         <img src="/images/circle.svg" alt="" />
         <div className={loginStyles.mainForm}>

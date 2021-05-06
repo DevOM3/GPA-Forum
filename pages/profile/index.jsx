@@ -24,6 +24,7 @@ import { useRouter } from "next/router";
 import { BootstrapTooltip } from "../../services/utilities";
 import ReportModal from "../../components/report/ReportModal";
 import { Rating } from "@material-ui/lab";
+import Head from "next/head";
 
 const ITEM_HEIGHT = 48;
 function Alert(props) {
@@ -80,6 +81,11 @@ const Profile = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Profile" />
+        <meta name="description" content="See your profile." />
+        <meta name="og:description" content="See your profile." />
+      </Head>
       <ReportModal
         reportModalOpen={reportModalOpen}
         handleReportModalClose={handleReportModalClose}

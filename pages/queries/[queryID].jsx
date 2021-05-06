@@ -5,8 +5,6 @@ import { Divider, IconButton, CircularProgress } from "@material-ui/core";
 import Link from "next/link";
 import {
   DeleteOutlined,
-  FavoriteBorderOutlined,
-  FavoriteRounded,
   ModeCommentOutlined,
   ReportOutlined,
   SendRounded,
@@ -17,7 +15,6 @@ import { db, firebase } from "../../services/firebase";
 import { motion } from "framer-motion";
 import {
   fadeAnimationVariant,
-  fadeWidthAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
@@ -31,6 +28,7 @@ import { Badge, withStyles } from "@material-ui/core";
 import { report, REPORT_THRESHOLD, suspendUser } from "../../services/report";
 import Solution from "../../components/queries/Solution";
 import { BootstrapTooltip } from "../../services/utilities";
+import Head from "next/head";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -217,6 +215,17 @@ const Query = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content={queryData?.query} />
+        <meta
+          name="description"
+          content={`${queryData?.query} - ${queryData?.queryType}`}
+        />
+        <meta
+          name="og:description"
+          content={`${queryData?.query} - ${queryData?.queryType}`}
+        />
+      </Head>
       <Snackbar
         open={openQueryCopy}
         autoHideDuration={6000}

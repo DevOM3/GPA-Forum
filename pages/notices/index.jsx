@@ -19,6 +19,7 @@ import Slide from "@material-ui/core/Slide";
 import MuiAlert from "@material-ui/lab/Alert";
 import Snackbar from "@material-ui/core/Snackbar";
 import NoticeListItem from "../../components/notices/NoticeListItem";
+import Head from "next/head";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -86,6 +87,17 @@ const Notices = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Notices" />
+        <meta
+          name="description"
+          content="See latest Notices from GPA faculties."
+        />
+        <meta
+          name="og:description"
+          content="See latest Notices from GPA faculties."
+        />
+      </Head>
       <Snackbar
         open={copyOpen}
         autoHideDuration={6000}

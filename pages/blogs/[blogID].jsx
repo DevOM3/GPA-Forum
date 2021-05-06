@@ -28,8 +28,7 @@ import Comment from "../../components/blogs/Comment";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { report } from "../../services/report";
-import ShowMoreText from "react-show-more-text";
-import { BootstrapTooltip } from "../../services/utilities";
+import Head from "next/head";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -190,6 +189,11 @@ const Blog = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content={blogData?.title} />
+        <meta name="description" content={blogData?.text} />
+        <meta name="og:description" content={blogData?.text} />
+      </Head>
       <Snackbar
         open={openBlogCopy}
         autoHideDuration={6000}

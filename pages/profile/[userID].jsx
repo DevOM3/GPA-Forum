@@ -94,6 +94,17 @@ const UserProfile = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content={userData?.name} />
+        <meta
+          name="description"
+          content={`${userData?.name.split(" ")[0]}'s profile.`}
+        />
+        <meta
+          name="og:description"
+          content={`${userData?.name.split(" ")[0]}'s profile.`}
+        />
+      </Head>
       <ReportModal
         reportModalOpen={reportModalOpen}
         handleReportModalClose={handleReportModalClose}

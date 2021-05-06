@@ -39,7 +39,7 @@ const Layout = ({ children }) => {
                   branch: doc.data()?.branch,
                   phno: doc.data()?.phno,
                   password: doc.data()?.password,
-                  reports: doc.data()?.reports
+                  reports: doc.data()?.reports,
                 },
               });
             } else {
@@ -384,6 +384,7 @@ const Layout = ({ children }) => {
       {router.pathname !== "/auth/forgot-password" &&
         router.pathname !== "/auth/signup" &&
         router.pathname !== "/auth/login" &&
+        router.pathname !== "/admin" &&
         router.pathname !== "/" && (
           <BootstrapTooltip title="Sitebot - Voice Assistant">
             <motion.div

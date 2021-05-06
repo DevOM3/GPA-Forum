@@ -24,6 +24,7 @@ import {
 } from "../../services/utilities";
 import { actionTypes } from "../../context/reducer";
 import { useStateValue } from "../../context/StateProvider";
+import Head from "next/head";
 
 const SignUp = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -155,6 +156,17 @@ const SignUp = () => {
       animate="visible"
       exit="exit"
     >
+      <Head>
+        <meta property="og:title" content="GPAForum | Sign Up" />
+        <meta
+          name="description"
+          content="Sign Up to GPAForum to be indivisible part of GPA Forever."
+        />
+        <meta
+          name="og:description"
+          content="Sign Up to GPAForum to be indivisible part of GPA Forever."
+        />
+      </Head>
       <form className={signUpStyles.form} onSubmit={verifyOTP}>
         <img id="img" src="/images/circle.svg" alt="" />
         <div className={signUpStyles.mainForm}>
