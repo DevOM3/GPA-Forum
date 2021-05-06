@@ -11,14 +11,13 @@ const User = (props) => {
   const [deleting, setDeleting] = useState(false);
   const [reportModalOpen, setReportModalOpen] = useState(false);
 
-  const handleReportModalOpen =() => {
-      setReportModalOpen(true)
-  }
+  const handleReportModalOpen = () => {
+    setReportModalOpen(true);
+  };
 
   const handleReportModalClose = () => {
-    setReportModalOpen(false)
-  }
-
+    setReportModalOpen(false);
+  };
 
   const deleteUser = async () => {
     if (
@@ -109,17 +108,28 @@ const User = (props) => {
       <div className={styles.delete_icon}>
         <DeleteForeverIcon onClick={deleteUser} />
       </div>
-      <Link href={`/profile/${props.id}`}>
-        <a className={styles.profile_info}>
-          <p className={styles.student_name}>{props.name}</p>
-          <p className={styles.student_branch}>{props.branch}</p>
-          <p className={styles.student_cont}>{props.phno}</p>
-            <Rating name="read-only" value={5-(props.reports/4)} readOnly/>
-        </a>
-      </Link>
-      <Button style={{color:"white",fontSize:"15px",fontWeight:600,justifyContent:"flex-end"}} onClick={handleReportModalOpen}>
-              Go to report
-      </Button>
+      <div className={styles.profile_info}>
+        <Link href={`/profile/${props.id}`}>
+          <a>
+            <p className={styles.student_name}>{props.name}</p>
+            <p className={styles.student_branch}>{props.branch}</p>
+            <p className={styles.student_cont}>{props.phno}</p>
+            <Rating
+              name="read-only"
+              value={5 - props.reports / 4}
+              size="small"
+              readOnly
+            />
+          </a>
+        </Link>
+        <p
+          className={styles.student_cont}
+          style={{ cursor: "pointer" }}
+          onClick={handleReportModalOpen}
+        >
+          Go to report
+        </p>
+      </div>
     </div>
   );
 };

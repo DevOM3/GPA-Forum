@@ -22,7 +22,7 @@ import EditProfile from "../../components/profile/EditProfile";
 import { actionTypes } from "../../context/reducer";
 import { useRouter } from "next/router";
 import { BootstrapTooltip } from "../../services/utilities";
-import ReportModal from '../../components/report/ReportModal'
+import ReportModal from "../../components/report/ReportModal";
 import { Rating } from "@material-ui/lab";
 
 const ITEM_HEIGHT = 48;
@@ -44,13 +44,13 @@ const Profile = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleReportModalOpen =() => {
-      setReportModalOpen(true)
-  }
+  const handleReportModalOpen = () => {
+    setReportModalOpen(true);
+  };
 
   const handleReportModalClose = () => {
-    setReportModalOpen(false)
-  }
+    setReportModalOpen(false);
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -81,10 +81,10 @@ const Profile = () => {
       exit="exit"
     >
       <ReportModal
-      reportModalOpen={reportModalOpen}
-      handleReportModalClose={handleReportModalClose}
-      id={user?.id}
-      reports={user?.reports}
+        reportModalOpen={reportModalOpen}
+        handleReportModalClose={handleReportModalClose}
+        id={user?.id}
+        reports={user?.reports}
       />
       <EditProfile
         openEditProfile={openEditProfile}
@@ -185,7 +185,7 @@ const Profile = () => {
         </motion.p>
         <motion.p
           className={styles.contact}
-          className={styles.name}
+          style={{ marginBottom: 4 }}
           variants={fadeWidthAnimationVariant}
           initial="hidden"
           animate="visible"
@@ -197,23 +197,20 @@ const Profile = () => {
         >
           {user?.phno}
         </motion.p>
-        <motion.p
-          className={styles.contact}
+        <Rating
+          style={{ marginLeft: 7 }}
+          name="read-only"
+          value={5 - user?.reports / 4}
+          size="small"
+          readOnly
+        />
+        <p
           className={styles.name}
-          variants={fadeWidthAnimationVariant}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{
-            duration: 0.5,
-            delay: 1.5,
-          }}
+          style={{ marginTop: 0, cursor: "pointer" }}
+          onClick={handleReportModalOpen}
         >
-          Reports: <Rating style={{marginTop:"10px"}} name="read-only" value={5-(user?.reports/4)} readOnly/>
-        </motion.p>
-          <Button style={{color:"white",fontSize:"15px",fontWeight:600}} onClick={handleReportModalOpen}>
-            Go to report
-          </Button>
+          Show report
+        </p>
       </div>
 
       <motion.div

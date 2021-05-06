@@ -14,11 +14,11 @@ import {
   fadeWidthAnimationVariant,
   pageAnimationVariant,
 } from "../../services/utilities";
-import {  CircularProgress } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import { useStateValue } from "../../context/StateProvider";
-import ReportModal from '../../components/report/ReportModal'
+import ReportModal from "../../components/report/ReportModal";
 import { Rating } from "@material-ui/lab";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -36,13 +36,13 @@ const UserProfile = () => {
     setOpenBlogCopy(true);
   };
 
-  const handleReportModalOpen =() => {
-    setReportModalOpen(true)
-  }
+  const handleReportModalOpen = () => {
+    setReportModalOpen(true);
+  };
 
   const handleReportModalClose = () => {
-    setReportModalOpen(false)
-  }
+    setReportModalOpen(false);
+  };
 
   const handleCloseBlogCopy = (event, reason) => {
     if (reason === "clickaway") {
@@ -83,7 +83,7 @@ const UserProfile = () => {
       }
     }
 
-    console.log(userData?.reports)
+    console.log(userData?.reports);
   }, [router.query?.userID]);
 
   return userData?.name ? (
@@ -95,10 +95,10 @@ const UserProfile = () => {
       exit="exit"
     >
       <ReportModal
-      reportModalOpen={reportModalOpen}
-      handleReportModalClose={handleReportModalClose}
-      id={userData?.id}
-      reports={userData?.reports}
+        reportModalOpen={reportModalOpen}
+        handleReportModalClose={handleReportModalClose}
+        id={userData?.id}
+        reports={userData?.reports}
       />
       <Snackbar
         open={openBlogCopy}
@@ -141,6 +141,7 @@ const UserProfile = () => {
         </motion.p>
         <motion.p
           className={styles.contact}
+          style={{ marginBottom: 4 }}
           variants={fadeWidthAnimationVariant}
           initial="hidden"
           animate="visible"
@@ -156,22 +157,20 @@ const UserProfile = () => {
             .toString()
             .replaceAll(",", "")}
         </motion.p>
-        <motion.p
+        <Rating
+          style={{ marginLeft: 7 }}
+          name="read-only"
+          value={5 - userData?.reports / 4}
+          size="small"
+          readOnly
+        />
+        <p
           className={styles.contact}
-          variants={fadeWidthAnimationVariant}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          transition={{
-            duration: 0.5,
-            delay: 1.5,
-          }}
+          style={{ marginTop: 0, cursor: "pointer" }}
+          onClick={handleReportModalOpen}
         >
-          Reports: <Rating name="read-only" value={5-(userData?.reports/4)} readOnly/>
-        </motion.p>
-          <Button style={{color:"white",fontSize:"15px",fontWeight:600}} onClick={handleReportModalOpen}>
-            Go to report
-          </Button>
+          Show report
+        </p>
       </div>
 
       <motion.div

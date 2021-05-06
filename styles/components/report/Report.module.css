@@ -1,0 +1,23 @@
+.main {
+  display: flex;
+}
+
+.left,
+.right {
+  flex: 1;
+}
+
+.divider {
+  height: 100%;
+  margin-left: 11px;
+  margin-right: 11px;
+}
+
+@media only screen and (max-width: 550px) {
+  .main {
+    flex-direction: column;
+  }
+  .divider {
+    display: none;
+  }
+}
