@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps, router }) {
           content="A platform exclusively for 'GPA'"
           key="type"
         />
-        <meta property="og:title" content="GPAForum | Gand" key="title" />
+        <meta property="og:title" content="GPAForum" key="title" />
         <meta
           name="description"
           content="Sign Up to be the indivisible part of GPA forever."
