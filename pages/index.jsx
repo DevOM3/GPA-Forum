@@ -77,6 +77,7 @@ const Home = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Home</title>
         <meta property="og:title" content="GPAForum | Home" key="title" />
         <meta
           name="description"
