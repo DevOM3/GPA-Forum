@@ -216,13 +216,10 @@ const Query = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Query</title>
+        <title>{`GPAForum | Query - ${queryData?.query}`}</title>
         <meta
           name="description"
-          content={`${queryData?.query} - ${queryData?.queryType}`.slice(
-            0,
-            154
-          )}
+          content={`${queryData?.query} - ${queryData?.queryType}`}
         />
       </Head>
       <Snackbar

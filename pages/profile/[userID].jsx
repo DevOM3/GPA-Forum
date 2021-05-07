@@ -95,7 +95,7 @@ const UserProfile = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | User Profile</title>
+        <title>{`GPAForum | ${userData?.name}`}</title>
         <meta
           name="description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}

@@ -190,12 +190,8 @@ const Blog = () => {
       exit="exit"
     >
       <Head>
-        <title>{blogData?.title.slice(0, 64)}</title>
-        <meta
-          name="description"
-          content={blogData?.text.slice(0, 154)}
-          key="desc"
-        />
+        <title>{`GPAForum | Blog - ${blogData?.title}`}</title>
+        <meta name="description" content={blogData?.text} key="desc" />
       </Head>
       <Snackbar
         open={openBlogCopy}
