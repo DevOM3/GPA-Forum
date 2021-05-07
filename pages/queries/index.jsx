@@ -101,13 +101,14 @@ const Queries = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Queries</title>
         <meta property="og:title" content="GPAForum | Queries" />
         <meta
           name="description"
           content="View Personalized Queries of GPA personnel corresponding to your Branch and whole GPA."
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="Queries of GPA personnel related to your Branch and whole GPA."
         />
       </Head>

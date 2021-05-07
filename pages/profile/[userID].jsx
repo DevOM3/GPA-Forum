@@ -95,13 +95,14 @@ const UserProfile = () => {
       exit="exit"
     >
       <Head>
+        <title>{userData?.name}</title>
         <meta property="og:title" content={userData?.name} />
         <meta
           name="description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}
         />
         <meta
-          name="og:description"
+          property="og:description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}
         />
       </Head>

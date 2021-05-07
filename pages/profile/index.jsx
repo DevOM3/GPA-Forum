@@ -82,9 +82,10 @@ const Profile = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Profile</title>
         <meta property="og:title" content="GPAForum | Profile" />
         <meta name="description" content="See your profile." />
-        <meta name="og:description" content="See your profile." />
+        <meta property="og:description" content="See your profile." />
       </Head>
       <ReportModal
         reportModalOpen={reportModalOpen}

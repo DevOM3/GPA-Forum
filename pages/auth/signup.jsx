@@ -157,13 +157,14 @@ const SignUp = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Sign Up</title>
         <meta property="og:title" content="GPAForum | Sign Up" />
         <meta
           name="description"
           content="Sign Up to GPAForum to be indivisible part of GPA Forever."
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="Sign Up to GPAForum to be indivisible part of GPA Forever."
         />
       </Head>

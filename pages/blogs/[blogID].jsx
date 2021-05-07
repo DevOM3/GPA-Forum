@@ -190,9 +190,10 @@ const Blog = () => {
       exit="exit"
     >
       <Head>
+        <title>{blogData?.title}</title>
         <meta property="og:title" content={blogData?.title} />
         <meta name="description" content={blogData?.text} />
-        <meta name="og:description" content={blogData?.text} />
+        <meta property="og:description" content={blogData?.text} />
       </Head>
       <Snackbar
         open={openBlogCopy}

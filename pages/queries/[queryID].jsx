@@ -216,13 +216,14 @@ const Query = () => {
       exit="exit"
     >
       <Head>
+        <title>{queryData?.query}</title>
         <meta property="og:title" content={queryData?.query} />
         <meta
           name="description"
           content={`${queryData?.query} - ${queryData?.queryType}`}
         />
         <meta
-          name="og:description"
+          property="og:description"
           content={`${queryData?.query} - ${queryData?.queryType}`}
         />
       </Head>

@@ -71,13 +71,14 @@ const Login = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Login</title>
         <meta property="og:title" content="GPAForum | Login" />
         <meta
           name="description"
           content="Login to GPAForum from your account"
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="Login to GPAForum from your account"
         />
       </Head>

@@ -43,13 +43,14 @@ const Dashboard = () => {
   return loggedIn ? (
     <div className={styles.container}>
       <Head>
+        <title>GPAForum | Admin Panel</title>
         <meta property="og:title" content="GPAForum | Admin Panel" />
         <meta
           name="description"
           content="Administrative control for GPAForum."
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="Administrative control for GPAForum."
         />
       </Head>

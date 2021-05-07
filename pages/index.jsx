@@ -77,13 +77,14 @@ const Home = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Home</title>
         <meta property="og:title" content="GPAForum | Home" />
         <meta
           name="description"
           content="Sign Up to be the indivisible part of GPA forever."
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="Sign Up to be the indivisible part of GPA forever."
         />
       </Head>

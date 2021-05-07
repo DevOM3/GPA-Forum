@@ -88,13 +88,14 @@ const Notices = () => {
       exit="exit"
     >
       <Head>
+        <title>GPAForum | Notices</title>
         <meta property="og:title" content="GPAForum | Notices" />
         <meta
           name="description"
           content="See latest Notices from GPA faculties."
         />
         <meta
-          name="og:description"
+          property="og:description"
           content="See latest Notices from GPA faculties."
         />
       </Head>

@@ -16,8 +16,8 @@ function MyApp({ Component, pageProps, router }) {
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
-        <title>GPAForum</title>
-
+        <meta property="og:site_name" content="GPAForum" />
+        <meta property="og:type" content="A platform exclusively for 'GPA'" />
         <link rel="manifest" href="/manifest.json" />
         <link
           href="/images/logo-rounded.png"
