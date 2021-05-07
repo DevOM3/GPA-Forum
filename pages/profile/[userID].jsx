@@ -96,19 +96,10 @@ const UserProfile = () => {
     >
       <Head>
         <title>GPAForum | User Profile</title>
-        {/* <meta
-          property="og:title"
-          content={userData?.name.slice(0, 34)}
-          key="title"
-        />
         <meta
           name="description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}
         />
-        <meta
-          property="og:description"
-          content={`${userData?.name.split(" ")[0]}'s profile.`}
-        /> */}
       </Head>
       <ReportModal
         reportModalOpen={reportModalOpen}

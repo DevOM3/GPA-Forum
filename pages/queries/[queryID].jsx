@@ -217,11 +217,6 @@ const Query = () => {
     >
       <Head>
         <title>GPAForum | Query</title>
-        {/* <meta
-          property="og:title"
-          content={queryData?.query.slice(0, 34)}
-          key="title"
-        />
         <meta
           name="description"
           content={`${queryData?.query} - ${queryData?.queryType}`.slice(
@@ -229,10 +224,6 @@ const Query = () => {
             154
           )}
         />
-        <meta
-          property="og:description"
-          content={`${queryData?.query} - ${queryData?.queryType}`.slice(0, 64)}
-        /> */}
       </Head>
       <Snackbar
         open={openQueryCopy}

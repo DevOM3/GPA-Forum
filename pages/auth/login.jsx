@@ -72,17 +72,11 @@ const Login = () => {
     >
       <Head>
         <title>GPAForum | Login</title>
-        {/* <meta property="og:title" content="GPAForum | Login" key="title" />
         <meta
           name="description"
           content="Login to GPAForum from your account."
           key="desc"
         />
-        <meta
-          property="og:description"
-          content="Login to GPAForum from your account."
-          key="og-desc"
-        /> */}
       </Head>
       <form className={loginStyles.form} onSubmit={login}>
         <img src="/images/circle.svg" alt="" />

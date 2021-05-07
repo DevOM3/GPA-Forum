@@ -158,17 +158,11 @@ const SignUp = () => {
     >
       <Head>
         <title>GPAForum | Sign Up</title>
-        {/* <meta property="og:title" content="GPAForum | Sign Up" key="title" />
         <meta
           name="description"
           content="Sign Up to GPAForum to be indivisible part of GPA Forever."
           key="desc"
         />
-        <meta
-          property="og:description"
-          content="Sign Up to GPAForum to be indivisible part of GPA Forever."
-          key="og-desc"
-        /> */}
       </Head>
       <form className={signUpStyles.form} onSubmit={verifyOTP}>
         <img id="img" src="/images/circle.svg" alt="" />

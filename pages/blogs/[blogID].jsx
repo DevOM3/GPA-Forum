@@ -191,21 +191,11 @@ const Blog = () => {
     >
       <Head>
         <title>{blogData?.title.slice(0, 64)}</title>
-        {/* <meta
-          property="og:title"
-          content={blogData?.title.slice(0, 34)}
-          key="title"
-        />
         <meta
           name="description"
           content={blogData?.text.slice(0, 154)}
           key="desc"
         />
-        <meta
-          property="og:description"
-          content={blogData?.text.slice(0, 64)}
-          key="og-desc"
-        /> */}
       </Head>
       <Snackbar
         open={openBlogCopy}

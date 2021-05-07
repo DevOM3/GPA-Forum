@@ -89,20 +89,10 @@ const Notices = () => {
     >
       <Head>
         <title>GPAForum | Notices</title>
-        {/* <meta
-          property="og:title"
-          content="GPAForum | Notices"
-          key="title"
-          key="title"
-        />
         <meta
           name="description"
           content="See latest Notices from GPA faculties."
         />
-        <meta
-          property="og:description"
-          content="See latest Notices from GPA faculties."
-        /> */}
       </Head>
       <Snackbar
         open={copyOpen}
