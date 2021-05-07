@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps, router }) {
           content="A platform exclusively for 'GPA'"
           key="type"
         />
-        <meta property="og:title" content="GPAForum" key="title" />
+        {/* <meta property="og:title" content="GPAForum" key="title" />
         <meta
           name="description"
           content="Sign Up to be the indivisible part of GPA forever."
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps, router }) {
           property="og:description"
           content="Sign Up to be the indivisible part of GPA forever."
           key="og-desc"
-        />
+        /> */}
 
         <link rel="manifest" href="/manifest.json" />
         <link
