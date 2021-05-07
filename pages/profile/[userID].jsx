@@ -20,6 +20,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import { useStateValue } from "../../context/StateProvider";
 import ReportModal from "../../components/report/ReportModal";
 import { Rating } from "@material-ui/lab";
+import Head from "next/head";
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
