@@ -16,12 +16,26 @@ function MyApp({ Component, pageProps, router }) {
           name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"
         />
+
         <meta property="og:site_name" content="GPAForum" key="site-name" />
         <meta
           property="og:type"
           content="A platform exclusively for 'GPA'"
           key="type"
         />
+        <title>GPAForum | Home</title>
+        <meta property="og:title" content="GPAForum | Home" key="title" />
+        <meta
+          name="description"
+          content="Sign Up to be the indivisible part of GPA forever."
+          key="desc"
+        />
+        <meta
+          property="og:description"
+          content="Sign Up to be the indivisible part of GPA forever."
+          key="og-desc"
+        />
+
         <link rel="manifest" href="/manifest.json" />
         <link
           href="/images/logo-rounded.png"
