@@ -95,8 +95,12 @@ const UserProfile = () => {
       exit="exit"
     >
       <Head>
-        <title>{userData?.name}</title>
-        <meta property="og:title" content={userData?.name} />
+        <title>{userData?.name.slice(0, 64)}</title>
+        <meta
+          property="og:title"
+          content={userData?.name.slice(0, 34)}
+          key="title"
+        />
         <meta
           name="description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}

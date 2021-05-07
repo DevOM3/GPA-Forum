@@ -102,14 +102,16 @@ const Queries = () => {
     >
       <Head>
         <title>GPAForum | Queries</title>
-        <meta property="og:title" content="GPAForum | Queries" />
+        <meta property="og:title" content="GPAForum | Queries" key="title" />
         <meta
           name="description"
           content="View Personalized Queries of GPA personnel corresponding to your Branch and whole GPA."
+          key="desc"
         />
         <meta
           property="og:description"
           content="Queries of GPA personnel related to your Branch and whole GPA."
+          key="og-desc"
         />
       </Head>
       <Snackbar

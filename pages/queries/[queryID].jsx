@@ -216,15 +216,22 @@ const Query = () => {
       exit="exit"
     >
       <Head>
-        <title>{queryData?.query}</title>
-        <meta property="og:title" content={queryData?.query} />
+        <title>{queryData?.query.slice(0, 64)}</title>
+        <meta
+          property="og:title"
+          content={queryData?.query.slice(0, 34)}
+          key="title"
+        />
         <meta
           name="description"
-          content={`${queryData?.query} - ${queryData?.queryType}`}
+          content={`${queryData?.query} - ${queryData?.queryType}`.slice(
+            0,
+            154
+          )}
         />
         <meta
           property="og:description"
-          content={`${queryData?.query} - ${queryData?.queryType}`}
+          content={`${queryData?.query} - ${queryData?.queryType}`.slice(0, 64)}
         />
       </Head>
       <Snackbar

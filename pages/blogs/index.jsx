@@ -86,11 +86,16 @@ const BlogPage = () => {
     >
       <Head>
         <title>GPAForum | Blogs</title>
-        <meta property="og:title" content="GPAForum | Blogs" />
-        <meta name="description" content="See blogs from all GPAForum users" />
+        <meta property="og:title" content="GPAForum | Blogs" key="title" />
+        <meta
+          name="description"
+          content="See blogs from all GPAForum users."
+          key="desc"
+        />
         <meta
           property="og:description"
-          content="See blogs from all GPAForum users"
+          content="See blogs from all GPAForum users."
+          key="og-desc"
         />
       </Head>
       <Snackbar

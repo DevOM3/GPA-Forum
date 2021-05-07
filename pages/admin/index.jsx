@@ -44,7 +44,11 @@ const Dashboard = () => {
     <div className={styles.container}>
       <Head>
         <title>GPAForum | Admin Panel</title>
-        <meta property="og:title" content="GPAForum | Admin Panel" />
+        <meta
+          property="og:title"
+          content="GPAForum | Admin Panel"
+          key="title"
+        />
         <meta
           name="description"
           content="Administrative control for GPAForum."
