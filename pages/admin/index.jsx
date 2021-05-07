@@ -43,7 +43,8 @@ const Dashboard = () => {
   return loggedIn ? (
     <div className={styles.container}>
       <Head>
-        <meta
+        <title>GPAForum | Admin Panel</title>
+        {/* <meta
           property="og:title"
           content="GPAForum | Admin Panel"
           key="title"
@@ -55,7 +56,7 @@ const Dashboard = () => {
         <meta
           property="og:description"
           content="Administrative control for GPAForum."
-        />
+        /> */}
       </Head>
       <span className={styles.hamburger} onClick={onToggle}>
         &#9776;

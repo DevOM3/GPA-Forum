@@ -106,7 +106,8 @@ const ForgotPassword = () => {
       exit="exit"
     >
       <Head>
-        <meta
+        <title>GPAForum | Forgot Password</title>
+        {/* <meta
           property="og:title"
           content="GPAForum | Forgot Password"
           key="title"
@@ -116,7 +117,7 @@ const ForgotPassword = () => {
           property="og:description"
           content="Reset your password."
           key="og-desc"
-        />
+        /> */}
       </Head>
       <form className={forgotStyles.form} onSubmit={verifyOTP}>
         <img src="/images/circle.svg" alt="" />

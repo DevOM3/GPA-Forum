@@ -95,7 +95,8 @@ const UserProfile = () => {
       exit="exit"
     >
       <Head>
-        <meta
+        <title>{userData?.name.slice(0, 64)}</title>
+        {/* <meta
           property="og:title"
           content={userData?.name.slice(0, 34)}
           key="title"
@@ -107,7 +108,7 @@ const UserProfile = () => {
         <meta
           property="og:description"
           content={`${userData?.name.split(" ")[0]}'s profile.`}
-        />
+        /> */}
       </Head>
       <ReportModal
         reportModalOpen={reportModalOpen}

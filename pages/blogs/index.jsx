@@ -85,7 +85,8 @@ const BlogPage = () => {
       exit="exit"
     >
       <Head>
-        <meta property="og:title" content="GPAForum | Blogs" key="title" />
+        <title>GPAForum | Blogs</title>
+        {/* <meta property="og:title" content="GPAForum | Blogs" key="title" />
         <meta
           name="description"
           content="See blogs from all GPAForum users."
@@ -95,7 +96,7 @@ const BlogPage = () => {
           property="og:description"
           content="See blogs from all GPAForum users."
           key="og-desc"
-        />
+        /> */}
       </Head>
       <Snackbar
         open={openBlogCopy}

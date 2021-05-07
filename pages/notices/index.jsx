@@ -88,7 +88,8 @@ const Notices = () => {
       exit="exit"
     >
       <Head>
-        <meta
+        <title>GPAForum | Notices</title>
+        {/* <meta
           property="og:title"
           content="GPAForum | Notices"
           key="title"
@@ -101,7 +102,7 @@ const Notices = () => {
         <meta
           property="og:description"
           content="See latest Notices from GPA faculties."
-        />
+        /> */}
       </Head>
       <Snackbar
         open={copyOpen}

@@ -78,7 +78,7 @@ const Home = () => {
     >
       <Head>
         <title>GPAForum | Home</title>
-        <meta property="og:title" content="GPAForum | Home" key="title" />
+        {/* <meta property="og:title" content="GPAForum | Home" key="title" />
         <meta
           name="description"
           content="Sign Up to be the indivisible part of GPA forever."
@@ -88,7 +88,7 @@ const Home = () => {
           property="og:description"
           content="Sign Up to be the indivisible part of GPA forever."
           key="og-desc"
-        />
+        /> */}
       </Head>
       <div className={styles.image_and_title} style={{ background: "#1a2226" }}>
         <svg

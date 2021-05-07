@@ -216,7 +216,8 @@ const Query = () => {
       exit="exit"
     >
       <Head>
-        <meta
+        <title>{queryData?.query.slice(0, 64)}</title>
+        {/* <meta
           property="og:title"
           content={queryData?.query.slice(0, 34)}
           key="title"
@@ -231,7 +232,7 @@ const Query = () => {
         <meta
           property="og:description"
           content={`${queryData?.query} - ${queryData?.queryType}`.slice(0, 64)}
-        />
+        /> */}
       </Head>
       <Snackbar
         open={openQueryCopy}
