@@ -106,7 +106,6 @@ const ForgotPassword = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Forgot Password</title>
         <meta
           property="og:title"
           content="GPAForum | Forgot Password"

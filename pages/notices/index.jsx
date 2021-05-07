@@ -88,7 +88,6 @@ const Notices = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Notices</title>
         <meta
           property="og:title"
           content="GPAForum | Notices"

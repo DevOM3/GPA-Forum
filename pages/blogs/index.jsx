@@ -85,7 +85,6 @@ const BlogPage = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Blogs</title>
         <meta property="og:title" content="GPAForum | Blogs" key="title" />
         <meta
           name="description"

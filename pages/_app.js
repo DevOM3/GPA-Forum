@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps, router }) {
           content="A platform exclusively for 'GPA'"
           key="type"
         />
-        <title>GPAForum | Home</title>
         <meta property="og:title" content="GPAForum | Home" key="title" />
         <meta
           name="description"

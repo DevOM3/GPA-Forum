@@ -95,7 +95,6 @@ const UserProfile = () => {
       exit="exit"
     >
       <Head>
-        <title>{userData?.name.slice(0, 64)}</title>
         <meta
           property="og:title"
           content={userData?.name.slice(0, 34)}

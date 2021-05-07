@@ -82,7 +82,6 @@ const Profile = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Profile</title>
         <meta property="og:title" content="GPAForum | Profile" key="title" />
         <meta name="description" content="See your profile." key="desc" />
         <meta

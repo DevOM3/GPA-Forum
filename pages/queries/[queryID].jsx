@@ -216,7 +216,6 @@ const Query = () => {
       exit="exit"
     >
       <Head>
-        <title>{queryData?.query.slice(0, 64)}</title>
         <meta
           property="og:title"
           content={queryData?.query.slice(0, 34)}

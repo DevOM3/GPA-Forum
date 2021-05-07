@@ -101,7 +101,6 @@ const Queries = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Queries</title>
         <meta property="og:title" content="GPAForum | Queries" key="title" />
         <meta
           name="description"

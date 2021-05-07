@@ -157,7 +157,6 @@ const SignUp = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Sign Up</title>
         <meta property="og:title" content="GPAForum | Sign Up" key="title" />
         <meta
           name="description"

@@ -71,7 +71,6 @@ const Login = () => {
       exit="exit"
     >
       <Head>
-        <title>GPAForum | Login</title>
         <meta property="og:title" content="GPAForum | Login" key="title" />
         <meta
           name="description"

@@ -190,7 +190,6 @@ const Blog = () => {
       exit="exit"
     >
       <Head>
-        <title>{blogData?.title.slice(0, 64)}</title>
         <meta
           property="og:title"
           content={blogData?.title.slice(0, 34)}

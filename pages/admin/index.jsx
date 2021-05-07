@@ -43,7 +43,6 @@ const Dashboard = () => {
   return loggedIn ? (
     <div className={styles.container}>
       <Head>
-        <title>GPAForum | Admin Panel</title>
         <meta
           property="og:title"
           content="GPAForum | Admin Panel"
