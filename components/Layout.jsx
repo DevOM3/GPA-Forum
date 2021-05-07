@@ -353,7 +353,7 @@ const Layout = ({ children }) => {
         router.pathname === "/admin" ||
         router.pathname === "/")) ? (
     <div id="main" style={{ overflow: "scroll", height: "100vh" }}>
-      {/* <Head>
+      <Head>
         <title>
           GPAForum |{" "}
           {router.pathname === "/auth/forgot-password"
@@ -380,7 +380,7 @@ const Layout = ({ children }) => {
             : ""}
         </title>
         <link rel="icon" href="/images/logo.png" />
-      </Head> */}
+      </Head>
       {router.pathname !== "/auth/forgot-password" &&
         router.pathname !== "/auth/signup" &&
         router.pathname !== "/auth/login" &&
