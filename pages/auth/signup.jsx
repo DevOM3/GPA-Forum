@@ -113,6 +113,7 @@ const SignUp = () => {
             branch,
             phno,
             password,
+            reports: 0,
           });
           dispatch({
             type: actionTypes.SET_USER,
@@ -122,6 +123,7 @@ const SignUp = () => {
               branch,
               phno,
               password,
+              reports: 0,
             },
           });
           localStorage.setItem("forumUserID", data.id);

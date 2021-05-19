@@ -42,6 +42,7 @@ const ForgotPassword = () => {
           branch: data.docs[0].data().branch,
           phno: data.docs[0].data().phno,
           password: data.docs[0].data().password,
+          reports: data.docs[0].data().reports,
         });
         const confirmationResult = await auth.signInWithPhoneNumber(
           `+91${phno}`,

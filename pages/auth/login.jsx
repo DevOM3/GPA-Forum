@@ -46,6 +46,7 @@ const Login = () => {
               branch: data.docs[0].data().branch,
               phno: data.docs[0].data().phno,
               password: data.docs[0].data().password,
+              reports: data.docs[0].data().reports,
             },
           });
           localStorage.setItem("forumUserID", data.docs[0].id);
