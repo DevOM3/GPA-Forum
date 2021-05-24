@@ -55,29 +55,62 @@ const PostQuery = ({ open, fetchQueries, handleClose }) => {
       )
     );
   }, []);
-
+  const diceCoefficient = (l, r) => {
+    if (l.length < 2 || r.length < 2) return 0;
+  
+    let lBigrams = new Map();
+    for (let i = 0; i < l.length - 1; i++) {
+      const bigram = l.substr(i, 2);
+      const count = lBigrams.has(bigram)
+        ? lBigrams.get(bigram) + 1
+        : 1;
+  
+      lBigrams.set(bigram, count);
+    };
+  
+    let intersectionSize = 0;
+    for (let i = 0; i < r.length - 1; i++) {
+      const bigram = r.substr(i, 2);
+      const count = lBigrams.has(bigram)
+        ? lBigrams.get(bigram)
+        : 0;
+  
+      if (count > 0) {
+        lBigrams.set(bigram, count - 1);
+        intersectionSize++;
+      }
+    }
+  
+    var diceCoefficientScore = (2.0 * intersectionSize) / (l.length + r.length - 2);
+    return {query :l,diceCoefficientValue : diceCoefficientScore};
+  }  
   const searchSimilarQueries = () => {
     setPosting(true);
     const arrayOfQueries = [];
-
-    for (var i = 0; i < queries.length; i++) {
-      arrayOfQueries.push(queries[i].query.toLowerCase());
+    for(var i = 0 ; i < queries.length ; i++){
+      arrayOfQueries.push((queries[i].query).toLowerCase());
     }
+    var bestMatch = 0;
+    var bestMatchedQuery;
+    var bestMatchIndex = 0;
 
-    var bestMatchedQueries = stringSimilarity.findBestMatch(
-      query.toLowerCase(),
-      arrayOfQueries
-    );
-
-    var probability = bestMatchedQueries.bestMatch.rating;
-    probability *= 10;
-    probability = Math.round(probability);
-
-    setPosting(false);
-    if (probability >= 7) {
-      setId(bestMatchedQueries.bestMatchIndex);
-      setSimilarQuery(queries[bestMatchedQueries.bestMatchIndex].query);
+    for (var j = 0; j< arrayOfQueries.length; j++)
+    {
+      var diceCoefficientObject = diceCoefficient(arrayOfQueries[j],query);
+      if(bestMatch < diceCoefficientObject.diceCoefficientValue){
+        bestMatch = diceCoefficientObject.diceCoefficientValue;
+        bestMatchedQuery = diceCoefficientObject.query;
+        bestMatchIndex = j;
+      }
+    } 
+    bestMatch *= 10;
+    bestMatch = Math.round(bestMatch);
+    console.log(bestMatch); 
+    if (bestMatch >= 5) {
+      setId(bestMatchIndex);
+      setSimilarQuery(queries[bestMatchIndex].query);
       setOpenSimilarQueryDialog(true);
+      setPosting(false);
     } else {
       StoreQuery();
     }
