@@ -111,8 +111,12 @@ const ForgotPassword = () => {
         <meta name="description" content="Reset your password." key="desc" />
       </Head>
       <form className={forgotStyles.form} onSubmit={verifyOTP}>
-        <img src="/images/circle.svg" alt="" />
         <div className={forgotStyles.mainForm}>
+          <img
+            className={forgotStyles.circleImage}
+            src="/images/navlogo.svg"
+            alt=""
+          />
           {visible ? (
             <>
               <motion.div

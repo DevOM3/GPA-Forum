@@ -167,8 +167,12 @@ const SignUp = () => {
         />
       </Head>
       <form className={signUpStyles.form} onSubmit={verifyOTP}>
-        <img id="img" src="/images/circle.svg" alt="" />
         <div className={signUpStyles.mainForm}>
+          <img
+            className={signUpStyles.circleImage}
+            src="/images/navlogo.svg"
+            alt=""
+          />
           {showOTPScreen ? (
             <motion.div
               className={signUpStyles.inputDiv}

@@ -7,6 +7,7 @@ import QueryLayout from "./QueryLayout";
 const Query = () => {
   const [searchString, setSearchString] = useState("");
   const [queries, setQueries] = useState([]);
+
   useEffect(() => {
     db.collection("Queries").onSnapshot((snapshot) =>
       setQueries(

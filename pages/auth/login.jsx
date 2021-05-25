@@ -80,8 +80,12 @@ const Login = () => {
         />
       </Head>
       <form className={loginStyles.form} onSubmit={login}>
-        <img src="/images/circle.svg" alt="" />
         <div className={loginStyles.mainForm}>
+          <img
+            className={loginStyles.circleImage}
+            src="/images/navlogo.svg"
+            alt=""
+          />
           <motion.div
             className={loginStyles.inputDiv}
             variants={inputAnimationVariant}
