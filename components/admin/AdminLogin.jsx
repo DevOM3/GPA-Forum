@@ -26,7 +26,8 @@ const Login = ({ id, setID, password, setPassword, login, loggingIn }) => {
       exit="exit"
     >
       <form className={loginStyles.form} onSubmit={login}>
-        <img src="/images/circle.svg" alt="" />
+        {/* <img src="/images/circle.svg" alt="" /> */}
+        <h1>GPA Admin Login</h1>
         <div className={loginStyles.mainForm}>
           <motion.div
             className={loginStyles.inputDiv}
