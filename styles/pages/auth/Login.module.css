@@ -27,6 +27,10 @@
   /* justify-content: flex-end; */
 }
 
+.form img {
+  height: 100px;
+}
+
 .form h1 {
   color: #005975;
   text-align: center;
