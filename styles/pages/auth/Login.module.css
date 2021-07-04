@@ -1,8 +1,11 @@
 .login {
   min-height: 100vh;
   background: whitesmoke;
-  display: grid;
-  place-items: center;
+  /* display: grid;
+  place-items: center; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .form {
@@ -14,29 +17,39 @@
   box-shadow: 0px 0 7px 0.001px lightgrey;
   border: 1px solid gray;
   border-radius: 11px;
+  position: relative;
   background: whitesmoke;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* justify-content: flex-end; */
 }
+
+.form h1 {
+  color: #005975;
+  text-align: center;
+}
+/* .form img {
+  left: -50%;
+  top: -40%;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+  filter: drop-shadow(2px 0 11px grey);
+} */
 
 .mainForm {
   z-index: 2;
   background: transparent;
-  width: 100%;
+  width: 80%;
   max-width: 700px;
   padding: 21px;
-  margin: auto;
+  /* margin-left: auto; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.circleImage {
-  width: 44%;
-  height: 44%;
-  object-fit: contain;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .inputDiv {
@@ -96,25 +109,33 @@
   .form {
     width: 95%;
   }
+  /* .form img {
+    top: -20%;
+    left: -50%;
+  } */
 }
 
 @media only screen and (max-width: 650px) {
   .form {
     height: 100%;
     width: 100%;
-    border-radius: 0;
+    border: none;
+    box-shadow: none;
+    /* border-radius: 0; */
   }
+  /* .form img {
+    width: 150%;
+    top: 50vh;
+    left: -25%;
+    filter: none;
+  } */
   .mainForm {
     margin: auto;
     width: 100%;
   }
-  .circleImage {
-    width: 55%;
-    height: 55%;
+  .inputDiv {
+    /* box-shadow: 0px 2px 4px; */
   }
-  /* .inputDiv { */
-  /* box-shadow: 0px 2px 4px; */
-  /* } */
 }
 
 @media only screen and (max-width: 400px) {
@@ -127,9 +148,5 @@
   .inputDiv {
     min-width: 270px;
     width: 98%;
-  }
-  .circleImage {
-    width: 55%;
-    height: 55%;
   }
 }
