@@ -121,6 +121,7 @@ const QueryListItem = ({
 
   const deletePost = async () => {
     if (confirm("Are you sure to delete this post?")) {
+      const queryRef = await db.collection("Queries").doc(id);
       deleteQuery();
     }
   };
