@@ -50,34 +50,34 @@
   .student_profile {
     margin: 5px 280px;
   }
-  .delete_icon {
+  /* .delete_icon {
     right: 281px;
-  }
+  } */
 }
 
 @media only screen and (max-width: 1199px) and (min-width: 800px) {
   .student_profile {
     margin: 5px 210px;
   }
-  .delete_icon {
+  /* .delete_icon {
     right: 211px;
-  }
+  } */
 }
 
 @media only screen and (max-width: 800px) and (min-width: 0px) {
   .student_profile {
     margin: 5px 125px;
   }
-  .delete_icon {
+  /* .delete_icon {
     right: 126px;
-  }
+  } */
 }
 
 @media only screen and (max-width: 600px) {
   .student_profile {
     margin: 5px 10px;
   }
-  .delete_icon {
+  /* .delete_icon {
     right: 11px;
-  }
+  } */
 }
