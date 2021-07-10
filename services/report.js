@@ -3,6 +3,7 @@ import { db, storage } from "./firebase";
 
 export const report = (text) => {
   const filter = new Filter();
+  filter.addWords("bad");
   let reportedText = filter.clean(text);
 
   return !(text === reportedText);
