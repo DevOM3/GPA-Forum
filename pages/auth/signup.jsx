@@ -356,10 +356,7 @@ const SignUp = () => {
               </li>
               <li>Use bad words, slangs or hate speech in your blog.</li>
               <li>Write a blog targeting a person or pornography.</li>
-              <li>
-                Post Porn images or any image which discloses sexual or private
-                parts.
-              </li>
+              <li>Post images which discloses sexual or private parts.</li>
               <li>
                 Leave bad words, slangs or hate speech as a comment for a blog.
               </li>
